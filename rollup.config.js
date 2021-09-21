@@ -9,11 +9,11 @@ module.exports = [
         input: "package/index.js",
         // 出口
         output: [
-        {
-            file: "dist/index.js",
-            // 配置打包模块化的方式 es:ESM  cjs:CommonJS
-            format: "cjs",
-        },
+            {
+                file: "dist/index.js",
+                // 配置打包模块化的方式 es:ESM  cjs:CommonJS
+                format: "cjs",
+            },
         ],
         // 插件
         plugins: [

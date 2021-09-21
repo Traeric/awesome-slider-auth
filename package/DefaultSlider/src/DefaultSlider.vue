@@ -421,6 +421,8 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
 </script>
 
 <style scoped lang="stylus">
+@import "./animation.styl"
+
 #awesome_slider_default
     border 1px solid #eee
     box-shadow 4px 4px 6px #eee
@@ -492,14 +494,4 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
             &:active
                 background-color rgb(83, 168, 255)
                 border-color #409EFF
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(359deg);
-    }
-}
 </style>
