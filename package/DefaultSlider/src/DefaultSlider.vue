@@ -5,23 +5,43 @@
             @mousedown="sliderDownEvent" width="72" height="72"
             v-show="sliderObj.puzzleShow"></canvas>
             <canvas class="fill" height="72" width="72" ref="fillPuzzle" v-show="sliderObj.puzzleShow"></canvas>
-            <img src="public/slider/default-slider-bg-0.png" alt="NO IMG" ref="bgImg">
+            <img :src="bgArray[0]" alt="NO IMG" ref="bgImg">
             <div class="load" v-show="sliderObj.loadShow">
-                <img src="public/slider/load.png" alt="NO IMG">
+                <img :src="load" alt="NO IMG">
             </div>
-            <div class="refresh" @click="refreshImg"></div>
+            <div class="refresh" @click="refreshImg" 
+            :style="'background-image: url(' + refreshImage + ')'"
+            @mouseover="refreshBtnMouseOver" 
+            @mouseleave="refreshBtnMouseLeave" 
+            ref="refreshRef"></div>
         </div>
         <div class="silder-area" ref="sliderBar">
             <span>{{ tips }}</span>
             <div class="slider" 
             @mousedown="sliderDownEvent" 
-            ref="slider"></div>
+            ref="slider"
+            :style="'background-image: url(' + arrow + ')'" 
+            @mouseover="sliderMouseOver" 
+            @mouseleave="sliderMouseLeave"></div>
         </div>
     </div>
 </template>
 
 <script>
 import {ref, onMounted, reactive} from "vue";
+import defaultBg0 from "../../../public/slider/default-slider-bg-0.png";
+import defaultBg1 from "../../../public/slider/default-slider-bg-1.png";
+import defaultBg2 from "../../../public/slider/default-slider-bg-2.png";
+import defaultBg3 from "../../../public/slider/default-slider-bg-3.png";
+import defaultBg4 from "../../../public/slider/default-slider-bg-4.png";
+import defaultBg5 from "../../../public/slider/default-slider-bg-5.png";
+import load from "../../../public/slider/load.png";
+import arrow from "../../../public/slider/default-slider-arrow.png";
+import arrowSelect from "../../../public/slider/default-slider-arrow-select.png";
+import refreshImage from "../../../public/slider/default-slider-refresh.png";
+import refreshSelectImg from "../../../public/slider/default-slider-refresh-select.png";
+import sliderError from "../../../public/slider/default-slider-error.png";
+import sliderOk from "../../../public/slider/default-slider-ok.png";
 
 export default {
     name: 'as-default-slider',
@@ -59,6 +79,7 @@ export default {
         const coverPuzzle = ref(null);
         const fillPuzzle = ref(null);
         const bgImg = ref(null);
+        const refreshRef = ref(null);
 
         onMounted(() => {
             // 设置slider背景
@@ -73,9 +94,22 @@ export default {
                 width: ${props.width}px;
             `;
         });
-        
-        let {puzzleObj, initPuzzlePosition} = drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap);
-        let {sliderDownEvent, sliderObj, refreshImg} = sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj, props, initPuzzlePosition);
+
+        function refreshBtnMouseOver() {
+            refreshRef.value.style.cssText += `
+                background-image: url(${refreshSelectImg});
+            `;
+        }
+
+        function refreshBtnMouseLeave() {
+            refreshRef.value.style.cssText += `
+                background-image: url(${refreshImage});
+            `;
+        }
+
+        const bgArray = [defaultBg0, defaultBg1, defaultBg2, defaultBg3, defaultBg4, defaultBg5];
+        let {puzzleObj, initPuzzlePosition} = drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgArray);
+        let {sliderDownEvent, sliderObj, refreshImg, sliderMouseOver, sliderMouseLeave} = sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj, props, initPuzzlePosition);
         
         return {
             imageWrap,
@@ -89,6 +123,17 @@ export default {
             sliderDownEvent,
             sliderObj,
             refreshImg,
+            refreshBtnMouseOver,
+            refreshBtnMouseLeave,
+            sliderMouseOver,
+            sliderMouseLeave,
+            refreshRef,
+            // 图片
+            load,
+            bgArray,
+            refreshImage,
+            arrow,
+            arrowSelect,
         };
     }
 }
@@ -101,12 +146,16 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
         puzzleShow: true,
         loadShow: false,
         canRefresh: true,
+        // 是否能够通过鼠标移入移出事件修改滑块样式
+        sliderEvent: true,
     });
 
     function sliderDownEvent(e) {
         if (!sliderObj.mouseDownFlag) {
             return;
         }
+        // 禁用鼠标事件改变滑块样式的事件
+        sliderObj.sliderEvent = false;
         // 获取滑块最大能移动的距离
         const sliderMoveMostLength = sliderBar.value.offsetWidth - slider.value.offsetWidth;
         // 获取鼠标点击时在可视化界面的位置
@@ -143,7 +192,7 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
             slider.value.style.cssText += `
                 background-color: rgb(83, 168, 255);
                 border-color: #409EFF;
-                background-image: url('../../../public/slider/default-slider-arrow-select.png');
+                background-image: url(${arrowSelect});
             `;
             // 暂时禁用滑块点击事件 认证完成后放开
             sliderObj.mouseDownFlag = false;
@@ -160,7 +209,7 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
                 slider.value.style.cssText += `
                     background-color: #67C23A;
                     border-color: #61c231;
-                    background-image: url('../../../public/slider/default-slider-ok.png');
+                    background-image: url(${sliderOk});
                 `;
                 // 认证成功不允许再点击刷新按钮
                 sliderObj.canRefresh = false;
@@ -173,7 +222,7 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
                 slider.value.style.cssText += `
                     background-color: #F56C6C;
                     border-color: #f46262;
-                    background-image: url('../../../public/slider/default-slider-error.png');
+                    background-image: url(${sliderError});
                 `;
                 setTimeout(() => {
                     // 错误样式展示后将所有数据归为
@@ -184,12 +233,16 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
                     slider.value.style.cssText = `
                         transition: left .5s;
                         left: 0;
+                        background-image: url(${arrow});
                     `;
                     setTimeout(() => {
                         // 清除slider移动效果
                         slider.value.style.cssText = `
                             transition: none;
+                            background-image: url(${arrow});
                         `;
+                        // 恢复鼠标移入移出能改变滑块样式事件
+                        sliderObj.sliderEvent = true;
                     }, 500);
                     // 刷新图片以及拼图位置
                     refreshImg();
@@ -219,14 +272,34 @@ function sliderMoveGather(sliderBar, slider, coverPuzzle, fillPuzzle, puzzleObj,
         }, 200);
     }
 
+    function sliderMouseOver() {
+        if (!sliderObj.sliderEvent) {
+            return;
+        }
+        slider.value.style.cssText += `
+            background-image: url(${arrowSelect});
+        `;
+    }
+
+    function sliderMouseLeave() {
+        if (!sliderObj.sliderEvent) {
+            return;
+        }
+        slider.value.style.cssText += `
+            background-image: url(${arrow});
+        `;
+    }
+
     return {
         sliderDownEvent,
         sliderObj,
         refreshImg,
+        sliderMouseOver,
+        sliderMouseLeave
     };
 }
 
-function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
+function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgArray) {
     let puzzleObj = {
         puzzleWidth: 0,
         fillPuzzlePositionX: 0,
@@ -289,7 +362,7 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
             let puzzlePosition = {
                 "puzzleX": Math.ceil(fillPuzzleStart + Math.random() * (props.width - puzzleObj.puzzleWidth - fillPuzzleStart)),
                 "puzzleY": Math.ceil(Math.random() * (props.height - puzzleObj.puzzleWidth)),
-                "backgroundPath": `../../public/slider/default-slider-bg-${puzzleObj.bgIndex++ % 6}.png`
+                "backgroundPath": `${bgArray[puzzleObj.bgIndex++ % 6]}`
             };
 
             setPuzzlePosition(puzzlePosition, callback);
@@ -384,7 +457,6 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
         .refresh
             height 25px
             width 25px
-            background-image url('../../../public/slider/default-slider-refresh.png')
             background-size 20px 20px
             background-repeat no-repeat
             background-position 2px 2px
@@ -393,8 +465,6 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
             right 0
             cursor pointer
             z-index 1001
-            &:hover
-                background-image url('../../../public/slider/default-slider-refresh-select.png')
     .silder-area
         height 35px
         width calc(100% - 2px)
@@ -412,7 +482,6 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
             border-color #eee
             border-width 1px
             cursor pointer
-            background-image url('../../../public/slider/default-slider-arrow.png')
             background-size 29px 29px
             background-repeat no-repeat
             background-position 8px 3px
@@ -423,7 +492,6 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
             &:active
                 background-color rgb(83, 168, 255)
                 border-color #409EFF
-                background-image url('../../../public/slider/default-slider-arrow-select.png')
 
 @keyframes rotate {
     from {

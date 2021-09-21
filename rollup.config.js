@@ -1,6 +1,7 @@
 import vue from "rollup-plugin-vue";
 import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
+import image from '@rollup/plugin-image';
 
 module.exports = [
     {
@@ -11,7 +12,7 @@ module.exports = [
         {
             file: "dist/index.js",
             // 配置打包模块化的方式 es:ESM  cjs:CommonJS
-            format: "es",
+            format: "cjs",
         },
         ],
         // 插件
@@ -25,6 +26,8 @@ module.exports = [
             // 代码压缩
             terser(),
             postcss(),
+            // 打包图片 不添加这个组件中引用的图片无法被打包
+            image(),
         ],
     },
 ];
