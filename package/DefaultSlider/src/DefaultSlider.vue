@@ -5,7 +5,7 @@
             @mousedown="sliderDownEvent" width="72" height="72"
             v-show="sliderObj.puzzleShow"></canvas>
             <canvas class="fill" height="72" width="72" ref="fillPuzzle" v-show="sliderObj.puzzleShow"></canvas>
-            <img src="public/slider/default-slider-bg.png" alt="NO IMG" ref="bgImg">
+            <img src="public/slider/default-slider-bg-0.png" alt="NO IMG" ref="bgImg">
             <div class="load" v-show="sliderObj.loadShow">
                 <img src="public/slider/load.png" alt="NO IMG">
             </div>
@@ -254,7 +254,7 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
         // 绘制被填充的拼图
         const fillCtx = fillPuzzle.value.getContext('2d');
         drawPuzzlePath(fillCtx, puzzleWidth, r);
-        fillCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        fillCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         fillCtx.fill();
 
         // 初始化拼图位置
@@ -276,30 +276,38 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap) {
         ctx.lineTo(0 + startX, puzzleWidth / 2 + 2 * r +6);
         ctx.arc(startX + r - 2, puzzleWidth / 2 + 2 * r, r, 0.65 * Math.PI, 1.23 * Math.PI, true);
         ctx.lineTo(0 + startX, 2 * r);
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2;
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.stroke();
     }
 
     function initPuzzlePosition(callback) {
-        let puzzlePosition;
+        // 被填充的拼图起始位置必须大于覆盖拼图的位置
+        const fillPuzzleStart = 5 + puzzleObj.puzzleWidth;
         if (props.refresh === null || props.refresh === undefined) {
             // 如果用户未定义刷新方法 则由组件自己初始化拼图位置
-            // 被填充的拼图起始位置必须大于覆盖拼图的位置
-            const fillPuzzleStart = 5 + puzzleObj.puzzleWidth;
-            puzzlePosition = {
+            let puzzlePosition = {
                 "puzzleX": Math.ceil(fillPuzzleStart + Math.random() * (props.width - puzzleObj.puzzleWidth - fillPuzzleStart)),
                 "puzzleY": Math.ceil(Math.random() * (props.height - puzzleObj.puzzleWidth)),
                 "backgroundPath": `../../public/slider/default-slider-bg-${puzzleObj.bgIndex++ % 6}.png`
             };
+
+            setPuzzlePosition(puzzlePosition, callback);
         } else {
-            puzzlePosition = props.refresh();
-            // 如果是用户传入的拼图位置 需要进行限制
-            puzzlePosition.puzzleX = Math.max(fillPuzzleStart, puzzlePosition.puzzleX);
-            puzzlePosition.puzzleX = Math.min(props.width - puzzleObj.puzzleWidth, puzzlePosition.puzzleX);
-            puzzlePosition.puzzleY = Math.max(0, puzzlePosition.puzzleY);
-            puzzlePosition.puzzleY = Math.max(props.height - puzzleObj.puzzleWidth, puzzlePosition.puzzleY);
+            props.refresh(puzzlePosition => {
+                // 如果是用户传入的拼图位置 需要进行限制
+                puzzlePosition.puzzleX = Math.max(fillPuzzleStart, puzzlePosition.puzzleX);
+                puzzlePosition.puzzleX = Math.min(props.width - puzzleObj.puzzleWidth, puzzlePosition.puzzleX);
+                puzzlePosition.puzzleY = Math.max(0, puzzlePosition.puzzleY);
+                puzzlePosition.puzzleY = Math.min(props.height - puzzleObj.puzzleWidth, puzzlePosition.puzzleY);
+
+                setPuzzlePosition(puzzlePosition, callback);
+            });
         }
+        
+    }
+
+    function setPuzzlePosition(puzzlePosition, callback) {
         // 设置背景图片
         imageWrap.value.style.cssText += `
             background-image: url(${puzzlePosition.backgroundPath});
