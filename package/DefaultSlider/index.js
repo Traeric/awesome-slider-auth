@@ -1,7 +1,7 @@
 import DefaultSlider from './src/DefaultSlider.vue';
 
 
-XButton.install = function (Vue) {
+DefaultSlider.install = function (Vue) {
     Vue.component(DefaultSlider.name, DefaultSlider);
 }
 
