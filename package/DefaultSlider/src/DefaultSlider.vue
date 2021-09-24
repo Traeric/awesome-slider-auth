@@ -85,7 +85,7 @@ export default {
             // 设置slider背景
             imageWrap.value.style.cssText += `
                 height: ${props.height}px;
-                width: ${props.width}px;
+                width: 100%;
                 background-size: ${props.width}px ${props.height}px;
                 background-repeat: no-repeat;
             `;
