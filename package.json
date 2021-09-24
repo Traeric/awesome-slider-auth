@@ -5,7 +5,10 @@
   "private": false,
   "main": "dist/index.js",
   "author": "jinxin",
-  "keywords": ["vue", "awesome-slider-auth"],
+  "keywords": [
+    "vue",
+    "awesome-slider-auth"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "rollup -c"
