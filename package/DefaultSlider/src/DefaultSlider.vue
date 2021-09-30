@@ -327,7 +327,7 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
         // 绘制被填充的拼图
         const fillCtx = fillPuzzle.value.getContext('2d');
         drawPuzzlePath(fillCtx, puzzleWidth, r);
-        fillCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        fillCtx.fillStyle = 'rgba(0, 0, 0, 0.35)';
         fillCtx.fill();
 
         // 初始化拼图位置
@@ -360,7 +360,7 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
         if (props.refresh === null || props.refresh === undefined) {
             // 如果用户未定义刷新方法 则由组件自己初始化拼图位置
             let puzzlePosition = {
-                "puzzleX": Math.ceil(fillPuzzleStart + Math.random() * (props.width - puzzleObj.puzzleWidth - fillPuzzleStart)),
+                "puzzleX": Math.ceil(fillPuzzleStart + Math.random() * (props.width - puzzleObj.puzzleWidth - fillPuzzleStart - 3)),
                 "puzzleY": Math.ceil(Math.random() * (props.height - puzzleObj.puzzleWidth)),
                 "backgroundPath": `${bgArray[puzzleObj.bgIndex++ % 6]}`
             };
@@ -370,7 +370,7 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
             props.refresh(puzzlePosition => {
                 // 如果是用户传入的拼图位置 需要进行限制
                 puzzlePosition.puzzleX = Math.max(fillPuzzleStart, puzzlePosition.puzzleX);
-                puzzlePosition.puzzleX = Math.min(props.width - puzzleObj.puzzleWidth, puzzlePosition.puzzleX);
+                puzzlePosition.puzzleX = Math.min(props.width - puzzleObj.puzzleWidth - 3, puzzlePosition.puzzleX);
                 puzzlePosition.puzzleY = Math.max(0, puzzlePosition.puzzleY);
                 puzzlePosition.puzzleY = Math.min(props.height - puzzleObj.puzzleWidth, puzzlePosition.puzzleY);
 

@@ -1,8 +1,10 @@
 import DefaultSlider from "./DefaultSlider/src/DefaultSlider.vue";
+import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
 
 // package下组件列表
 const components = [
-    DefaultSlider
+    DefaultSlider,
+    SimpleSlider
 ];
 
 
@@ -24,5 +26,6 @@ export default {
     // 导出对象需要有install才能被Vue.use()方法安装
     install,
     // 导出具体的组件
-    DefaultSlider
+    DefaultSlider,
+    SimpleSlider,
 }
