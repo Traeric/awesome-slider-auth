@@ -2,7 +2,10 @@
     <div class="simple-wrap">
         <div class="img-area" :style="'background-image: url(' + bgArray[0] + ')'"></div>
         <div class="slider-area">
-            <div class="slider-btn"></div>
+            <span>向右滑动滑块，完成认证</span>
+            <div class="slider-btn">
+                <i class="iconfont icon-jiantou-shuangyou"></i>
+            </div>
         </div>
     </div>
 </template>
@@ -30,30 +33,49 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-import "//at.alicdn.com/t/font_2844616_bsz28xp9t65.css";
+@import "https://at.alicdn.com/t/font_2825629_0vcm3kudhnta.css?spm=a313x.7781069.1998910419.65&file=font_2825629_0vcm3kudhnta.css"
 
 .simple-wrap
     border 1px solid #eee
     box-shadow 4px 4px 6px #eee
     padding 5px
-    width 300px
+    font-size 16px
+    width (300 / 16)em
     .img-area
         width 100%
-        height 150px
+        height (150 / 16)em
         background-size cover
-        margin-bottom 10px
+        margin-bottom (10 / 16)em
     .slider-area
         width 100%
-        height 35px
+        height (35 / 16)em
         background-image linear-gradient(to right, #a0cfff, #a0cfff 0%, #ddd 0%, #ddd)
         position relative
+        text-align center
+        line-height (35 / 16)em
         .slider-btn
-            height 33px
-            width 45px
+            height calc(2.1875em - 2px)
+            width (45 / 16)em
             background-color #fff
             border 1px solid #eee
             position absolute
             top 0
             left 0
+            display flex
+            justify-content center
+            align-items center
+            i
+                font-size 1.5em
+                color #e6e6e6
+            &:hover, &:active
+                background-color #53a8ff
+                border-color #409eff
+                cursor pointer
+                i
+                    color #fff
+        span
+            font-size (12 / 16)em
+            color #fff
+            user-select none
 </style>
 
