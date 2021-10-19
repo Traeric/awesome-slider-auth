@@ -13,4 +13,4 @@
 npm i awesome-slider-auth
 ```
 ## 官方文档
-![https://traeric.github.io/awesome-slider-auth-doc](https://traeric.github.io/awesome-slider-auth-doc/)
+[https://traeric.github.io/awesome-slider-auth-doc](https://traeric.github.io/awesome-slider-auth-doc/)
