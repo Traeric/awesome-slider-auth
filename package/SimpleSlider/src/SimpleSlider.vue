@@ -1,81 +1,114 @@
 <template>
-    <div class="simple-wrap">
-        <div class="img-area" :style="'background-image: url(' + bgArray[0] + ')'"></div>
-        <div class="slider-area">
-            <span>向右滑动滑块，完成认证</span>
-            <div class="slider-btn">
-                <i class="iconfont icon-jiantou-shuangyou"></i>
+    <div class="simple-wrap" ref="authModule">
+        <div class="img-area" :style="'background-image: url(' + background + ')'"></div>
+        <div class="slider-area" ref="sliderBar">
+            <span>{{ tips }}</span>
+            <div class="slider-btn" @mousedown="sliderDown" ref="slider">
+                <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { onMounted } from 'vue';
-import defaultBg0 from "../../../public/slider/default-slider-bg-0.png";
-import defaultBg1 from "../../../public/slider/default-slider-bg-1.png";
-import defaultBg2 from "../../../public/slider/default-slider-bg-2.png";
-import defaultBg3 from "../../../public/slider/default-slider-bg-3.png";
-import defaultBg4 from "../../../public/slider/default-slider-bg-4.png";
-import defaultBg5 from "../../../public/slider/default-slider-bg-5.png";
+import { onMounted, ref } from 'vue';
+import mouseEvent from "../../abstract/eventSublimation.js";
+import statusConvert from "../../abstract/statusConvert.js";
+import constant from "../../abstract/constant.js";
+import defaultBg0 from "../../../public/slider/default-slider-bg-2.png";
 
 export default {
     name: "as-simple-slider",
-    setup() {
-        onMounted(() => {
+    props: {
+        // 认证成功后的回调方法
+        success: Function,
+        // 认证成功后是否自动关闭认证模块
+        autoClose: {
+            type: Boolean,
+            default: true,
+        },
+        // 滑动提示
+        tips: {
+            type: String,
+            default: "向右滑动滑块，完成认证",
+        },
+        // 滑动距离与最终距离允许的误差 默认5px
+        errorRange: {
+            type: Number,
+            default: 5
+        },
+        // 认证模块大小
+        size: {
+            type: String,
+            default: "normal"
+        },
+        // 背景图片
+        background: {
+            type: String,
+            default: defaultBg0,
+        }
+    },
+    setup(props) {
+        const sliderBar = ref(null);
+        const slider = ref(null);
+        const sliderIcon = ref(null);
+        const authModule = ref(null);
 
+        onMounted(() => {
+            const fontSize = constant.sizeMap[props.size];
+            authModule.value.style.fontSize = `${fontSize}px`;
         });
 
-        const bgArray = [defaultBg0, defaultBg1, defaultBg2, defaultBg3, defaultBg4, defaultBg5];
+        let {sliderDown} = sliderGather(sliderBar, slider, sliderIcon, props, authModule);
         return {
-            bgArray,
+            sliderDown,
+            sliderBar,
+            slider,
+            sliderIcon,
+            authModule,
         };
     },
 }
+
+function sliderGather(sliderBar, slider, sliderIcon, props, authModule) {
+    function sliderDown(e) {
+        mouseEvent.moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
+            const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
+            // 完成滑动 判断滑块是否移动到最右端
+            if (Math.abs(sliderBar.value.offsetWidth - slider.value.offsetWidth - moveLength) <= props.errorRange) {
+                // 如果移动距离和滑块可移动距离之间的差距不足5个像素 则判断认证成功
+                statusConvert.changeSuccessStatus(slider, sliderBar, sliderIcon, moveRate);
+                // 执行成功后的回调方法
+                props.success !== null && props.success !== undefined && props.success(close);
+                setTimeout(() => {
+                    props.autoClose && close();
+                }, constant.successStyleDisplayTime);
+                return;
+            }
+            // 认证失败 提示失败然后将滑块位置归位
+            statusConvert.changeFaildStatus(slider, sliderBar, sliderIcon, moveRate);
+            setTimeout(() => {
+                statusConvert.changeDefaultStatus(slider, sliderBar, sliderIcon);
+            }, constant.faildStyleDisplayTime);
+        });
+    }
+
+    /**
+     * 关闭认证模块
+     */
+    function close() {
+        authModule.value.style.opacity = "0";
+        setTimeout(() => {
+            authModule.value.style.display = "none";
+        }, 500);
+    }
+
+    return {
+        sliderDown,
+    };
+}
 </script>
 <style lang="stylus" scoped>
-@import "https://at.alicdn.com/t/font_2825629_0vcm3kudhnta.css?spm=a313x.7781069.1998910419.65&file=font_2825629_0vcm3kudhnta.css"
-
-.simple-wrap
-    border 1px solid #eee
-    box-shadow 4px 4px 6px #eee
-    padding 5px
-    font-size 16px
-    width (300 / 16)em
-    .img-area
-        width 100%
-        height (150 / 16)em
-        background-size cover
-        margin-bottom (10 / 16)em
-    .slider-area
-        width 100%
-        height (35 / 16)em
-        background-image linear-gradient(to right, #a0cfff, #a0cfff 0%, #ddd 0%, #ddd)
-        position relative
-        text-align center
-        line-height (35 / 16)em
-        .slider-btn
-            height calc(2.1875em - 2px)
-            width (45 / 16)em
-            background-color #fff
-            border 1px solid #eee
-            position absolute
-            top 0
-            left 0
-            display flex
-            justify-content center
-            align-items center
-            i
-                font-size 1.5em
-                color #e6e6e6
-            &:hover, &:active
-                background-color #53a8ff
-                border-color #409eff
-                cursor pointer
-                i
-                    color #fff
-        span
-            font-size (12 / 16)em
-            color #fff
-            user-select none
+@import "../../iconfont/iconfont.css";
+@import "./test.styl";
 </style>
 
