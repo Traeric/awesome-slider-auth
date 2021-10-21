@@ -108,7 +108,6 @@ function sliderGather(sliderBar, slider, sliderIcon, props, authModule) {
 }
 </script>
 <style lang="stylus" scoped>
-@import "../../iconfont/iconfont.css";
-@import "./test.styl";
+@import "./simpleSlider.styl";
 </style>
 

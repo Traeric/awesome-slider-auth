@@ -3,10 +3,11 @@ import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
 import image from '@rollup/plugin-image';
 import resolve from "rollup-plugin-node-resolve";
+import babel from "rollup-plugin-babel";
 
 export default {
     // 入口
-    input: "package/index.js",
+    input: "packages/index.js",
     // 出口
     output: [
         {
@@ -29,5 +30,12 @@ export default {
         // 打包图片 不添加这个组件中引用的图片无法被打包
         image(),
         resolve(),
-    ]
+        babel({
+            exclude: "node_modules/**",
+        }),
+    ],
+    external: ['vue'],
+    sourcemap: true,
+    banner: '/* my-library version 1.1.4 */',
+    footer: '/* follow me on github! @Traeric */'
 };
