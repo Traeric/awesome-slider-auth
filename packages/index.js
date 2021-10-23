@@ -1,10 +1,12 @@
 import DefaultSlider from "./DefaultSlider/src/DefaultSlider.vue";
 import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
+import AsButton from "./AsButton/src/AsButton.vue";
 
 // package下组件列表
 const components = [
     DefaultSlider,
-    SimpleSlider
+    SimpleSlider,
+    AsButton,
 ];
 
 
@@ -28,4 +30,5 @@ export default {
     // 导出具体的组件
     DefaultSlider,
     SimpleSlider,
+    AsButton,
 }

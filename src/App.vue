@@ -14,6 +14,54 @@
     background="https://cn.bing.com/th?id=OHR.FanalMadeira_ZH-CN5337723033_1920x1080.jpg&rf=LaDigue_1920x1080.jpg" />
 
     <hr>
+    <as-button prefix-icon="icon-shibai1">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button>
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="primary">
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="positive">
+        成功按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="warning">
+        警告按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="negative">
+        错误按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle>
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle prefix-icon="icon-zuobian" type="primary">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle prefix-icon="icon-zuobian" type="positive">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle prefix-icon="icon-zuobian" type="warning">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle prefix-icon="icon-zuobian" type="negative">
+        测试按钮
+    </as-button>
+    <hr>
 </template>
 
 <script>
