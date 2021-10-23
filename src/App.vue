@@ -46,6 +46,10 @@
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
+    <as-button circle suffix-icon="icon-zuobian" prefix-icon="icon-zuobian">
+        测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
     <as-button circle prefix-icon="icon-zuobian" type="primary">
         测试按钮
     </as-button>
@@ -61,7 +65,89 @@
     <as-button circle prefix-icon="icon-zuobian" type="negative">
         测试按钮
     </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="primary" plain>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="positive" plain>
+        成功按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="warning" plain>
+        警告按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="negative" plain>
+        错误按钮
+    </as-button>
+    <br><br>
+    <as-button suffix-icon="icon-zuobian" type="primary" disabled>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="positive" disabled>
+        成功按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="warning" plain disabled>
+        警告按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="negative" disabled>
+        错误按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="icon-zuobian" type="primary" loading>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="primary" loading plain>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" loading circle>
+        主要按钮
+    </as-button>
+    <br><br>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="mini">
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="mini">
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="small">
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="normal">
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="mini" circle>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="small" circle>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="normal" circle>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" size="normal" circle plain>
+        主要按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" prefix-icon="icon-zuobian" round>
+        主要按钮
+    </as-button>
     <hr>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
 <script>

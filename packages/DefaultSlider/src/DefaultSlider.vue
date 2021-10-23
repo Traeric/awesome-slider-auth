@@ -1,5 +1,5 @@
 <template>
-    <div id="awesome_slider_default" ref="sliderWrap">
+    <div class="awesome_slider_default" ref="sliderWrap">
         <div class="image-area" ref="imageWrap">
             <canvas class="cover" ref="coverPuzzle" 
             @mousedown="sliderDownEvent" width="72" height="72"
@@ -421,9 +421,9 @@ function drawPuzzleGather(coverPuzzle, props, fillPuzzle, bgImg, imageWrap, bgAr
 </script>
 
 <style scoped lang="stylus">
-@import "./animation.styl"
+@import "../../Style/animation.styl"
 
-#awesome_slider_default
+.awesome_slider_default
     border 1px solid #eee
     box-shadow 4px 4px 6px #eee
     padding 5px
