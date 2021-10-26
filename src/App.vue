@@ -14,9 +14,7 @@
     background="https://cn.bing.com/th?id=OHR.FanalMadeira_ZH-CN5337723033_1920x1080.jpg&rf=LaDigue_1920x1080.jpg" />
 
     <hr>
-    <as-button prefix-icon="icon-shibai1">
-        测试按钮
-    </as-button>
+    <as-button prefix-icon="icon-shibai1">测试按钮</as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button suffix-icon="icon-zuobian">
         测试按钮
@@ -146,6 +144,8 @@
     <as-button type="negative" prefix-icon="icon-zuobian" round>
         主要按钮
     </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" suffix-icon="icon-jiazaizhong"></as-button>
     <hr>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>

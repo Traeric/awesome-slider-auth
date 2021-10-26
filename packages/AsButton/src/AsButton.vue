@@ -77,7 +77,11 @@ export default {
                 defaultIcon.value = false;
                 loadIcon.value = true;
             }
-            
+            // 如果有文字时需要将文字与按钮隔开
+            console.log(buttonTextRef.value.innerText);
+            if (buttonTextRef.value.innerText !== "") {
+                buttonTextRef.value.style.padding = "0 3px";
+            }
             changeTheme(buttonRef, props);
         });
 
