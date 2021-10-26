@@ -13,7 +13,7 @@
     </button>
 </template>
 <script>
-import { onMounted, ref } from '@vue/runtime-core';
+import { onMounted, ref } from 'vue';
 import {changeTheme} from "./theme.js";
 
 export default {
