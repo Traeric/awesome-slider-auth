@@ -27,12 +27,12 @@ const colorTheme = {
         hoverFontColor: "#fff",
     },
     warning: {
-        backendColor: '#e2bd3b',
+        backendColor: '#ffc82c',
         fontColor: '#fff',
-        borderColor: '#f2c04d',
+        borderColor: '#ffc014',
         borderRadius: '4px',
-        hoverBackendColor: '#e8cb64',
-        hoverBorderColor: '#e8cb64',
+        hoverBackendColor: '#ffd257',
+        hoverBorderColor: '#ffd257',
         hoverFontColor: "#fff",
     },
     negative: {

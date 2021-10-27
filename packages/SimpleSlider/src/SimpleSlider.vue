@@ -1,16 +1,20 @@
 <template>
-    <div class="simple-wrap" ref="authModule">
-        <div class="img-area" :style="'background-image: url(' + background + ')'"></div>
-        <div class="slider-area" ref="sliderBar">
-            <span>{{ tips }}</span>
-            <div class="slider-btn" @mousedown="sliderDown" ref="slider">
-                <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
+    <div class="click-btn">
+        <i :class="['iconfont', authobj.icon]" ref="sliderIcon"></i>
+        <span>{{authobj.text}}</span>
+        <div class="simple-wrap" ref="authModule">
+            <div class="img-area" :style="'background-image: url(' + background + ')'"></div>
+            <div class="slider-area" ref="sliderBar">
+                <span>{{ tips }}</span>
+                <div class="slider-btn" @mousedown="sliderDown" ref="slider">
+                    <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import mouseEvent from "../../abstract/eventSublimation.js";
 import statusConvert from "../../abstract/statusConvert.js";
 import constant from "../../abstract/constant.js";
@@ -21,11 +25,6 @@ export default {
     props: {
         // 认证成功后的回调方法
         success: Function,
-        // 认证成功后是否自动关闭认证模块
-        autoClose: {
-            type: Boolean,
-            default: true,
-        },
         // 滑动提示
         tips: {
             type: String,
@@ -35,11 +34,6 @@ export default {
         errorRange: {
             type: Number,
             default: 5
-        },
-        // 认证模块大小
-        size: {
-            type: String,
-            default: "normal"
         },
         // 背景图片
         background: {
@@ -52,24 +46,24 @@ export default {
         const slider = ref(null);
         const sliderIcon = ref(null);
         const authModule = ref(null);
-
-        onMounted(() => {
-            const fontSize = constant.sizeMap[props.size];
-            authModule.value.style.fontSize = `${fontSize}px`;
+        const authobj = reactive({
+            text: "立即开启验证",
+            icon: "icon-renzhengguanli"
         });
 
-        let {sliderDown} = sliderGather(sliderBar, slider, sliderIcon, props, authModule);
+        let {sliderDown} = sliderGather(sliderBar, slider, sliderIcon, props, authModule, authobj);
         return {
             sliderDown,
             sliderBar,
             slider,
             sliderIcon,
             authModule,
+            authobj,
         };
     },
 }
 
-function sliderGather(sliderBar, slider, sliderIcon, props, authModule) {
+function sliderGather(sliderBar, slider, sliderIcon, props, authModule, authobj) {
     function sliderDown(e) {
         mouseEvent.moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
             const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
@@ -80,7 +74,9 @@ function sliderGather(sliderBar, slider, sliderIcon, props, authModule) {
                 // 执行成功后的回调方法
                 props.success !== null && props.success !== undefined && props.success(close);
                 setTimeout(() => {
-                    props.autoClose && close();
+                    authobj.text = "认证成功";
+                    authobj.icon = "icon-icon1";
+                    close();
                 }, constant.successStyleDisplayTime);
                 return;
             }
