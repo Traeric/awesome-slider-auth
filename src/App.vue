@@ -148,40 +148,36 @@
     &nbsp;&nbsp;&nbsp;
     <as-button type="negative" suffix-icon="icon-jiazaizhong"></as-button>
     <hr>
+    <p>{{t}}</p>
+    <hr>
+    <div style="width: 500px;">
+        <as-puzzle-slider />
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
-<script>
-export default {
-    name: 'App',
-    setup() {
-        function success() {
-            console.log("回调成功");
-        }
+<script setup>
+let t = "ddddd";
 
-        function refresh(callback) {
-            setTimeout(() => {
-                callback({
-                    "puzzleX": 1000,
-                    "puzzleY": 50,
-                    "backgroundPath": "https://cn.bing.com/th?id=OHR.MidAutumnFestival2021_ZH-CN7657484762_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
-                });
-            }, 500);
-        }
+function success() {
+    console.log("回调成功");
+}
+
+function refresh(callback) {
+    setTimeout(() => {
+        callback({
+            "puzzleX": 1000,
+            "puzzleY": 50,
+            "backgroundPath": "https://cn.bing.com/th?id=OHR.MidAutumnFestival2021_ZH-CN7657484762_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+        });
+    }, 500);
+}
 
 
-        function success1(close) {
-            alert(1);
-            setTimeout(() => {
-                close();
-            }, 1000);
-        }
-
-        return {
-            success,
-            refresh,
-            success1,
-        };
-    }
+function success1(close) {
+    alert(1);
+    setTimeout(() => {
+        close();
+    }, 1000);
 }
 </script>

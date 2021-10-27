@@ -1,0 +1,63 @@
+<template>
+    <div class="click-btn">
+        <i :class="['iconfont', authObj.icon]"></i>
+        <span>{{authObj.text}}</span>
+        <div class="auth-area">
+            <slot></slot>
+        </div>
+    </div>
+</template>
+<script setup>
+import { reactive } from "vue";
+
+let authObj = reactive({
+    text: "立即开启验证",
+    icon: "icon-renzhengguanli"
+});
+
+function success() {
+    authObj.text = "认证成功";
+    authObj.icon = "icon-icon1";
+}
+
+defineExpose({
+    success,
+});
+</script>
+<style lang="stylus" scoped>
+@import "../Style/animation.styl"
+.click-btn
+    width 100%
+    height 36px
+    border 1px solid #67c23a
+    border-radius 4px
+    cursor pointer
+    background-color #67c23a4d
+    position relative
+    text-align center
+    line-height 36px
+    font-size 16px
+    i
+        color #67c23a
+        font-size 1.1em
+        vertical-align bottom
+        margin-right 3px
+    span
+        user-select none
+        color #67c23a
+        font-size (14 / 16)em
+    &:hover
+        .auth-area
+            opacity 1
+            visibility visible
+    .auth-area
+        position absolute
+        bottom -1px
+        left -1px
+        z-index 1000
+        opacity 0
+        visibility hidden
+        transition all .5s
+        background-color #fff
+        width calc(100% + 2px)
+</style>
