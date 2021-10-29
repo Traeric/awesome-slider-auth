@@ -1,132 +1,253 @@
 <template>
-    <AuthBar>
+    <AuthBar ref="authBarRef">
         <div class="simple-wrap" ref="containerRef">
-            <div class="img-area" ref="imgRef" :style="'background-image: url(' + background + ')'">
-                <canvas ref="canvasTest"></canvas>
+            <div class="img-area" ref="imgRef">
+                <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown"></canvas>
+                <canvas ref="puzzleBeCoveredRef"></canvas>
+                <img :src="background" alt="NO IMG" ref="imgBgRef">
+                <!-- 加载样式 -->
+                <div class="load" v-show="loadFlag">
+                    <i class="iconfont icon-top"></i>
+                </div>
+                <!-- 刷新样式 -->
+                <i class="iconfont icon-shuaxin1 refresh" @click="initPuzzlePosition"></i>
             </div>
-            <div class="slider-area">
+            <div class="slider-area" ref="sliderBar">
                 <span>{{ tips }}</span>
-                <div class="slider-btn">
-                    <i class="iconfont icon-zuobian"></i>
+                <div class="slider-btn" @mousedown="sliderDown" ref="slider">
+                    <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
                 </div>
             </div>
         </div>  
     </AuthBar>
-    <canvas ref="canvasTest"></canvas>
 </template>
 <script setup>
 import AuthBar from "../../components/AuthBar.vue";
-import background from "../../../public/slider/default-slider-bg-2.png";
-import { onMounted, ref } from '@vue/runtime-core';
+import defaultBackground from "../../../public/slider/default-slider-bg-2.png";
+import blackBackground from "../../../public/slider/black_background.png";
+import { onMounted, ref } from 'vue';
+import mouseEvent from "../../abstract/eventSublimation.js";
+import statusConvert from "../../abstract/statusConvert.js";
+import constant from "../../abstract/constant.js";
 
 const containerRef = ref();
 const imgRef = ref();
-const canvasTest = ref();
+const puzzleCoverRef = ref();
+const puzzleBeCoveredRef = ref();
+const slider = ref();
+const sliderBar = ref();
+const authBarRef = ref();
+const sliderIcon = ref();
+const imgBgRef = ref();
+let loadFlag = ref(false);
 
-onMounted(() => {
-    const containerWidth = containerRef.value.offsetWidth;
-    imgRef.value.style.height = `${0.5 * containerWidth}px`;
-});
-
-defineProps({
+// 父组件传入参数
+const props = defineProps({
     tips: {
         type: String,
         default: "移动滑块，完成拼图",
     },
+    background: {
+        type: String,
+        default: defaultBackground
+    },
+    // 刷新拼图获取新的背景以及拼图位置
+    refresh: {
+        type: Function,
+        default: null
+    },
+    // 认证时两个滑块之间允许误差范围
+    errorRange: {
+        type: Number,
+        default: 5
+    },
+    // 认证失败时的刷新频率
+    refreshFrequency: {
+        type: Number,
+        default: 3
+    },
+});
+
+// 限制拼图最左侧的位置
+const leftLimit = 10;
+// 底色图片 用于被覆盖的拼图
+const beCoveredImgData = new Image();
+beCoveredImgData.src = blackBackground;
+const rate = 1.3;
+let failCount = 0;
+onMounted(() => {
+    // 设置图片高度等于宽度的一半
+    const containerWidth = containerRef.value.offsetWidth;
+    imgRef.value.style.height = `${0.5 * containerWidth}px`;
+    // 初始化拼图位置
+    initPuzzlePosition();
 });
 
 
-const img = new Image();
-img.src = "/slider/default-slider-bg-2.png";
-img.onload = () => {
-    const unit = 50;
-    canvasTest.value.width = unit * 1;
-    canvasTest.value.height = unit * 1;
-    const ctx = canvasTest.value.getContext('2d');
-    ctx.beginPath();
-    // 设置线段效果
-    ctx.lineCap = "round";
-    ctx.lineJoin  = "round";
-    ctx.lineWidth = 5;
-    ctx.moveTo(canvasTest.value.width / 2, 0);
-    ctx.lineTo(0, canvasTest.value.height);
-    ctx.lineTo(canvasTest.value.width, canvasTest.value.height);
-    ctx.lineTo(canvasTest.value.width / 2, 0);
+// 移动底部滑块事件
+function sliderDown(e) {
+    mouseEvent.moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
+        const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
+        // 完成滑动 判断两个拼图是否合并在一起
+        const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));
+        const beCoveredLeft = parseInt(puzzleBeCoveredRef.value.style.left.replace('px', ''));
+        if (Math.abs(coverLeft - beCoveredLeft) <= props.errorRange) {
+            statusConvert.changeSuccessStatus(slider, sliderBar, sliderIcon, moveRate);
+            // 执行成功后的回调方法
+            props.success !== null && props.success !== undefined && props.success(close);
+            setTimeout(() => {
+                authBarRef.value.success();
+                // 关闭认证模块
+                close();
+            }, constant.successStyleDisplayTime);
+            return;
+        }
+        // 认证失败 提示失败然后将滑块位置归位
+        statusConvert.changeFaildStatus(slider, sliderBar, sliderIcon, moveRate);
+        setTimeout(() => {
+            statusConvert.changeDefaultStatus(slider, sliderBar, sliderIcon);
+            puzzleCoverRef.value.style.left = `${leftLimit}px`;
+            puzzleCoverRef.value.style.transition = `left .5s`;
+            setTimeout(() => {
+                puzzleCoverRef.value.style.transition = "none";
+                // 如果失败超过指定次数则刷新位置
+                if (props.refreshFrequency <= ++failCount) {
+                    initPuzzlePosition();
+                    failCount = 0;
+                }
+            }, 500);
+        }, constant.faildStyleDisplayTime);
+    }, (moveLenth, mostMoveLength) => {
+        // 计算滑块和拼图的移动比
+        const moveRate = (imgRef.value.offsetWidth - initPuzzleSize() - 2 - leftLimit) / mostMoveLength;
+        // 移动拼图
+        puzzleCoverRef.value.style.left = `${moveRate * moveLenth + leftLimit}px`;
+    });
+}
 
-    let gradient = ctx.createRadialGradient(50, 50, 0, 50, 50, 30);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
-    gradient.addColorStop(1, '#000');
-    ctx.fillStyle = gradient;
-    ctx.fill();
-    
-    ctx.globalCompositeOperation="destination-over";
-
-    ctx.closePath();
-    ctx.moveTo(canvasTest.value.width / 2, 0);
-    ctx.lineTo(0, canvasTest.value.height);
-    ctx.lineTo(canvasTest.value.width, canvasTest.value.height);
-    ctx.lineTo(canvasTest.value.width / 2, 0);
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-    ctx.stroke();
-    ctx.clip();
-    ctx.drawImage(img, 0, 0, canvasTest.value.width, canvasTest.value.height);
-
-    // const imageData = ctx.getImageData(0, 0, canvasTest.value.width, canvasTest.value.height);
-    // sepia(imageData);
-    // ctx.putImageData(imageData, 0, 0);
-    
+/**
+ * 销毁当前认证模块
+ */
+function close() {
+    containerRef.value.style.opacity = "0";
+    setTimeout(() => {
+        containerRef.value.style.display = "none";
+    }, 500);
 }
 
 
-
-
-
-const sepia = function (pixels) {
-    const d = pixels.data;
-    for (let i = 0; i < d.length; i += 4) {
-      let r = d[i];
-      let g = d[i + 1];
-      let b = d[i + 2];
-      d[i]     = (r * 0.393) + (g * 0.769) + (b * 0.189); // red
-      d[i + 1] = (r * 0.349) + (g * 0.686) + (b * 0.168); // green
-      d[i + 2] = (r * 0.272) + (g * 0.534) + (b * 0.131); // blue
+/**
+ * 初始化拼图位置
+ */
+function initPuzzlePosition() {
+    loadFlag.value = true;
+    // 初始化拼图
+    const refreshFunc = props.refresh || defaultRefresh;
+    const position = refreshFunc();
+    // 限制拼图位置不能超过能显示的区域
+    position.x = Math.max(leftLimit, position.x);
+    position.x = Math.min(imgRef.value.offsetWidth - initPuzzleSize() - 2, position.x);
+    position.y = Math.max(0, position.y);
+    position.y = Math.min(imgRef.value.offsetHeight - initPuzzleSize() - 2, position.y);
+    // 设置背景
+    imgBgRef.value.setAttribute('src', position.background);
+    imgBgRef.value.onload = () => {
+        setTimeout(() => {
+            // 准备待覆盖的puzzle
+            drawPuzzle(puzzleCoverRef.value, imgBgRef.value, "#E6A23C", {
+                x: -position.x,
+                y: -position.y,
+                width: imgRef.value.offsetWidth,
+                height: imgRef.value.offsetHeight
+            });
+            // 设置覆盖的puzzle位置
+            puzzleCoverRef.value.style.left = `${leftLimit}px`;
+            puzzleCoverRef.value.style.top = `${position.y}px`;
+            // 准备被覆盖的puzzle
+            drawPuzzle(puzzleBeCoveredRef.value, beCoveredImgData, "rgba(255, 255, 255, .5)");
+            // 设置被覆盖的puzzle位置
+            puzzleBeCoveredRef.value.style.left = `${position.x}px`;
+            puzzleBeCoveredRef.value.style.top = `${position.y}px`;
+            loadFlag.value = false;
+        }, 200);
     }
-    return pixels;
-};
+}
+
+/**
+ * 如果用户未定义refresh方法 则使用默认的方式生成拼图随机位置
+ */
+function defaultRefresh() {
+    return {
+        x: Math.ceil(leftLimit + initPuzzleSize() + Math.random() * (imgRef.value.offsetWidth - 2 * initPuzzleSize())),
+        y: Math.ceil(Math.random() * (imgRef.value.offsetHeight - initPuzzleSize())),
+        background: defaultBackground,
+    };
+}
+
+/**
+ * 初始化拼图大小
+ */
+function initPuzzleSize() {
+    const unit = 50;
+    const cl = unit * rate;
+    return cl;
+}
 
 
-const grayscale = function (pixels) {
-  const d = pixels.data;
-  for (let i = 0; i < d.length; i += 4) {
-    let r = d[i];
-    let g = d[i + 1];
-    let b = d[i + 2];
-    d[i] = d[i + 1] = d[i + 2] = (r + g + b) / 3;
-  }
-  return pixels;
-};
-
-const red = function (pixels) {
-  const d = pixels.data;
-  for (let i = 0; i < d.length; i += 4) {
-    let r = d[i];
-    let g = d[i + 1];
-    let b = d[i + 2];
-    d[i] = (r + g + b)/3;        // 红色通道取平均值
-    d[i + 1] = d[i + 2] = 0; // 绿色通道和蓝色通道都设为0
-  }
-  return pixels;
-};
-
-const brightness = function (pixels, delta) {
-  const d = pixels.data;
-  for (let i = 0; i < d.length; i += 4) {
-    d[i] += delta;     // red
-    d[i + 1] += delta; // green
-    d[i + 2] += delta; // blue
-  }
-  return pixels;
-};
+/**
+ * 画拼图方法
+ */
+function drawPuzzle(canvas, imageData, borderStyle = "#67C23A", position = null, rate = 1.3) {
+    const cl = initPuzzleSize();
+    canvas.width = cl + 2;
+    canvas.height = cl + 2;
+    // 设置圆的直径以及正方形的边长
+    const sideLen = cl / 5 * 3.8;
+    const diameter = cl / 5 * 1.2;
+    // x跟y轴整体移动距离
+    const xOffset = 2
+    const yOffset = 0;
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    // 设置线段效果
+    ctx.moveTo(xOffset, diameter + yOffset);
+    // 上边中线
+    ctx.lineTo(sideLen / 2 + xOffset, diameter + yOffset);
+    // 画上面的圆
+    ctx.arc(sideLen / 2 + xOffset, diameter / 2 + 2 + yOffset, diameter / 2, 0, 2 * Math.PI);
+    ctx.lineTo(sideLen / 2 + xOffset, diameter + yOffset);
+    // 上边另外的中线
+    ctx.lineTo(sideLen + xOffset, diameter + yOffset);
+    // 右边中线
+    ctx.lineTo(sideLen + xOffset, diameter + sideLen / 2 + yOffset);
+    // 右边的圆
+    ctx.arc(sideLen + diameter / 2 - 2 + xOffset, diameter + sideLen / 2 + yOffset, diameter / 2, 0, 2 * Math.PI);
+    ctx.lineTo(sideLen + xOffset, diameter + sideLen / 2 + yOffset);
+    // 右边下段中线
+    ctx.lineTo(sideLen + xOffset, cl + yOffset);
+    // 下面的线
+    ctx.lineTo(xOffset, cl + yOffset);
+    // 左边的下半段线
+    ctx.lineTo(xOffset, diameter + sideLen / 2 + 5 + yOffset);
+    ctx.arc(diameter / 2 - 2 + xOffset, diameter + sideLen / 2 + yOffset, diameter / 2, 0.8 * Math.PI, 1.2 * Math.PI, true);
+    ctx.lineTo(xOffset, diameter + sideLen / 2 + - 5 + yOffset);
+    ctx.lineTo(xOffset, diameter + yOffset);
+    // 线条样式
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = borderStyle;
+    ctx.stroke();
+    ctx.clip();
+    // 给图片位置设置默认值
+    position = position || {
+        x: 0,
+        y: 0,
+        width: canvas.width,
+        height: canvas.height
+    };
+    ctx.drawImage(imageData, position.x, position.y, position.width, position.height);
+} 
 </script>
 <script>
 export default {
@@ -147,6 +268,42 @@ export default {
         height (150 / 16)em
         background-size cover
         margin-bottom (10 / 16)em
+        position relative
+        overflow hidden
+        canvas
+            position absolute
+            z-index 1001
+        .puzzle-cover
+            z-index 1002
+            cursor move
+        img
+            width 100%
+            height 100%
+            user-select none
+        .load
+            height 100%
+            width 100%
+            background-color rgba(244, 248, 252, 0.9)
+            z-index 1003
+            position absolute
+            top 0
+            left 0
+            display flex
+            justify-content center
+            align-items center
+            i
+                font-size 2em
+                animation rotate 1s linear infinite
+                color rgb(112, 112, 112)
+        .refresh
+            position absolute
+            z-index 1002
+            bottom 0
+            right 10px
+            font-size 1.2em
+            color #aaa
+            &:hover
+                color #fff
     .slider-area
         width 100%
         height (35 / 16)em

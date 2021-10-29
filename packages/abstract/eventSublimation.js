@@ -2,9 +2,10 @@
  * 
  * @param {Object} e 鼠标事件对象 
  * @param {Object} data 该方法需要的参数集合 
- * @param {Function} mouseupCallback 鼠标抬起后的回调事件 
+ * @param {Function} mouseupCallback 鼠标抬起后的回调事件
+ * @param {Function} moveCallback 鼠标移动过程中的回调事件 
  */
-function moveSliderEvent(e, data, mouseupCallback) {
+function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
     let {slider, sliderBar} = data;
     // 记录鼠标点击时滑块的初始位置
     const startPosition = e.clientX;
@@ -23,6 +24,8 @@ function moveSliderEvent(e, data, mouseupCallback) {
         slider.value.style.left = `${moveLength}px`;
         // 渲染滑块移动过的地方的颜色
         sliderBar.value.style.background = `linear-gradient(to right, #a0cfff, #a0cfff ${moveLength / sliderMoveMostLength * 100}%, #ddd ${moveLength / sliderMoveMostLength * 100}%, #ddd)`;
+        // 执行自定义的移动方法
+        moveCallback && moveCallback(moveLength, sliderMoveMostLength);
     }
 
     document.onmouseup = mouseUpEvent => {

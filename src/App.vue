@@ -1,4 +1,5 @@
 <template>
+    <br><br><br><br><br><br><br><br><br><br><br>
     <as-default-slider
     :success="success" width="450" height="250" tips="提示。。。。。" errorRange="10"
     :refresh="refresh" />
