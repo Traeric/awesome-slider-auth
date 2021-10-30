@@ -4,7 +4,7 @@
             <div class="img-area" ref="imgRef">
                 <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown"></canvas>
                 <canvas ref="puzzleBeCoveredRef"></canvas>
-                <img :src="background" alt="NO IMG" ref="imgBgRef">
+                <img :src="defaultBackground" alt="NO IMG" ref="imgBgRef">
                 <!-- 加载样式 -->
                 <div class="load" v-show="loadFlag">
                     <i class="iconfont icon-top"></i>
@@ -47,10 +47,6 @@ const props = defineProps({
         type: String,
         default: "移动滑块，完成拼图",
     },
-    background: {
-        type: String,
-        default: defaultBackground
-    },
     // 刷新拼图获取新的背景以及拼图位置
     refresh: {
         type: Function,
@@ -65,6 +61,11 @@ const props = defineProps({
     refreshFrequency: {
         type: Number,
         default: 3
+    },
+    // 成功后的回调
+    success: {
+        type: Function,
+        default: null
     },
 });
 
@@ -93,12 +94,12 @@ function sliderDown(e) {
         const beCoveredLeft = parseInt(puzzleBeCoveredRef.value.style.left.replace('px', ''));
         if (Math.abs(coverLeft - beCoveredLeft) <= props.errorRange) {
             statusConvert.changeSuccessStatus(slider, sliderBar, sliderIcon, moveRate);
-            // 执行成功后的回调方法
-            props.success !== null && props.success !== undefined && props.success(close);
             setTimeout(() => {
                 authBarRef.value.success();
                 // 关闭认证模块
                 close();
+                // 执行成功后的回调方法
+                props.success && props.success();
             }, constant.successStyleDisplayTime);
             return;
         }
@@ -112,6 +113,7 @@ function sliderDown(e) {
                 puzzleCoverRef.value.style.transition = "none";
                 // 如果失败超过指定次数则刷新位置
                 if (props.refreshFrequency <= ++failCount) {
+                    loadFlag.value = true;
                     initPuzzlePosition();
                     failCount = 0;
                 }
@@ -141,47 +143,48 @@ function close() {
  */
 function initPuzzlePosition() {
     loadFlag.value = true;
-    // 初始化拼图
-    const refreshFunc = props.refresh || defaultRefresh;
-    const position = refreshFunc();
-    // 限制拼图位置不能超过能显示的区域
-    position.x = Math.max(leftLimit, position.x);
-    position.x = Math.min(imgRef.value.offsetWidth - initPuzzleSize() - 2, position.x);
-    position.y = Math.max(0, position.y);
-    position.y = Math.min(imgRef.value.offsetHeight - initPuzzleSize() - 2, position.y);
-    // 设置背景
-    imgBgRef.value.setAttribute('src', position.background);
-    imgBgRef.value.onload = () => {
-        setTimeout(() => {
-            // 准备待覆盖的puzzle
-            drawPuzzle(puzzleCoverRef.value, imgBgRef.value, "#E6A23C", {
-                x: -position.x,
-                y: -position.y,
-                width: imgRef.value.offsetWidth,
-                height: imgRef.value.offsetHeight
-            });
-            // 设置覆盖的puzzle位置
-            puzzleCoverRef.value.style.left = `${leftLimit}px`;
-            puzzleCoverRef.value.style.top = `${position.y}px`;
-            // 准备被覆盖的puzzle
-            drawPuzzle(puzzleBeCoveredRef.value, beCoveredImgData, "rgba(255, 255, 255, .5)");
-            // 设置被覆盖的puzzle位置
-            puzzleBeCoveredRef.value.style.left = `${position.x}px`;
-            puzzleBeCoveredRef.value.style.top = `${position.y}px`;
-            loadFlag.value = false;
-        }, 200);
-    }
+    setTimeout(() => {
+        // 初始化拼图
+        const refreshFunc = props.refresh || defaultRefresh;
+        refreshFunc(position => {
+            // 限制拼图位置不能超过能显示的区域
+            position.x = Math.max(leftLimit + initPuzzleSize() - 2, position.x);
+            position.x = Math.min(imgRef.value.offsetWidth - initPuzzleSize() - 2, position.x);
+            position.y = Math.max(0, position.y);
+            position.y = Math.min(imgRef.value.offsetHeight - initPuzzleSize() - 2, position.y);
+            // 设置背景
+            imgBgRef.value.setAttribute('src', position.background);
+            imgBgRef.value.onload = () => {
+                    // 准备待覆盖的puzzle
+                    drawPuzzle(puzzleCoverRef.value, imgBgRef.value, "#E6A23C", {
+                        x: -position.x,
+                        y: -position.y,
+                        width: imgRef.value.offsetWidth,
+                        height: imgRef.value.offsetHeight
+                    });
+                    // 设置覆盖的puzzle位置
+                    puzzleCoverRef.value.style.left = `${leftLimit}px`;
+                    puzzleCoverRef.value.style.top = `${position.y}px`;
+                    // 准备被覆盖的puzzle
+                    drawPuzzle(puzzleBeCoveredRef.value, beCoveredImgData, "rgba(255, 255, 255, .5)");
+                    // 设置被覆盖的puzzle位置
+                    puzzleBeCoveredRef.value.style.left = `${position.x}px`;
+                    puzzleBeCoveredRef.value.style.top = `${position.y}px`;
+                    loadFlag.value = false;
+            }
+        });
+    }, 200);
 }
 
 /**
  * 如果用户未定义refresh方法 则使用默认的方式生成拼图随机位置
  */
-function defaultRefresh() {
-    return {
+function defaultRefresh(callback) {
+    callback({
         x: Math.ceil(leftLimit + initPuzzleSize() + Math.random() * (imgRef.value.offsetWidth - 2 * initPuzzleSize())),
         y: Math.ceil(Math.random() * (imgRef.value.offsetHeight - initPuzzleSize())),
         background: defaultBackground,
-    };
+    });
 }
 
 /**

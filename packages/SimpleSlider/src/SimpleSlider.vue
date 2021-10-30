@@ -1,17 +1,15 @@
 <template>
-    <div class="click-btn">
-        <AuthBar ref="authBarRef">
-            <div class="simple-wrap" ref="authModule">
-                <div class="img-area" :style="'background-image: url(' + background + ')'" ref="imgRef"></div>
-                <div class="slider-area" ref="sliderBar">
-                    <span>{{ tips }}</span>
-                    <div class="slider-btn" @mousedown="sliderDown" ref="slider">
-                        <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
-                    </div>
+    <AuthBar ref="authBarRef">
+        <div class="simple-wrap" ref="authModule">
+            <div class="img-area" :style="'background-image: url(' + background + ')'" ref="imgRef"></div>
+            <div class="slider-area" ref="sliderBar">
+                <span>{{ tips }}</span>
+                <div class="slider-btn" @mousedown="sliderDown" ref="slider">
+                    <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
                 </div>
             </div>
-        </AuthBar>
-    </div>
+        </div>
+    </AuthBar>
 </template>
 <script>
 import { onMounted, ref } from 'vue';

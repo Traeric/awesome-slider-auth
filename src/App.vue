@@ -152,7 +152,9 @@
     <p>{{t}}</p>
     <hr>
     <div style="width: 500px;">
-        <as-puzzle-slider />
+        <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10" 
+        :refreshFrequency="5" 
+        :refresh="refresh" />
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
@@ -166,12 +168,13 @@ function success() {
 
 function refresh(callback) {
     setTimeout(() => {
-        callback({
-            "puzzleX": 1000,
-            "puzzleY": 50,
-            "backgroundPath": "https://cn.bing.com/th?id=OHR.MidAutumnFestival2021_ZH-CN7657484762_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
-        });
-    }, 500);
+        let position = {
+            "x": 1000,
+            "y": 50,
+            "background": "https://cn.bing.com/th?id=OHR.MidAutumnFestival2021_ZH-CN7657484762_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+        };
+        callback(position);
+    }, 1000);
 }
 
 
@@ -180,5 +183,15 @@ function success1(close) {
     setTimeout(() => {
         close();
     }, 1000);
+}
+
+function sleep(numberMillis) {
+    var now = new Date();
+    var exitTime = now.getTime() + numberMillis;
+    while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime)
+        return;
+        }
 }
 </script>
