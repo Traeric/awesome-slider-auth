@@ -156,6 +156,8 @@
         :refreshFrequency="5" 
         :refresh="refresh" />
     </div>
+    <hr>
+    <as-text-slider />
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
@@ -171,7 +173,7 @@ function refresh(callback) {
         let position = {
             "x": 1000,
             "y": 50,
-            "background": "https://cn.bing.com/th?id=OHR.MidAutumnFestival2021_ZH-CN7657484762_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+            "background": "https://www.bing.com/th?id=OHR.CinnamonFernNS_ZH-CN3822051382_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
         };
         callback(position);
     }, 1000);

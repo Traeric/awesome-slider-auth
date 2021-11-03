@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    // 只输出类型声明文件
+    "emitDeclarationOnly": true,
+    // 输出类型声明文件位置
+    "declarationDir": "../dist/typings"
+  },
+  // .表示当前目录  这个配置说明改配置文件只管当前目录及其下的目录
+  "include": [".", "./shims-vue.d.ts"]
+}

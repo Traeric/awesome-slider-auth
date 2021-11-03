@@ -22,6 +22,7 @@
     </AuthBar>
 </template>
 <script setup>
+import "../style/index.styl";
 import AuthBar from "../../components/AuthBar.vue";
 import defaultBackground from "../../../public/slider/default-slider-bg-2.png";
 import blackBackground from "../../../public/slider/black_background.png";
@@ -257,86 +258,4 @@ export default {
     name: "as-puzzle-slider",
 }
 </script>
-<style lang="stylus" scoped>
-@import "../../Style/animation.styl"
-.simple-wrap
-    width 100%
-    box-sizing border-box
-    border 1px solid #eee
-    padding 5px
-    overflow hidden
-    transition all .5s
-    .img-area
-        width 100%
-        height (150 / 16)em
-        background-size cover
-        margin-bottom (10 / 16)em
-        position relative
-        overflow hidden
-        canvas
-            position absolute
-            z-index 1001
-        .puzzle-cover
-            z-index 1002
-            cursor move
-        img
-            width 100%
-            height 100%
-            user-select none
-        .load
-            height 100%
-            width 100%
-            background-color rgba(244, 248, 252, 0.9)
-            z-index 1003
-            position absolute
-            top 0
-            left 0
-            display flex
-            justify-content center
-            align-items center
-            i
-                font-size 2em
-                animation rotate 1s linear infinite
-                color rgb(112, 112, 112)
-        .refresh
-            position absolute
-            z-index 1002
-            bottom 0
-            right 10px
-            font-size 1.2em
-            color #aaa
-            &:hover
-                color #fff
-    .slider-area
-        width 100%
-        height (35 / 16)em
-        background linear-gradient(to right, #a0cfff, #a0cfff 0%, #ddd 0%, #ddd)
-        position relative
-        text-align center
-        line-height (35 / 16)em
-        .slider-btn
-            height calc(2.1875em - 2px)
-            width (50 / 16)em
-            background-color #fff
-            border 1px solid #eee
-            position absolute
-            top 0
-            left 0
-            display flex
-            justify-content center
-            align-items center
-            i
-                font-size 1.5em
-                color #e6e6e6
-                transform rotate(180deg)
-            &:hover, &:active
-                background-color #53a8ff
-                border-color #409eff
-                cursor move
-                i
-                    color #fff
-        span
-            font-size (12 / 16)em
-            color #fff
-            user-select none
-</style>
+

@@ -15,6 +15,7 @@
 <script>
 import { onMounted, ref } from 'vue';
 import {changeTheme} from "./theme.js";
+import "../style/index.styl";
 
 export default {
     name: "as-button",
@@ -95,40 +96,3 @@ export default {
     },
 }
 </script>
-<style lang="stylus" scoped>
-@import "../../Style/animation.styl"
-.as-button-wrap
-    --backend-color #fff
-    --font-color #000
-    --border-color #000
-    --border-radius 4px
-    --hover-backend-color #eee
-    --padding 10px 18px
-    --hover-font-color #000
-    --hover-border-color #000
-    --disabled pointer
-    --opacity 1
-
-    padding var(--padding)
-    background none
-    border 1px solid #000
-    border-radius var(--border-radius)
-    color var(--font-color)
-    border-color var(--border-color)
-    background-color var(--backend-color)
-    line-height 1
-    font-weight 500
-    cursor var(--disabled)
-    opacity var(--opacity)
-    &:hover
-        background-color var(--hover-backend-color)
-        color var(--hover-font-color)
-        border-color var(--hover-border-color)
-        opacity var(--opacity)
-    i
-        font-size 14px
-        vertical-align bottom
-    .load-icon
-        display inline-block
-        animation rotate 1s linear infinite
-</style>

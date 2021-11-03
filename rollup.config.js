@@ -1,41 +1,54 @@
-import vue from "rollup-plugin-vue";
-import { terser } from "rollup-plugin-terser";
+import { join } from 'path';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript2';
+// import stylus from 'rollup-plugin-stylus-compiler';
 import postcss from "rollup-plugin-postcss";
 import image from '@rollup/plugin-image';
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
+import babel from '@rollup/plugin-babel';
+import vue from 'rollup-plugin-vue';
+import del from 'rollup-plugin-delete';
 
-export default {
-    // 入口
-    input: "packages/index.js",
-    // 出口
-    output: [
-        {
-            file: "dist/index.js",
-            // 配置打包模块化的方式 es:ESM  cjs:CommonJS
-            format: "cjs",
-        },
-    ],
-    // 插件
+
+const baseOutput = format => ({
+  format,
+  file: `dist/${format}/index.js`
+});
+
+export default ({ format }) => {
+  const output = format === 'esm' ? baseOutput(format) : {
+    ...baseOutput(format),
+    name: 'awesome-slider-auth',
+    exports: 'named',
+    globals: {
+      vue: 'Vue'
+    }
+  }
+  return {
+    input: join(__dirname, 'packages/index.ts'),
+    output,
     plugins: [
-        vue({
-            // 把单文件组件中的样式，插入到html中的style标签
-            css: true,
-            // 把组件转换成 render 函数
-            compileTemplate: true,
-        }),
-        // 代码压缩
-        terser(),
-        postcss(),
-        // 打包图片 不添加这个组件中引用的图片无法被打包
-        image(),
-        resolve(),
-        babel({
-            exclude: "node_modules/**",
-        }),
+      del({ targets: 'dist/' + format }),
+      terser(),
+      nodeResolve(),
+      postcss(),
+      // 打包图片 不添加这个组件中引用的图片无法被打包
+      image(),
+      vue({
+        target: 'browser',
+        css: false,
+        exposeFilename: false
+      }),
+      typescript(),
+      babel({
+        exclude: 'node_modules/**',
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+        babelHelpers: 'runtime',
+        skipPreflightCheck: true
+      })
     ],
-    external: ['vue'],
-    sourcemap: true,
-    banner: '/* my-library version 1.1.4 */',
-    footer: '/* follow me on github! @Traeric */'
-};
+    external(id) {
+      return /^vue/.test(id);
+    },
+  }
+}
