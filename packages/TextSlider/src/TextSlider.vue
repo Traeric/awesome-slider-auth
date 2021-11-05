@@ -1,45 +1,63 @@
 <template>
     <AuthBar>
-        <div class="text-slider-wrap">
-            
+        <div class="text-slider-wrap" ref="textSliderRef">
+            <div class="bg">
+                <canvas class="bg-canvas" 
+                ref="bgCanvasRef"
+                @click="drawDot"></canvas>
+                <span class="dot" 
+                v-for="(item, index) in dotList"
+                :key="index"
+                :style="{top: `${item.top}px`, left: `${item.left}px`}">{{ item.text }}</span>
+                <!-- 刷新按钮 -->
+                <i class="iconfont icon-shuaxin1 refresh" @click="refreshPanel"></i>
+            </div>
+            <div class="auth-bar">
+                <span class="text">验证：请</span>
+                <span class="tips">按顺序</span>
+                <span class="text">点击</span>
+                <span class="word">{{textOrder}}</span>
+            </div>
         </div>
     </AuthBar>
-    <canvas
-        style="border: 1px solid #000"
-        class="text-one" ref="textOne"></canvas>
 </template>
 <script setup lang="ts">
-import { onMounted, Ref, ref } from "vue";
+import { onMounted, reactive, Ref, ref } from "vue";
+import {UnwrapNestedRefs} from "@vue/reactivity";
 import "../style/index.styl";
 import AuthBar from "../../components/AuthBar.vue";
 import defaultBackground from "../../../public/slider/bg1.jpg";
+import { GenerateText, WordInfo, DotInfo } from "./TextSlider";
 
-const textOne = ref<HTMLCanvasElement>() as Ref<HTMLCanvasElement>;
+
+const bgCanvasRef = ref<HTMLCanvasElement>() as Ref<HTMLCanvasElement>;
+const textSliderRef = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+const textOrder: Ref<string> = ref("");
+let generateText: GenerateText;
+const dotList: UnwrapNestedRefs<Array<DotInfo>> = reactive<Array<DotInfo>>([]);
 
 onMounted(() => {
-    const backgroundImg: HTMLImageElement = new Image();
-    backgroundImg.src = defaultBackground;
-    backgroundImg.onload =() => {
-        const ctx = textOne.value.getContext('2d') as CanvasRenderingContext2D;
-        ctx.drawImage(backgroundImg, 0, 0, 300, 150);
+    // 设置背景高度
+    const containerWidth: number = textSliderRef.value.offsetWidth;
+    bgCanvasRef.value.height = 0.5 * containerWidth;
+    bgCanvasRef.value.width = containerWidth;
 
-        ctx.font = 'italic bolder 30px FangSong';
-        ctx.textAlign = 'center';
-        ctx.strokeStyle = "#fff";
-        ctx.save();
-        ctx.translate(50, 50);
-        ctx.rotate(Math.PI / 180 * 60);
-        ctx.strokeText('探', 0, 0);
-        ctx.restore();
-        const width = ctx.measureText('探').width;
-
-        ctx.strokeStyle = "#67C23A";
-        // ctx.translate(50 + width, 50);
-        // ctx.rotate(Math.PI / 180 * 30);
-        ctx.strokeText('林', 50 + width, 50);
-        console.log(ctx.measureText('探'));
-    }
+    generateText = new GenerateText(bgCanvasRef.value, dotList);
+    refreshPanel();
 });
+
+function refreshPanel(): void {
+    generateText.refreshCanvas(defaultBackground, () => {
+        textOrder.value = "";
+        generateText.authWordList.map((wordItem: WordInfo) => {
+            textOrder.value += wordItem.word;
+        });
+    });
+}
+
+function drawDot(e: MouseEvent) {
+    generateText.drawDot(e, <HTMLElement>(<HTMLElement>textSliderRef.value.parentElement).parentElement);
+}
 
 </script>
 <script lang="ts">

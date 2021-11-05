@@ -1,2 +1,45 @@
-.as-text-slider
-    background-color #f00
+.text-slider-wrap
+    width 100%
+    box-sizing border-box
+    overflow hidden
+    background-color transparent
+    .bg
+        position relative
+        .bg-canvas
+            width 100%
+            border-radius 4px
+            overflow hidden
+        .refresh
+            position absolute
+            z-index 1002
+            bottom 10px
+            right 5px
+            font-size 1.2em
+            color #aaa
+            &:hover
+                color #fff
+        .dot
+            position absolute
+            color #fff
+            font-size 12px !important
+            padding 0 10px
+            border-radius 50%
+            border 2px solid #fff
+            background-color rgb(75, 92, 196)
+    .auth-bar
+        height 38px
+        line-height 38px
+        border 1px solid rgb(233, 233, 233)
+        border-radius 4px
+        background-color rgb(247, 247, 247)
+        text-align left
+        padding 0 10px
+        .text
+            color #000
+        .tips
+            color rgb(245, 106, 0)
+        .word
+            color #000
+            margin-left 10px
+            font-weight bolder
+            letter-spacing 5px
