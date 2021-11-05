@@ -11,7 +11,7 @@
         </div>
     </AuthBar>
 </template>
-<script>
+<script lang="ts">
 import { onMounted, ref } from 'vue';
 import mouseEvent from "../../abstract/eventSublimation.js";
 import statusConvert from "../../abstract/statusConvert.js";

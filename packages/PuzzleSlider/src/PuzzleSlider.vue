@@ -21,7 +21,7 @@
         </div>  
     </AuthBar>
 </template>
-<script setup>
+<script setup lang="ts">
 import "../style/index.styl";
 import AuthBar from "../../components/AuthBar.vue";
 import defaultBackground from "../../../public/slider/default-slider-bg-2.png";
@@ -253,7 +253,7 @@ function drawPuzzle(canvas, imageData, borderStyle = "#67C23A", position = null,
     ctx.drawImage(imageData, position.x, position.y, position.width, position.height);
 } 
 </script>
-<script>
+<script lang="ts">
 export default {
     name: "as-puzzle-slider",
 }

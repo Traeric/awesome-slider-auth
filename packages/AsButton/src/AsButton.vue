@@ -12,7 +12,7 @@
         <i></i>
     </button>
 </template>
-<script>
+<script lang="ts">
 import { onMounted, ref } from 'vue';
 import {changeTheme} from "./theme.js";
 import "../style/index.styl";

@@ -157,7 +157,9 @@
         :refresh="refresh" />
     </div>
     <hr>
-    <as-text-slider />
+    <div style="width: 300px;">
+        <as-text-slider />
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
