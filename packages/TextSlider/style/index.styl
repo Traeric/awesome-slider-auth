@@ -1,8 +1,13 @@
+@import "../../componentsStyle/animation.styl";
+
 .text-slider-wrap
     width 100%
     box-sizing border-box
     overflow hidden
     background-color transparent
+    transition opacity .5s
+    position relative
+    overflow hidden
     .bg
         position relative
         overflow hidden
@@ -30,6 +35,21 @@
             border-radius 50%
             border 2px solid #fff
             background-color rgb(75, 92, 196)
+        .refresh-panel
+            position absolute
+            border-radius 4px
+            left 0
+            right 0
+            top 0
+            bottom 12px
+            z-index 1003
+            background-color rgba(238, 238, 238, .7)
+            display flex
+            justify-content center
+            align-items center
+            i
+                font-size 24px
+                animation rotate .5s linear infinite
     .auth-bar
         height 38px
         line-height 38px
@@ -47,3 +67,18 @@
             margin-left 10px
             font-weight bolder
             letter-spacing 5px
+    .error-tips
+        position absolute
+        bottom 0
+        left 0
+        height 38px
+        line-height 38px
+        width calc(100% - 2px)
+        border 1px solid #F56C6C
+        background-color #fef0f0
+        border-radius 4px
+        color #F56C6C
+        font-size 14px
+        display none
+        i
+            color #F56C6C
