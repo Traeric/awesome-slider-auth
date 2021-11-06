@@ -1,11 +1,10 @@
 import {ptWordList} from "./WordGather";
 import {UnwrapNestedRefs} from "@vue/reactivity";
-import {reactive} from "vue";
 
 export class GenerateText {
     public static fontFamily: Array<string> = ['SimSun', 'SimHei', 'KaiTi', 'Microsoft Yahei', 'Microsoft JhengHei', 'MSimSun', 'FangSong'];
     public static fontStyle: string[] = ['normal', 'italic', 'oblique'];
-    private static fontColor: Array<string> = ['#67C23A', '#409EFF', '#E6A23C', '#F56C6C'];
+    private static fontColor: Array<string> = ['#fff', '#f9db3d', '#409EFF'];
     private context: CanvasRenderingContext2D;
     private canvasObj: HTMLCanvasElement;
     private image: HTMLImageElement;
@@ -68,8 +67,18 @@ export class GenerateText {
             }
             // 将文字输出到画板上
             this.wordList.map(wordItem => {
-                const wordIndex: number = Math.floor(Math.random() * ptWordList.length);
-                const wordText: string = ptWordList[wordIndex];
+                let wordIndex: number;
+                let wordText: string = '';
+                let wordOld: boolean = true;
+                // 挑选要显示的文字 不能与之前的重复
+                while (wordOld) {
+                    wordIndex = Math.floor(Math.random() * ptWordList.length);
+                    wordText = ptWordList[wordIndex];
+                    wordOld = this.wordList.findIndex(wordPrev => {
+                        return wordPrev.word === wordText;
+                    }) !== -1;
+                }
+
                 wordItem.word = wordText;
                 this.drawText(wordItem.positionX, wordItem.positionY, wordText);
             });
@@ -162,12 +171,12 @@ export class GenerateText {
         this.context.rotate(Math.PI / 180 * deg);
     }
 
-    public drawDot(event: MouseEvent, wrapContainer: HTMLElement): void {
-        const subContainer: HTMLElement = wrapContainer.parentElement as HTMLElement;
-        const parentContainer: HTMLElement = subContainer.parentElement as HTMLElement;
+    public drawDot(event: MouseEvent, wrapContainer: HTMLElement, successCallback: Function, errorCallback: Function): void {
+        const subDom = wrapContainer.parentElement as HTMLElement;
+        const parentDom = subDom.parentElement as HTMLElement;
         // 获取鼠标点击的位置 因为存在绝对定位 需要算出子元素相对于父元素的定位 + 父元素相对于浏览器页面的定位 = 子元素相对于浏览器的定位
-        let left: number = event.clientX - (parentContainer.offsetLeft + subContainer.offsetLeft);
-        let top: number = event.clientY - (parentContainer.offsetTop + subContainer.offsetTop) + 90;
+        let left: number = event.clientX + window.scrollX - (subDom.offsetLeft + parentDom.offsetLeft) - 10;
+        let top: number = event.clientY + window.scrollY - (subDom.offsetTop + parentDom.offsetTop - parentDom.scrollTop) - 10;
         // 设置文字
         const dotText: number = this.dotList.length + 1;
         this.dotList.push({
@@ -176,7 +185,22 @@ export class GenerateText {
             left
         });
         // 验证
-        console.log(top, left);
+        if (this.dotList.length === this._authWordList.length) {
+            // 禁用点击事件
+            this.canvasObj.onclick = null;
+            for (let i = 0; i < this.dotList.length; i++) {
+                const dot: DotInfo = this.dotList[i];
+                const authText: WordInfo = this._authWordList[i];
+                const errorRange = 35;
+                if (Math.abs(dot.top - authText.positionY) > errorRange || Math.abs(dot.left - authText.positionX) > errorRange) {
+                    // 认证失败
+                    errorCallback();
+                    return;
+                }
+            }
+            // 认证成功
+            successCallback();
+        }
     }
 }
 
