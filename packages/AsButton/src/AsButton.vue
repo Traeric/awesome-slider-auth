@@ -20,11 +20,11 @@ import "../style/index.styl";
 export default {
     name: "as-button",
     props: {
-        "prefix-icon": {
+        prefixIcon: {
             type: String,
             default: null,
         },
-        "suffix-icon": {
+        suffixIcon: {
             type: String,
             default: null,
         },
@@ -48,12 +48,12 @@ export default {
         },
     },
     setup(props) {
-        let buttonRef = ref(null);
-        let buttonTextRef = ref(null);
-        let prefixIconRef = ref(null);
+        let buttonRef = ref();
+        let buttonTextRef = ref();
+        let prefixIconRef = ref();
         let defaultIcon = ref(false);
         let loadIcon = ref(false);
-        let suffixIconRef = ref(null);
+        let suffixIconRef = ref();
 
         onMounted(() => {
             // 替换主题

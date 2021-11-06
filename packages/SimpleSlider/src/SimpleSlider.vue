@@ -16,8 +16,8 @@ import { onMounted, ref } from 'vue';
 import mouseEvent from "../../abstract/eventSublimation.js";
 import statusConvert from "../../abstract/statusConvert.js";
 import constant from "../../abstract/constant.js";
-import defaultBg0 from "../../../public/slider/default-slider-bg-2.png";
-import AuthBar from "../../components/AuthBar.vue";
+import defaultBg0 from "./InputAdapter.js";
+import AuthBar from "./SimpleSlider";
 import "../style/index.styl";
 
 export default {
@@ -48,7 +48,7 @@ export default {
         const sliderBar = ref(null);
         const slider = ref(null);
         const sliderIcon = ref(null);
-        const authModule = ref(null);
+        const authModule = ref();
         const authBarRef = ref();
         const imgRef = ref();
 

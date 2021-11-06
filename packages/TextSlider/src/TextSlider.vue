@@ -32,8 +32,8 @@
 import { onMounted, reactive, Ref, ref } from "vue";
 import {UnwrapNestedRefs} from "@vue/reactivity";
 import "../style/index.styl";
-import AuthBar from "../../components/AuthBar.vue";
-import defaultBackground from "../../../public/slider/bg1.jpg";
+import defaultBackground from "./InputAdapter.js";
+import AuthBar from "./TextSlider";
 import { GenerateText, WordInfo, DotInfo } from "./TextSlider";
 
 

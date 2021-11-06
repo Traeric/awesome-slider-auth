@@ -1,5 +1,8 @@
 import {ptWordList} from "./WordGather";
 import {UnwrapNestedRefs} from "@vue/reactivity";
+import AuthBar from "../../components/AuthBar.vue";
+
+export default AuthBar;
 
 export class GenerateText {
     public static fontFamily: Array<string> = ['SimSun', 'SimHei', 'KaiTi', 'Microsoft Yahei', 'Microsoft JhengHei', 'MSimSun', 'FangSong'];

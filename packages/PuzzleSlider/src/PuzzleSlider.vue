@@ -23,9 +23,8 @@
 </template>
 <script setup lang="ts">
 import "../style/index.styl";
-import AuthBar from "../../components/AuthBar.vue";
-import defaultBackground from "../../../public/slider/default-slider-bg-2.png";
-import blackBackground from "../../../public/slider/black_background.png";
+import AuthBar from "./PuzzleSlider";
+import {defaultBackground, blackBackground} from "./InputAdapter.js";
 import { onMounted, ref } from 'vue';
 import mouseEvent from "../../abstract/eventSublimation.js";
 import statusConvert from "../../abstract/statusConvert.js";
@@ -201,7 +200,7 @@ function initPuzzleSize() {
 /**
  * 画拼图方法
  */
-function drawPuzzle(canvas, imageData, borderStyle = "#67C23A", position = null, rate = 1.3) {
+function drawPuzzle(canvas, imageData, borderStyle = "#67C23A", position: any = null, rate = 1.3) {
     const cl = initPuzzleSize();
     canvas.width = cl + 2;
     canvas.height = cl + 2;
