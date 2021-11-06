@@ -163,9 +163,11 @@ export class GenerateText {
     }
 
     public drawDot(event: MouseEvent, wrapContainer: HTMLElement): void {
-        // 获取鼠标点击的位置
-        let left: number = event.clientX - wrapContainer.offsetLeft;
-        let top: number = event.clientY - wrapContainer.offsetTop;
+        const subContainer: HTMLElement = wrapContainer.parentElement as HTMLElement;
+        const parentContainer: HTMLElement = subContainer.parentElement as HTMLElement;
+        // 获取鼠标点击的位置 因为存在绝对定位 需要算出子元素相对于父元素的定位 + 父元素相对于浏览器页面的定位 = 子元素相对于浏览器的定位
+        let left: number = event.clientX - (parentContainer.offsetLeft + subContainer.offsetLeft);
+        let top: number = event.clientY - (parentContainer.offsetTop + subContainer.offsetTop) + 90;
         // 设置文字
         const dotText: number = this.dotList.length + 1;
         this.dotList.push({
@@ -174,7 +176,7 @@ export class GenerateText {
             left
         });
         // 验证
-        console.log(event.clientY, wrapContainer.offsetTop);
+        console.log(top, left);
     }
 }
 

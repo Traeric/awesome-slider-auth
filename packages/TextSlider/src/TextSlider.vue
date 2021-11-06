@@ -56,7 +56,7 @@ function refreshPanel(): void {
 }
 
 function drawDot(e: MouseEvent) {
-    generateText.drawDot(e, <HTMLElement>(<HTMLElement>textSliderRef.value.parentElement).parentElement);
+    generateText.drawDot(e, textSliderRef.value);
 }
 
 </script>
