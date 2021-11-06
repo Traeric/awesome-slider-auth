@@ -163,9 +163,11 @@ export class GenerateText {
     }
 
     public drawDot(event: MouseEvent, wrapContainer: HTMLElement): void {
+        const subDom = wrapContainer.parentElement as HTMLElement;
+        const parentDom = subDom.parentElement as HTMLElement;
         // 获取鼠标点击的位置
-        let left: number = event.clientX - wrapContainer.offsetLeft;
-        let top: number = event.clientY - wrapContainer.offsetTop;
+        let left: number = event.clientX + window.scrollX - (subDom.offsetLeft + parentDom.offsetLeft) - 10;
+        let top: number = event.clientY + window.scrollY - (subDom.offsetTop + parentDom.offsetTop - parentDom.scrollTop) - 10;
         // 设置文字
         const dotText: number = this.dotList.length + 1;
         this.dotList.push({
@@ -174,7 +176,7 @@ export class GenerateText {
             left
         });
         // 验证
-        console.log(event.clientY, wrapContainer.offsetTop);
+        console.log(event.clientY, parentDom.scrollTop);
     }
 }
 
