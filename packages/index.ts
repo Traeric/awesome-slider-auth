@@ -28,6 +28,9 @@ const install: any = (app: App) => {
 export default {
     // 导出对象需要有install才能被Vue.use()方法安装
     install,
+}
+
+export {
     // 导出具体的组件
     SimpleSlider,
     AsButton,

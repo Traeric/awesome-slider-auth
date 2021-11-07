@@ -173,7 +173,7 @@
 
 <script setup>
 import { h, isVNode } from "vue";
-import {AsMessage} from "../packages/AsMessage";
+import {AsMessage} from "../packages";
 
 let t = "ddddd";
 
