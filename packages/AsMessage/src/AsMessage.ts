@@ -7,6 +7,12 @@ let messageInstance: Array<VNode> = [];
 let defaultOffset = 20;
 
 const AsMessage = (options: AsMessageOptionsType) => {
+    if (options === undefined) {
+        options = {
+            message: "Awesome Slider Auth Message!"
+        }
+    }
+
     if (typeof options === 'string' || isVNode(options)) {
         options = {
             message: options
