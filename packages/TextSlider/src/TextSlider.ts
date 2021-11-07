@@ -42,6 +42,8 @@ export class GenerateText {
      */
     public refreshCanvas(backgroundPath: string, callback: Function, wordCount: number = 5): void {
         this.image.src = backgroundPath;
+        // 元素的跨域资源请求不需要凭证标志设置 防止使用其它网站图片时出现跨域问题
+        this.image.crossOrigin = "anonymous";
         this.image.onload = () => {
             this.clear();
             // 绘制背景图片
@@ -177,9 +179,10 @@ export class GenerateText {
     public drawDot(event: MouseEvent, wrapContainer: HTMLElement, successCallback: Function, errorCallback: Function): void {
         const subDom = wrapContainer.parentElement as HTMLElement;
         const parentDom = subDom.parentElement as HTMLElement;
-        // 获取鼠标点击的位置 因为存在绝对定位 需要算出子元素相对于父元素的定位 + 父元素相对于浏览器页面的定位 = 子元素相对于浏览器的定位
-        let left: number = event.clientX + window.scrollX - (subDom.offsetLeft + parentDom.offsetLeft) - 10;
-        let top: number = event.clientY + window.scrollY - (subDom.offsetTop + parentDom.offsetTop - parentDom.scrollTop) - 10;
+        const pos: DOMRect = subDom.getBoundingClientRect();
+        // 获取鼠标点击的位置相对于canvas背景顶点的位置
+        let left: number = event.clientX - pos.x - 10;
+        let top: number = event.clientY - pos.y - 10;
         // 设置文字
         const dotText: number = this.dotList.length + 1;
         this.dotList.push({

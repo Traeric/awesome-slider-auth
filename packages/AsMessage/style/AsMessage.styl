@@ -1,0 +1,72 @@
+.as-message-wrap
+    position fixed
+    left 50%
+    transform translateX(-50%)
+    background-color #fff
+    box-shadow 1px 1px 8px #cacaca
+    border-radius 5px
+    transition-property opacity, transform, top
+    transition-duration .4s
+    padding 10px 20px
+    i
+        vertical-align center
+        padding-right 8px
+        font-size 18px
+        &.icon-info
+            color #1890ff
+        &.icon-success
+            color #52c41a
+        &.icon-warn
+            color #faad14
+        &.icon-error
+            color #f5222d
+    span
+        vertical-align center
+        font-size 14px
+        color #606266
+        display inline-block
+.as-message-info
+    min-width 300px
+    background-color #f4f4f5
+    box-shadow none
+    padding 10px 20px
+    border 1px solid #e9e9eb
+    i.icon-info
+        color #909399
+    span
+        color #a2a5aa
+.as-message-success
+    min-width 300px
+    background-color #f0f9eb
+    box-shadow none
+    padding 10px 20px
+    border 1px solid #e1f3d8
+    i.icon-info
+        color #67c23a
+    span
+        color #7cca54
+.as-message-warn
+    min-width 300px
+    background-color #fdf6ec
+    box-shadow none
+    padding 10px 20px
+    border 1px solid #faecd8
+    i.icon-info
+        color #e6a23c
+    span
+        color #e7a646
+.as-message-error
+    min-width 300px
+    background-color #fef0f0
+    box-shadow none
+    padding 10px 20px
+    border 1px solid #fde2e2
+    i.icon-info
+        color #f56c6c
+    span
+        color #f78484
+
+.as-message-fade-enter-from, .as-message-fade-leave-to
+    transform translate(-50%, -100%)
+    opacity 0
+

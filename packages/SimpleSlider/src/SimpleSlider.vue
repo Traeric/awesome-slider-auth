@@ -13,9 +13,9 @@
 </template>
 <script lang="ts">
 import { onMounted, ref } from 'vue';
-import mouseEvent from "../../abstract/eventSublimation.js";
-import statusConvert from "../../abstract/statusConvert.js";
-import constant from "../../abstract/constant.js";
+import mouseEvent from "../../utils/eventSublimation.js";
+import statusConvert from "../../utils/statusConvert.js";
+import constant from "../../utils/constant.js";
 import defaultBg0 from "./InputAdapter.js";
 import AuthBar from "./SimpleSlider";
 import "../style/index.styl";

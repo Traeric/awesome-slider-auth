@@ -1,4 +1,4 @@
-import { App } from "vue";
+import type { App } from "vue";
 import TextSlider from "./src/TextSlider.vue";
 
 TextSlider.install = (app: App) => {

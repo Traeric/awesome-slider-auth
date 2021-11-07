@@ -158,13 +158,65 @@
     </div>
     <hr>
     <div style="width: 300px;">
-        <as-text-slider />
+        <as-text-slider :success="success" />
     </div>
+    <br><br><br><br><br>
+    <div style="width: 300px;">
+        <as-text-slider :refresh="refreshText" />
+    </div>
+    <br>
+    <as-button type="primary" @click="messageDialog">消息提示VNode</as-button> 
+    <as-button type="positive" @click="messageDialog1">消息提示</as-button> 
+    <as-button type="warning" @click="messageDialog2">消息提示2</as-button>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
 <script setup>
+import { h, isVNode } from "vue";
+import {AsMessage} from "../packages/AsMessage";
+
 let t = "ddddd";
+
+function messageDialog() {
+    AsMessage({
+        message: h('p', null, [
+          h('span', null, 'Message can be '),
+          h('i', { style: 'color: teal' }, 'VNode'),
+        ]),
+        type: "error",
+        onClose: () => {
+            console.log(111);
+        },
+        offset: 20,
+        duration: 1000,
+        // elementLike: true,
+    });
+}
+
+function messageDialog1() {
+    AsMessage({
+        message: 'This is a test message',
+        type: "error",
+        onClose: () => {
+            console.log(111);
+        },
+        offset: 20,
+        duration: 1000,
+        elementLike: true,
+    });
+}
+
+function messageDialog2() {
+    AsMessage({
+        message: 'This is a test message',
+        type: "error",
+        onClose: () => {
+            console.log(111);
+        },
+        offset: 20,
+        duration: 1000,
+    });
+}
 
 function success() {
     console.log("回调成功");
@@ -197,5 +249,11 @@ function sleep(numberMillis) {
         if (now.getTime() > exitTime)
         return;
         }
+}
+
+function refreshText(callback) {
+    callback({
+        background: "https://www.bing.com/th?id=OHR.MackArch_ZH-CN1068755647_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+    });
 }
 </script>

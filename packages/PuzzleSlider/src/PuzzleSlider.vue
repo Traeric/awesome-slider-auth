@@ -26,9 +26,9 @@ import "../style/index.styl";
 import AuthBar from "./PuzzleSlider";
 import {defaultBackground, blackBackground} from "./InputAdapter.js";
 import { onMounted, ref } from 'vue';
-import mouseEvent from "../../abstract/eventSublimation.js";
-import statusConvert from "../../abstract/statusConvert.js";
-import constant from "../../abstract/constant.js";
+import mouseEvent from "../../utils/eventSublimation.js";
+import statusConvert from "../../utils/statusConvert.js";
+import constant from "../../utils/constant.js";
 
 const containerRef = ref();
 const imgRef = ref();

@@ -37,8 +37,8 @@ import AuthBar from "./TextSlider";
 import { GenerateText, WordInfo, DotInfo } from "./TextSlider";
 
 
-const bgCanvasRef = ref<HTMLCanvasElement>() as Ref<HTMLCanvasElement>;
-const textSliderRef = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+const bgCanvasRef = ref();
+const textSliderRef = ref();
 const textOrder: Ref<string> = ref("");
 let generateText: GenerateText;
 const dotList: UnwrapNestedRefs<Array<DotInfo>> = reactive<Array<DotInfo>>([]);
@@ -49,6 +49,8 @@ const refreshFlag = ref(false);
 const props = defineProps({
     // 刷新方法
     refresh: Function,
+    // 认证成功
+    success: Function,
 });
 
 onMounted(() => {
@@ -66,6 +68,7 @@ onMounted(() => {
             // 认证成功
             authBarRef.value.success();
             close();
+            props.success && props.success();
         }, () => {
             // 显示失败样式
             errorTipRef.value.style.display = "block";
@@ -128,6 +131,3 @@ export default {
     name: "as-text-slider"
 }
 </script>
-<style lang="stylus" scoped>
-
-</style>

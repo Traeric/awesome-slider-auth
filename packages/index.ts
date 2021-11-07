@@ -2,7 +2,8 @@ import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
 import AsButton from "./AsButton/src/AsButton.vue";
 import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";
 import TextSlider from "./TextSlider/src/TextSlider.vue";
-import { App } from "vue";
+import AsMessage from "./AsMessage";
+import type { App } from "vue";
 
 // package下组件列表
 const components = [
@@ -10,22 +11,19 @@ const components = [
     AsButton,
     PuzzleSlider,
     TextSlider,
+    AsMessage,
 ];
 
 
 // 定义安装方法 如果使用use注册插件，则将package中所有组件注册
-const install: any = (Vue: App) => {
-    if (install.installed) {
-        return;
-    }
-
-    components.map(component => Vue.component(component.name, component));
+const install: any = (app: App) => {
+    components.forEach((component: any) => {
+        // 执行每个组件的use方法
+        app.use(component);
+        app.component(component.name, component)
+    });
 } 
 
-
-if (typeof window !== 'undefined' && (window as any).Vue) {
-    install((<any>window).Vue);
-}
 
 export default {
     // 导出对象需要有install才能被Vue.use()方法安装
@@ -35,4 +33,5 @@ export default {
     AsButton,
     PuzzleSlider,
     TextSlider,
+    AsMessage,
 }

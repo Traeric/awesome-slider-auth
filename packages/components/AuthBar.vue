@@ -9,7 +9,7 @@
 </template>
 <script setup lang="ts">
 import { reactive } from "vue";
-import "../componentsStyle/AuthBar.styl";
+import "../theme-chalk/AuthBar.styl";
 
 let authObj = reactive({
     text: "立即开启验证",
