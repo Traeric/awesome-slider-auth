@@ -3,6 +3,7 @@ import AsButton from "./AsButton/src/AsButton.vue";
 import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";
 import TextSlider from "./TextSlider/src/TextSlider.vue";
 import AsMessage from "./AsMessage";
+import AsCodeBlock from "./AsCodeBlock";
 import type { App } from "vue";
 
 // package下组件列表
@@ -12,6 +13,7 @@ const components = [
     PuzzleSlider,
     TextSlider,
     AsMessage,
+    AsCodeBlock,
 ];
 
 
@@ -37,4 +39,5 @@ export {
     PuzzleSlider,
     TextSlider,
     AsMessage,
+    AsCodeBlock,
 }

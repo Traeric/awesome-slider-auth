@@ -168,6 +168,10 @@
     <as-button type="primary" @click="messageDialog">消息提示VNode</as-button> 
     <as-button type="positive" @click="messageDialog1">消息提示</as-button> 
     <as-button type="warning" @click="messageDialog2">消息提示2</as-button>
+    <br><br>
+    <div style="width: 1000px;">
+        <as-code-block :code="code"></as-code-block>
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
@@ -175,7 +179,28 @@
 import { h, isVNode } from "vue";
 import {AsMessage} from "../packages";
 
-let t = "ddddd";
+let code = 
+`<template>
+    <as-button type="primary" @click="messageTip">测试</as-button>
+    <as-button type="warning" @click="messageVNode">VNode消息基础用法</as-button>
+</template>
+<script setup>
+    import {AsMessage} from "awesome-slider-auth";
+    import { h } from "vue";
+    
+    function messageTip() {
+        AsMessage("Message提示基础用法").test().message();
+    }
+
+    function messageVNode() {
+        AsMessage(h('p', null, [
+            h('span', null, 'Message消息支持 '),
+            h('i', { style: 'color: teal' }, 'VNode'),
+        ]));
+    }
+
+    let a = 99;
+<\/script>`;
 
 function messageDialog() {
     AsMessage({
