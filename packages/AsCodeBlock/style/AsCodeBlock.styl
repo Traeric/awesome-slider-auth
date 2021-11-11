@@ -1,35 +1,51 @@
-.tab 
-    margin-left 10px
-.tag
-    color#f81d22
-.attr
-    color #0b8235
-.val
-    color #008dff
-.key-word
-    color #528dff
-.func
-    color #008dff
-.normal
-    color #24292f
-.tag-code
-    color #008dff
-.attr-code
-    color #f81d22
 .as-code-block-wrap
-    background-color #f5f7fa
+    --tag-color #f92672
+    --attr-color #a6e22e
+    --val-color #e6db74
+    --key-word-color #8481ff
+    --func-color #66d9ef
+    --normal-color #f8f8f2
+    --tag-code-color #f92659
+    --attr-code-color #a6e22e
+    --number-color #90908a
+    --number-border-color #464741
+    --code-background-color #272822
+    --base-color #f8f8f2
+
+    background-color var(--code-background-color)
     padding 5px 0
-    .line
+    color var(--base-color)
+    .ascb-line
         height 35px
         line-height 35px
-        .number
+        .ascb-number
             display inline-block
             width 45px
             text-align right
             margin-right 10px
             user-select none
-            border-right 2px solid #eee
+            border-right 1px solid var(--number-border-color)
+            color var(--number-color)
             padding-right 10px
-        .code
+        .ascb-code
             display inline-block
+            .ascb-tab 
+                margin-left 10px
+            .ascb-tag
+                color var(--tag-color)
+            .ascb-attr
+                color var(--attr-color)
+            .ascb-val
+                color var(--val-color)
+            .ascb-key-word
+                color var(--key-word-color)
+            .ascb-func
+                color var(--func-color)
+            .ascb-normal
+                color var(--normal-color)
+            .ascb-tag-code
+                color var(--tag-code-color)
+            .ascb-attr-code
+                color var(--attr-code-color)
+
 
