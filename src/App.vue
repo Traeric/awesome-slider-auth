@@ -169,14 +169,14 @@
     <as-button type="positive" @click="messageDialog1">消息提示</as-button> 
     <as-button type="warning" @click="messageDialog2">消息提示2</as-button>
     <br><br>
-    <div style="width: 1000px;">
-        <as-code-block :code="code" theme="light"></as-code-block>
+    <div style="width: 500px;">
+        <as-code-block theme="light" ref="codeBlockRef"></as-code-block>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
 <script setup>
-import { h, isVNode } from "vue";
+import { h, onMounted, ref } from "vue";
 import {AsMessage} from "../packages";
 
 let code = 
@@ -205,6 +205,11 @@ let code =
         });
     }
 <\/script>`;
+
+const codeBlockRef = ref();
+onMounted(() => {
+    codeBlockRef.value.formatCode(code);
+});
 
 function messageDialog() {
     AsMessage({

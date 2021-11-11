@@ -1,6 +1,6 @@
 <template>
     <div class="as-code-block-wrap" ref="codeBlockWrapRef">
-        <div class="code-area" ref="codeAreaRef">
+        <div class="as-code-block-code-area" ref="codeAreaRef">
         </div>
     </div>
 </template>
@@ -11,10 +11,6 @@ import {CodeBlockHandler, ThemeHandler} from './AsCodeBlock';
 import type {themeType} from "./AsCodeBlock.typing";
 
 const props = defineProps({
-    code: {
-        type: String,
-        default: ''
-    },
     theme: {
         type: String as PropType<themeType>,
         default: "light"
@@ -24,11 +20,18 @@ const props = defineProps({
 const codeAreaRef = ref();
 const codeBlockWrapRef = ref();
 onMounted(() => {
-    // 格式化要展示的代码
-    const handler = new CodeBlockHandler(props.code);
-    codeAreaRef.value.innerHTML = handler.parseCode();
     // 切换主题
     new ThemeHandler(codeBlockWrapRef.value).changeTheme(props.theme);
+});
+
+function formatCode(code: string) {
+    // 格式化要展示的代码
+    const handler = new CodeBlockHandler(code);
+    codeAreaRef.value.innerHTML = handler.parseCode();
+}
+
+defineExpose({
+    formatCode,
 });
 
 </script>

@@ -49,6 +49,7 @@ class CodeBlockHandler {
         let result = "";
         let className = "";
         let currStr = "";
+        let tagInner = false;
         // 数据类型 0标签类 1代码类
         let dataType = wordLine.startsWith("<") ? 0 : 1;
         for (let i = 0; i < wordLine.length; i++) {
@@ -58,12 +59,14 @@ class CodeBlockHandler {
                     result += `<span class="${className}">${currStr}</span>` + currCode;
                     if (currCode === "<" || currCode === "/") {
                         className = 'ascb-tag';
+                        tagInner = true;
                     }
-                    if (currCode === " ") {
+                    if (currCode === " " && tagInner) {
                         className = "ascb-attr";
                     }
                     if (currCode === ">") {
                         className = "ascb-normal";
+                        tagInner = false;
                     }
                     if (currCode === "=") {
                         className = "ascb-val";
