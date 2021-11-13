@@ -1,30 +1,37 @@
-function changeFaildStatus(slider, sliderBar, sliderIcon, moveRate) {
-    sliderIcon.value.setAttribute("class", "iconfont icon-shibai1");
-    sliderIcon.value.style.color = "#fff";
-    slider.value.style.backgroundColor = "#F56C6C";
-    slider.value.style.borderColor = "#f46262";
-    sliderBar.value.style.background = `linear-gradient(to right, #f56c6cd1, #f56c6cd1 ${moveRate}%, #ddd ${moveRate}%, #ddd)`;
+function changeFaildStatus(slider, progressRef, sliderIcon) {
+    sliderIcon.setAttribute("class", "iconfont icon-shibai1");
+    sliderIcon.style.color = "#F56C6C";
+    slider.style.borderColor = "#f46262";
+    slider.style.boxShadow = "0 0 3px #f46262";
+    progressRef.style.backgroundColor = '#fa96a0';
+    progressRef.style.borderColor = '#F56C6C';
+    // 将滑块归位
+    slider.style.left = "0";
+    progressRef.style.width = "10px";
+    slider.style.transition = 'left .5s';
+    progressRef.style.transition = 'width .5s';
 }
 
-function changeSuccessStatus(slider, sliderBar, sliderIcon, moveRate) {
-    sliderIcon.value.setAttribute("class", "iconfont icon-wancheng");
-    sliderIcon.value.style.color = "#fff";
-    sliderIcon.value.style.transform = "rotate(0deg)";
-    slider.value.style.backgroundColor = "#67C23A";
-    slider.value.style.borderColor = "#61c231";
-    sliderBar.value.style.background = `linear-gradient(to right, #67c23abf, #67c23abf ${moveRate}%, #ddd ${moveRate}%, #ddd)`;
+function changeSuccessStatus(slider, progressRef, sliderIcon) {
+    sliderIcon.setAttribute("class", "iconfont icon-wancheng");
+    sliderIcon.style.color = "#67C23A";
+    sliderIcon.style.transform = "rotate(0deg)";
+    slider.style.borderColor = "#61c231";
+    slider.style.boxShadow = "0 0 3px #61c231";
+    progressRef.style.backgroundColor = '#d1edc4';
+    progressRef.style.borderColor = '#67c23a';
 }
 
-function changeDefaultStatus(slider, sliderBar, sliderIcon) {
-    slider.value.style.cssText = "";
-    sliderBar.value.style.cssText = "";
-    sliderIcon.value.style.cssText = "";
-    sliderIcon.value.setAttribute("class", "iconfont icon-zuobian");
-    sliderIcon.value.style.transform = "rotate(180deg)";
-    slider.value.style.transition = "left .5s";
+function changeDefaultStatus(slider, progressRef, sliderIcon) {
+    slider.style.cssText = "";
+    progressRef.style.cssText = "";
+    sliderIcon.style.cssText = "";
+    sliderIcon.setAttribute("class", "iconfont icon-zuobian");
+    sliderIcon.style.transform = "rotate(180deg)";
+    slider.style.transition = "left .5s";
 
     setTimeout(() => {
-        slider.value.style.cssText = "";
+        slider.style.cssText = "";
     }, 500);
 }
 

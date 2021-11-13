@@ -30,7 +30,7 @@ function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
 
     document.onmouseup = mouseUpEvent => {
         document.onmousemove = null;
-        mouseupCallback(moveLength);
+        mouseupCallback(moveLength, sliderMoveMostLength);
         document.onmouseup = null;
     }
 }
