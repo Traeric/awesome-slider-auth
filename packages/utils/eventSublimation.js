@@ -6,7 +6,7 @@
  * @param {Function} moveCallback 鼠标移动过程中的回调事件 
  */
 function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
-    let {slider, sliderBar} = data;
+    let {slider, sliderBar, progressRef} = data;
     // 记录鼠标点击时滑块的初始位置
     const startPosition = e.clientX;
     // 获取滑块最大能移动的距离
@@ -17,13 +17,13 @@ function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
         // 计算滑块移动的距离
         moveLength = movePosition - startPosition;
         // 限制移动距离
-        moveLength = Math.max(0, moveLength);
+        moveLength = Math.max(-1, moveLength);
         moveLength = Math.min(sliderMoveMostLength, moveLength);
 
         // 移动滑块
         slider.value.style.left = `${moveLength}px`;
         // 渲染滑块移动过的地方的颜色
-        sliderBar.value.style.background = `linear-gradient(to right, #a0cfff, #a0cfff ${moveLength / sliderMoveMostLength * 100}%, #ddd ${moveLength / sliderMoveMostLength * 100}%, #ddd)`;
+        progressRef.value.style.width = `${moveLength + 10}px`;
         // 执行自定义的移动方法
         moveCallback && moveCallback(moveLength, sliderMoveMostLength);
     }

@@ -178,7 +178,6 @@ export class GenerateText {
 
     public drawDot(event: MouseEvent, wrapContainer: HTMLElement, successCallback: Function, errorCallback: Function): void {
         const subDom = wrapContainer.parentElement as HTMLElement;
-        const parentDom = subDom.parentElement as HTMLElement;
         const pos: DOMRect = subDom.getBoundingClientRect();
         // 获取鼠标点击的位置相对于canvas背景顶点的位置
         let left: number = event.clientX - pos.x - 10;

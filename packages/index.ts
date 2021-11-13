@@ -1,10 +1,12 @@
+import type { App } from "vue";
 import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
 import AsButton from "./AsButton/src/AsButton.vue";
 import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";
 import TextSlider from "./TextSlider/src/TextSlider.vue";
 import AsMessage from "./AsMessage";
 import AsCodeBlock from "./AsCodeBlock";
-import type { App } from "vue";
+import AsAuthBar from "./AsAuthBar";
+import AsRotateSlider from "./RotateSlider";
 
 // package下组件列表
 const components = [
@@ -14,6 +16,8 @@ const components = [
     TextSlider,
     AsMessage,
     AsCodeBlock,
+    AsAuthBar,
+    AsRotateSlider,
 ];
 
 
@@ -40,4 +44,6 @@ export {
     TextSlider,
     AsMessage,
     AsCodeBlock,
+    AsAuthBar,
+    AsRotateSlider,
 }

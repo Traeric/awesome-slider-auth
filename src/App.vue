@@ -172,7 +172,17 @@
     <div style="width: 500px;">
         <as-code-block theme="light" ref="codeBlockRef"></as-code-block>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br>
+    <div style="width: 350px">
+        <as-auth-bar>
+            <as-rotate-slider></as-rotate-slider>
+        </as-auth-bar>
+    </div>
+    <br><br>
+    <div style="width: 350px">
+        <as-rotate-slider></as-rotate-slider>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
 <script setup>
