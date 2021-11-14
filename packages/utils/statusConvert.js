@@ -6,7 +6,7 @@ function changeFaildStatus(slider, progressRef, sliderIcon) {
     progressRef.style.backgroundColor = '#fa96a0';
     progressRef.style.borderColor = '#F56C6C';
     // 将滑块归位
-    slider.style.left = "0";
+    slider.style.left = "-1px";
     progressRef.style.width = "10px";
     slider.style.transition = 'left .5s';
     progressRef.style.transition = 'width .5s';

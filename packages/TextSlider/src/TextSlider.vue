@@ -9,9 +9,9 @@
                 :key="index"
                 :style="{top: `${item.top}px`, left: `${item.left}px`}">{{ item.text }}</span>
                 <!-- 刷新按钮 -->
-                <i class="iconfont icon-shuaxin1 refresh" @click="refreshPanel()"></i>
+                <i class="iconfont icon-shuaxin1 asa-refresh" @click="refreshPanel()"></i>
                 <!-- 刷新样式 -->
-                <div class="refresh-panel"
+                <div class="asa-refresh-panel"
                 v-show="refreshFlag">
                     <i class="iconfont icon-jiazaizhong2"></i>
                 </div>

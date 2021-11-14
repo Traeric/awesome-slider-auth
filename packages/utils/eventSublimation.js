@@ -35,9 +35,17 @@ function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
     }
 }
 
+function close(ref) {
+    ref.style.opacity = "0";
+    ref.style.transition = "opacity .5s";
+    setTimeout(() => {
+        ref.style.display = "none";
+        ref.style.transition = "none";
+    }, 500);
+}
 
 
-
-export default {
+export {
     moveSliderEvent,
+    close,
 };

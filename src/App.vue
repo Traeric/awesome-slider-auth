@@ -175,7 +175,7 @@
     <br><br>
     <div style="width: 350px">
         <as-auth-bar>
-            <as-rotate-slider></as-rotate-slider>
+            <as-rotate-slider :success="success"></as-rotate-slider>
         </as-auth-bar>
     </div>
     <br><br>
@@ -263,7 +263,7 @@ function messageDialog2() {
 }
 
 function success() {
-    console.log("回调成功");
+    AsMessage("回调成功");
 }
 
 function refresh(callback) {

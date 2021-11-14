@@ -13,7 +13,7 @@
 </template>
 <script lang="ts">
 import { onMounted, ref } from 'vue';
-import mouseEvent from "../../utils/eventSublimation.js";
+import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 import defaultBg0 from "./InputAdapter.js";
@@ -73,7 +73,7 @@ export default {
 
 function sliderGather(sliderBar, slider, sliderIcon, props, authModule, authBarRef) {
     function sliderDown(e) {
-        mouseEvent.moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
+        moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
             const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
             // 完成滑动 判断滑块是否移动到最右端
             if (Math.abs(sliderBar.value.offsetWidth - slider.value.offsetWidth - moveLength) <= props.errorRange) {

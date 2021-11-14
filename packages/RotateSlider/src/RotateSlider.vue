@@ -1,15 +1,22 @@
 <template>
-    <div class="as-rotate-slider-wrap">
+    <div class="as-rotate-slider-wrap" ref="wrapRef">
         <div class="as-rotate-slider-bg">
             <img class="as-rotate-slider-canvas" ref="bgRef"/>
             <div class="as-rotate-slider-rotate" ref="rotateRef"></div>
+            <!-- 加载样式 -->
+            <div class="asa-refresh-panel"
+            v-show="loadFlag">
+                <i class="iconfont icon-jiazaizhong2"></i>
+            </div>
+            <!-- 刷新按钮 -->
+            <i class="iconfont icon-shuaxin1 asa-refresh" @click="refreshPanel()"></i>
         </div>
-        <div class="as-rotate-slider-bar" ref="sliderBar">
-            <span class="as-rotate-slider-tips">
+        <div class="asa-slider-bar" ref="sliderBar">
+            <span class="asa-slider-tips">
                 {{tips}}
             </span>
-            <div class="as-rotate-slider-progress" ref="progressRef"></div>
-            <div class="as-rotate-slider" @mousedown="sliderDown" ref="slider">
+            <div class="asa-slider-progress" ref="progressRef"></div>
+            <div class="asa-slider" @mousedown="sliderDown" ref="slider">
                 <i class="iconfont icon-zuobian" ref="iconRef"></i>
             </div>
         </div>
@@ -18,7 +25,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import "../style/AsRotateSlider.styl";
-import mouseEvent from "../../utils/eventSublimation.js";
+import {moveSliderEvent, close} from "../../utils/eventSublimation.js";
 import {defaultBackground1} from "../../utils/pictureAdapter";
 import {RotateSliderHandler} from "./RotateSlider";
 import statusConvert from "../../utils/statusConvert.js";
@@ -33,7 +40,16 @@ let props = defineProps({
     errorRange: {
         type: Number,
         defualt: 5
-    }
+    },
+    // 刷新方法
+    refresh: Function,
+    // 允许失败次数
+    refreshFrequency: {
+        type: Number,
+        default: 3
+    },
+    // 成功回调
+    success: Function
 });
 
 const bgRef = ref();
@@ -42,6 +58,9 @@ const sliderBar = ref();
 const progressRef = ref();
 const rotateRef = ref();
 const iconRef = ref();
+const wrapRef = ref();
+
+let loadFlag = ref(false);
 
 let rotateHandler: RotateSliderHandler;
 onMounted(() => {
@@ -49,37 +68,57 @@ onMounted(() => {
     bgRef.value.style.height = `${bgRef.value.offsetWidth * 0.5}px`;
     // 初始化slider
     rotateHandler = new RotateSliderHandler(bgRef.value, rotateRef.value, bgRef.value.offsetHeight * 0.6);
-    rotateHandler.initSliderBackground(defaultBackground1);
+    refreshPanel();
 });
 
+let failCount = 0;
 function sliderDown(e) {
-    mouseEvent.moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength, sliderMoveMostLength) => {
+    moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength, sliderMoveMostLength) => {
         let authResult: boolean = rotateHandler.auth(moveLength / sliderMoveMostLength);
         if (authResult) {
             // 认证成功
             statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconRef.value);
+            // 关闭panel
+            setTimeout(() => {
+                close(wrapRef.value);
+                // 执行成功后的回调
+                props.success?.()
+            }, constant.successStyleDisplayTime);
         } else {
             // 认证失败
             statusConvert.changeFaildStatus(slider.value, progressRef.value, iconRef.value);
-            // 将圆圈归为
+            // 将圆圈归位
             rotateHandler.resetRotate();
             setTimeout(() => {
                 statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconRef.value);
-                // puzzleCoverRef.value.style.left = `${leftLimit}px`;
-                // puzzleCoverRef.value.style.transition = `left .5s`;
-                setTimeout(() => {
-                    // puzzleCoverRef.value.style.transition = "none";
-                    // 如果失败超过指定次数则刷新位置
-                    // if (props.refreshFrequency <= ++failCount) {
-                    //     loadFlag.value = true;
-                    //     initPuzzlePosition();
-                    //     failCount = 0;
-                    // }
-                }, 500);
+                // 如果失败超过指定次数则刷新位置
+                if (props.refreshFrequency <= ++failCount) {
+                    refreshPanel();
+                }
             }, constant.faildStyleDisplayTime);
         }
     }, (moveLength, sliderMoveMostLength) => {
         rotateHandler.realRotate(moveLength / sliderMoveMostLength);
+    });
+}
+
+function refreshPanel() {
+    // 打开加载样式
+    loadFlag.value = true;
+    setTimeout(() => {
+        (props.refresh || defaultRefresh)(sliderInfo => {
+            rotateHandler.initSliderBackground(sliderInfo.background, () => {
+                // 关闭加载样式
+                loadFlag.value = false;
+                failCount = 0;
+            });
+        });
+    }, 200);
+}
+
+function defaultRefresh (callbakc: Function) {
+    callbakc({
+        "background": defaultBackground1,
     });
 }
 </script>

@@ -12,10 +12,13 @@
                 <!-- 刷新样式 -->
                 <i class="iconfont icon-shuaxin1 refresh" @click="initPuzzlePosition"></i>
             </div>
-            <div class="slider-area" ref="sliderBar">
-                <span>{{ tips }}</span>
-                <div class="slider-btn" @mousedown="sliderDown" ref="slider">
-                    <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
+            <div class="asa-slider-bar" ref="sliderBar">
+                <span class="asa-slider-tips">
+                    {{tips}}
+                </span>
+                <div class="asa-slider-progress" ref="progressRef"></div>
+                <div class="asa-slider" @mousedown="sliderDown" ref="slider">
+                    <i class="iconfont icon-zuobian" ref="iconRef"></i>
                 </div>
             </div>
         </div>  
@@ -26,7 +29,7 @@ import "../style/index.styl";
 import AuthBar from "./PuzzleSlider";
 import {defaultBackground, blackBackground} from "./InputAdapter.js";
 import { onMounted, ref } from 'vue';
-import mouseEvent from "../../utils/eventSublimation.js";
+import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 
@@ -38,6 +41,7 @@ const slider = ref();
 const sliderBar = ref();
 const authBarRef = ref();
 const sliderIcon = ref();
+const progressRef = ref();
 const imgBgRef = ref();
 let loadFlag = ref(false);
 
@@ -87,7 +91,7 @@ onMounted(() => {
 
 // 移动底部滑块事件
 function sliderDown(e) {
-    mouseEvent.moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
+    moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
         const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
         // 完成滑动 判断两个拼图是否合并在一起
         const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));

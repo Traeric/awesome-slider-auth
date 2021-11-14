@@ -15,7 +15,7 @@ class RotateSliderHandler {
      * 初始化背景以及拼图旋转角度
      * @param background 背景图片路径
      */
-    public initSliderBackground(background: string): void {
+    public initSliderBackground(background: string, callback?: Function): void {
         this.bgImg.src = background;
         // 元素的跨域资源请求不需要凭证标志设置 防止使用其它网站图片时出现跨域问题
         this.bgImg.crossOrigin = "anonymous";
@@ -37,6 +37,7 @@ class RotateSliderHandler {
                 this.rotateAngle = Math.random() * 360;
             }
             this.rotate.style.transform = `rotate(${this.rotateAngle}deg)`;
+            callback?.();
         };
     }
 
