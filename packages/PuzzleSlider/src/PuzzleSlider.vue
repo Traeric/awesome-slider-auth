@@ -1,32 +1,30 @@
 <template>
-    <AuthBar ref="authBarRef">
-        <div class="simple-wrap" ref="containerRef">
-            <div class="img-area" ref="imgRef">
-                <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown"></canvas>
-                <canvas ref="puzzleBeCoveredRef"></canvas>
-                <img :src="defaultBackground" alt="NO IMG" ref="imgBgRef">
-                <!-- 加载样式 -->
-                <div class="load" v-show="loadFlag">
-                    <i class="iconfont icon-top"></i>
-                </div>
-                <!-- 刷新样式 -->
-                <i class="iconfont icon-shuaxin1 refresh" @click="initPuzzlePosition"></i>
+    <div class="simple-wrap" ref="containerRef">
+        <div class="img-area" ref="imgRef">
+            <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown"></canvas>
+            <canvas ref="puzzleBeCoveredRef"></canvas>
+            <img :src="defaultBackground" alt="NO IMG" ref="imgBgRef">
+            <!-- 加载样式 -->
+            <div class="asa-refresh-panel"
+            v-show="loadFlag">
+                <i class="iconfont icon-jiazaizhong2"></i>
             </div>
-            <div class="asa-slider-bar" ref="sliderBar">
-                <span class="asa-slider-tips">
-                    {{tips}}
-                </span>
-                <div class="asa-slider-progress" ref="progressRef"></div>
-                <div class="asa-slider" @mousedown="sliderDown" ref="slider">
-                    <i class="iconfont icon-zuobian" ref="iconRef"></i>
-                </div>
+            <!-- 刷新按钮 -->
+            <i class="iconfont icon-shuaxin1 asa-refresh" @click="initPuzzlePosition"></i>
+        </div>
+        <div class="asa-slider-bar" ref="sliderBar">
+            <span class="asa-slider-tips">
+                {{tips}}
+            </span>
+            <div class="asa-slider-progress" ref="progressRef"></div>
+            <div class="asa-slider" @mousedown="sliderDown" ref="slider">
+                <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
             </div>
-        </div>  
-    </AuthBar>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import "../style/index.styl";
-import AuthBar from "./PuzzleSlider";
 import {defaultBackground, blackBackground} from "./InputAdapter.js";
 import { onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation.js";
@@ -39,7 +37,6 @@ const puzzleCoverRef = ref();
 const puzzleBeCoveredRef = ref();
 const slider = ref();
 const sliderBar = ref();
-const authBarRef = ref();
 const sliderIcon = ref();
 const progressRef = ref();
 const imgBgRef = ref();
@@ -91,28 +88,26 @@ onMounted(() => {
 
 // 移动底部滑块事件
 function sliderDown(e) {
-    moveSliderEvent(e, {slider, sliderBar}, (moveLength) => {
-        const moveRate = moveLength / (sliderBar.value.offsetWidth - slider.value.offsetWidth) * 100;
+    moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength) => {
         // 完成滑动 判断两个拼图是否合并在一起
         const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));
         const beCoveredLeft = parseInt(puzzleBeCoveredRef.value.style.left.replace('px', ''));
         if (Math.abs(coverLeft - beCoveredLeft) <= props.errorRange) {
-            statusConvert.changeSuccessStatus(slider, sliderBar, sliderIcon, moveRate);
+            statusConvert.changeSuccessStatus(slider.value, progressRef.value, sliderIcon.value);
             setTimeout(() => {
-                authBarRef.value.success();
                 // 关闭认证模块
                 close();
                 // 执行成功后的回调方法
-                props.success && props.success();
+                props.success?.();
             }, constant.successStyleDisplayTime);
             return;
         }
         // 认证失败 提示失败然后将滑块位置归位
-        statusConvert.changeFaildStatus(slider, sliderBar, sliderIcon, moveRate);
+        statusConvert.changeFaildStatus(slider.value, progressRef.value, sliderIcon.value);
+        puzzleCoverRef.value.style.left = `${leftLimit}px`;
+        puzzleCoverRef.value.style.transition = `left .5s`;
         setTimeout(() => {
-            statusConvert.changeDefaultStatus(slider, sliderBar, sliderIcon);
-            puzzleCoverRef.value.style.left = `${leftLimit}px`;
-            puzzleCoverRef.value.style.transition = `left .5s`;
+            statusConvert.changeDefaultStatus(slider.value, progressRef.value, sliderIcon.value);
             setTimeout(() => {
                 puzzleCoverRef.value.style.transition = "none";
                 // 如果失败超过指定次数则刷新位置

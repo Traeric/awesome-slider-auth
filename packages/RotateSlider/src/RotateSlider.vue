@@ -82,7 +82,7 @@ function sliderDown(e) {
             setTimeout(() => {
                 close(wrapRef.value);
                 // 执行成功后的回调
-                props.success?.()
+                props.success?.();
             }, constant.successStyleDisplayTime);
         } else {
             // 认证失败

@@ -156,6 +156,13 @@
         :refreshFrequency="5" 
         :refresh="refresh" />
     </div>
+    <div style="width: 300px;">
+        <as-auth-bar>
+            <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10" 
+            :refreshFrequency="5" 
+            :refresh="refresh" />
+        </as-auth-bar>
+    </div>
     <hr>
     <div style="width: 300px;">
         <as-text-slider :success="success" />
