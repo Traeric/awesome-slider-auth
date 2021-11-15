@@ -1,4 +1,6 @@
 import type { App } from "vue";
+import "./theme-chalk/index.styl";
+import "./theme-chalk/iconfont.css";
 import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
 import AsButton from "./AsButton/src/AsButton.vue";
 import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";

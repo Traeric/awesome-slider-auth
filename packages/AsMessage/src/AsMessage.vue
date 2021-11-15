@@ -16,7 +16,6 @@
 </template>
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, PropType, ref, h } from "vue";
-import "../style/AsMessage.styl";
 import { MessageType } from "./AsMessageOptions.types";
 import {VNode} from "../../utils/insertVNode";
 

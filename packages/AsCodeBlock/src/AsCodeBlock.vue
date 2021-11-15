@@ -6,7 +6,6 @@
 </template>
 <script setup lang="ts">
 import { onMounted, PropType, ref } from 'vue';
-import "../style/AsCodeBlock.styl";
 import {CodeBlockHandler, ThemeHandler} from './AsCodeBlock';
 import type {themeType} from "./AsCodeBlock.typing";
 

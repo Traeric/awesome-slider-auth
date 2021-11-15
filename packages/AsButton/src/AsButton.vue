@@ -15,7 +15,6 @@
 <script lang="ts">
 import { onMounted, ref } from 'vue';
 import {changeTheme} from "./theme.js";
-import "../style/index.styl";
 
 export default {
     name: "as-button",

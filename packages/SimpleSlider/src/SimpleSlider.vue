@@ -18,7 +18,6 @@ import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 import defaultBg0 from "./InputAdapter.js";
-import "../style/index.styl";
 
 export default {
     name: "as-simple-slider",

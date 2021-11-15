@@ -22,14 +22,14 @@
             <span class="word">{{textOrder}}</span>
         </div>
         <div class="error-tips" ref="errorTipRef">
-            <i class="iconfont icon-shibai"></i>验证失败，请按提示重新认证
+            <i class="iconfont icon-shibai"></i>
+            验证失败，请按提示重新认证
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, Ref, ref } from "vue";
 import {UnwrapNestedRefs} from "@vue/reactivity";
-import "../style/index.styl";
 import defaultBackground from "./InputAdapter.js";
 import { GenerateText, WordInfo, DotInfo } from "./TextSlider";
 

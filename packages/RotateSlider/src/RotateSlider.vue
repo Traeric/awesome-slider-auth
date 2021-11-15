@@ -24,7 +24,6 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import "../style/AsRotateSlider.styl";
 import {moveSliderEvent, close} from "../../utils/eventSublimation.js";
 import {defaultBackground1} from "../../utils/pictureAdapter";
 import {RotateSliderHandler} from "./RotateSlider";
