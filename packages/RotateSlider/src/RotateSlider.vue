@@ -73,7 +73,7 @@ onMounted(() => {
 let failCount = 0;
 function sliderDown(e) {
     moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength, sliderMoveMostLength) => {
-        let authResult: boolean = rotateHandler.auth(moveLength / sliderMoveMostLength);
+        let authResult: boolean = rotateHandler.auth(moveLength / sliderMoveMostLength, props.errorRange);
         if (authResult) {
             // 认证成功
             statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconRef.value);
