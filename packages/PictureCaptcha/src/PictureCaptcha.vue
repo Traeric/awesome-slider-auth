@@ -33,12 +33,13 @@ function refreshPicture() {
     handler.initPicture(text, result, color);
 }
 
-function auth(input: string|number) {
+function auth(input: string) {
     return handler.auth(input);
 }
 
 defineExpose({
-    auth
+    auth,
+    refresh: refreshPicture
 });
 </script>
 <script lang="ts">

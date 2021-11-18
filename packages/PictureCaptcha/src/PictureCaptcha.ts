@@ -1,7 +1,7 @@
 class CaptchaHandler {
     private canvasObj: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
-    private result: string|number = 0;
+    private result: string = "";
     private textArr: number[] = [];
 
     constructor (canvasObj: HTMLCanvasElement) {
@@ -19,7 +19,7 @@ class CaptchaHandler {
         }
     }
 
-    public initPicture(text?: string, result?: string|number, color?: string): void {
+    public initPicture(text?: string, result?: string, color?: string): void {
         // 生成文字
         if (text === undefined || result === undefined) {
             // 如果用户未传入 需要手动生成
@@ -43,12 +43,12 @@ class CaptchaHandler {
      * @param input 用户的输入
      * @returns 认证结果
      */
-    public auth(input: string|number): boolean {
+    public auth(input: string): boolean {
         if (typeof input === "string") {
             // 转小写
             input = input.toLocaleLowerCase();
         }
-        return input == this.result;
+        return input === this.result;
     }
 
     /**
@@ -153,11 +153,11 @@ class CaptchaHandler {
             if (Math.random() <= 0.5) {
                 // 乘法
                 text = `${num1}x${num2}=`;
-                this.result = num1 * num2;
+                this.result = num1 * num2 + '';
             } else {
                 // 加法
                 text = `${num1}+${num2}=`;
-                this.result = num1 + num2;
+                this.result = num1 + num2 + '';
             }
         }
         return text;

@@ -193,7 +193,7 @@
     </div>
     <br><br><br>
     <div style="width: 120px; height: 50px;">
-        <as-picture-captcha ref="pictureCaptchaRef" :refresh="refreshPicture"></as-picture-captcha>
+        <as-picture-captcha ref="pictureCaptchaRef"></as-picture-captcha>
         <input type="text" v-model="a">
         <as-button @click="pictureAuth" type="primary">认证</as-button>
     </div>
@@ -227,10 +227,10 @@ function pictureAuth() {
             message: "认证失败",
             type: "error"
         });
-        if (++authCount >= 5) {
+        // if (++authCount >= 5) {
             pictureCaptchaRef.value.refresh();
             authCount = 0;
-        }
+        // }
     }
 }
 
