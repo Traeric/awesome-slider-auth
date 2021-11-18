@@ -12,8 +12,8 @@
 import { onMounted, Ref, ref } from 'vue';
 import {CaptchaHandler} from "./PictureCaptcha";
 
-const wrapRef = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-const pictureRef = ref<HTMLCanvasElement>() as Ref<HTMLCanvasElement>;
+const wrapRef = ref();
+const pictureRef = ref();
 let handler: CaptchaHandler;
 onMounted(() => {
     // 设置图片区域高度
