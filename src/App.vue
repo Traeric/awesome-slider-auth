@@ -191,12 +191,40 @@
     <div style="width: 350px">
         <as-rotate-slider></as-rotate-slider>
     </div>
+    <br><br><br>
+    <div style="width: 120px; height: 50px;">
+        <as-picture-captcha ref="pictureCaptchaRef"></as-picture-captcha>
+        <input type="text" v-model="a">
+        <as-button @click="pictureAuth" type="primary">认证</as-button>
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
 <script setup>
 import { h, onMounted, ref } from "vue";
 import {AsMessage} from "../packages";
+
+const pictureCaptchaRef = ref();
+let a = ref();
+let authCount = 0;
+function pictureAuth() {
+    if (pictureCaptchaRef.value.auth(a.value)) {
+        AsMessage({
+            message: "认证成功",
+            type: "success"
+        });
+    } else {
+        AsMessage({
+            message: "认证失败",
+            type: "error"
+        });
+        if (++authCount >= 5) {
+            pictureCaptchaRef.value.refresh();
+            authCount = 0;
+        }
+    }
+}
+
 
 let code = 
 `<template>
