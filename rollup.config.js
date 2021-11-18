@@ -29,7 +29,7 @@ export default ({ format }) => {
     input: join(__dirname, 'packages/index.ts'),
     output,
     plugins: [
-      del({ targets: [`dist/*-${format}.js`, 'dist/index.css', 'dist/fonts/'] }),
+      del({ targets: [`dist/*-${format}.js`] }),
       terser(),
       nodeResolve(),
       stylus(),

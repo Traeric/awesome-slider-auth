@@ -193,7 +193,7 @@
     </div>
     <br><br><br>
     <div style="width: 120px; height: 50px;">
-        <as-picture-captcha ref="pictureCaptchaRef"></as-picture-captcha>
+        <as-picture-captcha ref="pictureCaptchaRef" :refresh="refreshPicture"></as-picture-captcha>
         <input type="text" v-model="a">
         <as-button @click="pictureAuth" type="primary">认证</as-button>
     </div>
@@ -207,6 +207,15 @@ import {AsMessage} from "../packages";
 const pictureCaptchaRef = ref();
 let a = ref();
 let authCount = 0;
+
+function refreshPicture() {
+    return {
+        "text": "4r4r",
+        "result": "dfdf",
+        "color": "#f00"
+    };
+}
+
 function pictureAuth() {
     if (pictureCaptchaRef.value.auth(a.value)) {
         AsMessage({

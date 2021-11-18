@@ -3,14 +3,18 @@
         <canvas class="picture" ref="pictureRef">
 
         </canvas>
-        <div class="refresh" @click="refresh">
+        <div class="refresh" @click="refreshPicture">
             看不清楚？换张图片
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, Ref, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import {CaptchaHandler} from "./PictureCaptcha";
+
+const props = defineProps({
+    refresh: Function
+});
 
 const wrapRef = ref();
 const pictureRef = ref();
@@ -21,11 +25,12 @@ onMounted(() => {
     pictureRef.value.width = wrapRef.value.offsetWidth;
 
     handler = new CaptchaHandler(pictureRef.value);
-    handler.initPicture();
+    refreshPicture();
 });
 
-function refresh() {
-    handler.initPicture();
+function refreshPicture() {
+    let {text, result, color} = props.refresh?.()??{};
+    handler.initPicture(text, result, color);
 }
 
 function auth(input: string|number) {
@@ -33,8 +38,7 @@ function auth(input: string|number) {
 }
 
 defineExpose({
-    auth,
-    refresh,
+    auth
 });
 </script>
 <script lang="ts">
