@@ -8,6 +8,7 @@
 * 滑动滑块认证
 * 文字点选认证
 * 图形旋转认证
+* 图片验证码生成
 ## 版本
 支持VUE3.o+
 ## 下载
@@ -16,4 +17,5 @@ npm i awesome-slider-auth
 ```
 ## 官方文档
 [https://traeric.github.io](https://traeric.github.io)
+
 [https://awesome-slider-auth.gitee.io](https://awesome-slider-auth.gitee.io)
