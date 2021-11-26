@@ -197,6 +197,10 @@
         <input type="text" v-model="a">
         <as-button @click="pictureAuth" type="primary">认证</as-button>
     </div>
+    <br><br><br><br><br><br>
+    <div style="width: 350px;">
+        <as-jigsaw-slider></as-jigsaw-slider>
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 

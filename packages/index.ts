@@ -10,6 +10,7 @@ import AsCodeBlock from "./AsCodeBlock";
 import AsAuthBar from "./AsAuthBar";
 import AsRotateSlider from "./RotateSlider";
 import PictureCaptcha from "./PictureCaptcha";
+import JigsawSlider from "./JigsawSlider";
 
 // package下组件列表
 const components = [
@@ -22,6 +23,7 @@ const components = [
     AsAuthBar,
     AsRotateSlider,
     PictureCaptcha,
+    JigsawSlider,
 ];
 
 
@@ -51,4 +53,5 @@ export {
     AsAuthBar,
     AsRotateSlider,
     PictureCaptcha,
+    JigsawSlider,
 }
