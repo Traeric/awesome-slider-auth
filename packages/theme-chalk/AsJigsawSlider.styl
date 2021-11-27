@@ -1,0 +1,105 @@
+.jigsaw-slider-wrap
+    transition opacity .5s
+    .bg
+        border-radius 5px
+        background-color #fff
+        margin-bottom 10px
+        overflow hidden
+        position relative
+        --back-offset 4px
+        --offset-width 0px
+        --offset-height 0px
+        .asa-refresh
+            bottom 5px
+        .asa-refresh-panel
+            inset 0
+        .wrap
+            position relative
+            height 100%
+            width 100%
+            .block
+                position absolute
+                z-index 100
+                cursor move
+                background-size calc(var(--offset-width) * 2) calc(var(--offset-height) * 2)
+                .position
+                    position relative
+                    height 100%
+                    width 100%
+                    &:hover::after
+                        content ""
+                        display block
+                        position absolute
+                        height 100%
+                        width 100%
+                        top 0
+                        left 0
+                        background-color rgba(255, 255, 255, .3)
+                        z-index 98
+                    .serial
+                        position absolute
+                        top 5px
+                        left 5px
+                        height 15px
+                        line-height 15px
+                        text-align center
+                        width 15px
+                        font-size 12px
+                        background-color rgba(0, 0, 0, .5)
+                        color rgba(255, 255, 255, .5)
+                        border 1px solid rgba(255, 255, 255, .5)
+                        border-radius 50%
+                        z-index 99
+                        user-select none
+            .left-top
+                top 0
+                left 0
+            .right-top
+                top 0
+                left calc(var(--offset-width) + 2px)
+                background-position var(--offset-width) 0
+            .left-bottom
+                top calc(var(--offset-height) + 2px)
+                left 0
+                background-position 0 var(--offset-height)
+            .right-bottom
+                top calc(var(--offset-height) + 2px)
+                left calc(var(--offset-width) + 2px)
+                background-position var(--offset-width) var(--offset-height)
+            .back
+                position absolute
+                z-index 99
+                border-radius 5px
+                border 1px dotted #aaa
+            .back-left-top
+                top var(--back-offset)
+                left var(--back-offset)
+            .back-right-top
+                right var(--back-offset)
+                top var(--back-offset)
+            .back-left-bottom
+                left var(--back-offset)
+                bottom var(--back-offset)
+            .back-right-bottom
+                right var(--back-offset)
+                bottom var(--back-offset)
+    .jigsaw-slider-bar
+        text-align left
+        padding 0 10px
+        user-select none
+        .error-tips
+            position absolute
+            bottom 0
+            left 0
+            height 38px
+            line-height 38px
+            width calc(100% - 2px)
+            border 1px solid #F56C6C
+            background-color #fef0f0
+            border-radius 4px
+            color #F56C6C
+            font-size 14px
+            text-align center
+            display none
+            i
+                color #F56C6C
