@@ -108,7 +108,7 @@ export default {
                         background-color rgba(255, 255, 255, .3)
                         z-index 98
                     .serial
-                        position absolute 
+                        position absolute
                         top 5px
                         left 5px
                         height 15px
@@ -157,5 +157,6 @@ export default {
     .jigsaw-slider-bar
         text-align left
         padding 0 10px
+        user-select none
 </style>
 
