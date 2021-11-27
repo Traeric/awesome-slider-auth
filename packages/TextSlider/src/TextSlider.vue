@@ -1,9 +1,9 @@
 <template>
     <div class="text-slider-wrap" ref="textSliderRef">
         <div class="bg">
-            <canvas class="bg-canvas" 
+            <canvas class="bg-canvas"
             ref="bgCanvasRef"></canvas>
-            <span class="dot" 
+            <span class="dot"
             v-for="(item, index) in dotList"
             :key="index"
             :style="{top: `${item.top}px`, left: `${item.left}px`}">{{ item.text }}</span>

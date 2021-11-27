@@ -198,8 +198,8 @@
         <as-button @click="pictureAuth" type="primary">认证</as-button>
     </div>
     <br><br><br><br><br><br>
-    <div style="width: 350px;">
-        <as-jigsaw-slider></as-jigsaw-slider>
+    <div style="width: 300px;">
+        <as-jigsaw-slider :refresh="jigsawRefresh" :success="jigsawSuccess" />
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
@@ -211,6 +211,28 @@ import {AsMessage} from "../packages";
 const pictureCaptchaRef = ref();
 let a = ref();
 let authCount = 0;
+
+function jigsawRefresh(callback) {
+    let bgArr = ['https://cn.bing.com/th?id=OHR.BeechTrees_ZH-CN9605292244_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.ElanValley_ZH-CN9533069637_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.WinterWaxwing_ZH-CN9435499385_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.SquirrelsCairngorms_ZH-CN9369511507_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.ChocoHillBohol_ZH-CN9297094265_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.AmmoniteShell_ZH-CN9232274077_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
+    'https://cn.bing.com/th?id=OHR.IrohazakaRoad_ZH-CN9151363864_1920x1080.jpg&rf=LaDigue_1920x1080.jpg'];
+    let index = Math.floor(Math.random() * bgArr.length);
+    let bg = bgArr[index];
+    callback({
+        "background": bg
+    });
+}
+
+function jigsawSuccess() {
+    AsMessage({
+        message: "认证成功！！！",
+        type: "success"
+    });
+}
 
 function refreshPicture() {
     return {
