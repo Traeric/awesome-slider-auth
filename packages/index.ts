@@ -11,6 +11,7 @@ import AsAuthBar from "./AsAuthBar";
 import AsRotateSlider from "./RotateSlider";
 import PictureCaptcha from "./PictureCaptcha";
 import JigsawSlider from "./JigsawSlider";
+import AsTop from "./AsTop";
 
 // package下组件列表
 const components = [
@@ -24,6 +25,7 @@ const components = [
     AsRotateSlider,
     PictureCaptcha,
     JigsawSlider,
+    AsTop,
 ];
 
 
@@ -34,7 +36,7 @@ const install: any = (app: App) => {
         app.use(component);
         app.component(component.name, component)
     });
-} 
+}
 
 
 export default {
@@ -54,4 +56,5 @@ export {
     AsRotateSlider,
     PictureCaptcha,
     JigsawSlider,
+    AsTop,
 }

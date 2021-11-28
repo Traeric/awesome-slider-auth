@@ -201,6 +201,8 @@
     <div style="width: 300px;">
         <as-jigsaw-slider :refresh="jigsawRefresh" :success="jigsawSuccess" />
     </div>
+    <br>
+    <as-top />
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 

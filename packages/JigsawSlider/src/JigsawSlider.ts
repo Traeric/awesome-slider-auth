@@ -105,12 +105,14 @@ class JigsawHandler {
                     currentDom.style.zIndex = '100';
                     // 将当前移动的块移动到未被占的区域
                     currentDom.style.cssText += this.blockPosition[this.currentBlockSerial];
-                    // 判断用户移动是否正确
-                    let authResult = this.rightSerial.every((item, index) => {
-                        return this.currentSerial[index] === item;
-                    });
-                    // 认证回调
-                    authResult ? successCallback?.() : failCallback?.();
+                    setTimeout(() => {
+                        // 判断用户移动是否正确
+                        let authResult = this.rightSerial.every((item, index) => {
+                            return this.currentSerial[index] === item;
+                        });
+                        // 认证回调
+                        authResult ? successCallback?.() : failCallback?.();
+                    }, 500);
                     document.onmouseup = null;
                 }
             }
