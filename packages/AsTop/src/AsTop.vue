@@ -27,10 +27,10 @@ let props = defineProps({
 
 let visible = ref(false);
 
-document.onscroll = e => {
+document.addEventListener("scroll", () => {
     let scrollObj = document.documentElement || document.body;
     visible.value = scrollObj.scrollTop >= props.visibilityHeight;
-}
+}, true);
 
 function backToTop() {
     window.scrollTo({
