@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, Ref, ref } from "vue";
 import {UnwrapNestedRefs} from "@vue/reactivity";
-import defaultBackground from "./InputAdapter.js";
+import {defaultBackground1} from "../../utils/pictureAdapter.js";
 import { GenerateText, WordInfo, DotInfo } from "./TextSlider";
 
 
@@ -109,7 +109,7 @@ function refreshPanel(refreshSuccess?: Function): void {
  */
 function defaultRefreshFunc(callback: Function): void {
     callback({
-        "background": defaultBackground
+        "background": defaultBackground1
     });
 }
 

@@ -17,7 +17,7 @@ import { onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
-import defaultBg0 from "./InputAdapter.js";
+import {defaultBackground} from "../../utils/pictureAdapter.js";
 
 export default {
     name: "as-simple-slider",
@@ -37,7 +37,7 @@ export default {
         // 背景图片
         background: {
             type: String,
-            default: defaultBg0,
+            default: defaultBackground,
         }
     },
     setup(props) {
