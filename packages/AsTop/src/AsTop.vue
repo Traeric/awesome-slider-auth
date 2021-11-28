@@ -9,8 +9,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity';
-import { onMounted } from '@vue/runtime-core';
+import { ref } from 'vue';
 let props = defineProps({
     bottom: {
         type: Number,
@@ -28,12 +27,10 @@ let props = defineProps({
 
 let visible = ref(false);
 
-onMounted(() => {
-    document.onscroll = e => {
-        let scrollObj = document.documentElement || document.body;
-        visible.value = scrollObj.scrollTop >= props.visibilityHeight;
-    }
-});
+document.onscroll = e => {
+    let scrollObj = document.documentElement || document.body;
+    visible.value = scrollObj.scrollTop >= props.visibilityHeight;
+}
 
 function backToTop() {
     window.scrollTo({
