@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {defaultBackground} from "../../utils/pictureAdapter.js";
+import {defaultBackground1} from "../../utils/pictureAdapter.js";
 import {ScratchHandler} from "./ScratchSlider";
 
 let props = defineProps({
@@ -52,7 +52,7 @@ onMounted(() => {
 function refreshFunc(callback?: Function) {
     let refreshFunction = props.refresh || ((callback: Function) => {
         callback({
-            "backgorund": defaultBackground,
+            "background": defaultBackground1,
         });
     });
 
