@@ -218,6 +218,10 @@
             UP
         </div>
     </as-top>
+    <br><br>
+    <div style="width: 350px">
+        <as-scratch-slider :refresh="jigsawRefresh" :success="jigsawSuccess" />
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 

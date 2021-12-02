@@ -12,6 +12,7 @@ import AsRotateSlider from "./RotateSlider";
 import PictureCaptcha from "./PictureCaptcha";
 import JigsawSlider from "./JigsawSlider";
 import AsTop from "./AsTop";
+import ScratchSlider from "./ScratchSlider";
 
 // package下组件列表
 const components = [
@@ -26,6 +27,7 @@ const components = [
     PictureCaptcha,
     JigsawSlider,
     AsTop,
+    ScratchSlider,
 ];
 
 
@@ -57,4 +59,5 @@ export {
     PictureCaptcha,
     JigsawSlider,
     AsTop,
+    ScratchSlider,
 }
