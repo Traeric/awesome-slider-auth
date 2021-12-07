@@ -3,7 +3,7 @@
     @click="backToTop">
         <slot>
             <div class="default">
-                <i class="iconfont icon-bxs-to-top"></i>
+                <top class="icon-top" />
             </div>
         </slot>
     </div>

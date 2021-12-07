@@ -28,11 +28,11 @@
                 <div class="back back-right-bottom"></div>
             </div>
             <!-- 刷新按钮 -->
-            <i class="iconfont icon-shuaxin1 asa-refresh" @click="refreshFunc()"></i>
+            <refresh class="asa-refresh" @click="refreshFunc()" />
             <!-- 刷新样式 -->
             <div class="asa-refresh-panel"
             v-show="refreshFlag">
-                <i class="iconfont icon-jiazaizhong2"></i>
+                <loading class="asa-load" />
             </div>
         </div>
         <div class="asa-slider-bar jigsaw-slider-bar">
@@ -40,7 +40,7 @@
             <span class="tips">拖动区块</span>
             <span class="text">得到完整的图片</span>
             <div class="error-tips" ref="errorTipRef">
-                <i class="iconfont icon-shibai"></i>
+                <error class="asa-error" />
                 验证失败，请重新拼图完成认证
             </div>
         </div>

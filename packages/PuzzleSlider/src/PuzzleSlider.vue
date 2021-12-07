@@ -7,10 +7,10 @@
             <!-- 加载样式 -->
             <div class="asa-refresh-panel"
             v-show="loadFlag">
-                <i class="iconfont icon-jiazaizhong2"></i>
+                <loading class="asa-load" />
             </div>
             <!-- 刷新按钮 -->
-            <i class="iconfont icon-shuaxin1 asa-refresh" @click="initPuzzlePosition"></i>
+            <refresh class="asa-refresh" @click="initPuzzlePosition" />
         </div>
         <div class="asa-slider-bar" ref="sliderBar">
             <span class="asa-slider-tips">
@@ -18,7 +18,12 @@
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
             <div class="asa-slider" @mousedown="sliderDown" ref="slider">
-                <i class="iconfont icon-zuobian" ref="sliderIcon"></i>
+                <arrow class="icon-arrow"
+                v-if="iconStatus === IconStatus.Normal" />
+                <success class="icon-success"
+                v-else-if="iconStatus === IconStatus.Success" />
+                <fail class="icon-fail"
+                v-else-if="iconStatus === IconStatus.Fail" />
             </div>
         </div>
     </div>
@@ -29,6 +34,7 @@ import { onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
+import {IconStatus} from "../../utils/enums";
 
 const containerRef = ref();
 const imgRef = ref();
@@ -36,9 +42,9 @@ const puzzleCoverRef = ref();
 const puzzleBeCoveredRef = ref();
 const slider = ref();
 const sliderBar = ref();
-const sliderIcon = ref();
 const progressRef = ref();
 const imgBgRef = ref();
+let iconStatus = ref(IconStatus.Normal);
 let loadFlag = ref(false);
 
 // 父组件传入参数
@@ -92,7 +98,7 @@ function sliderDown(e) {
         const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));
         const beCoveredLeft = parseInt(puzzleBeCoveredRef.value.style.left.replace('px', ''));
         if (Math.abs(coverLeft - beCoveredLeft) <= props.errorRange) {
-            statusConvert.changeSuccessStatus(slider.value, progressRef.value, sliderIcon.value);
+            statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconStatus);
             setTimeout(() => {
                 // 关闭认证模块
                 close();
@@ -102,11 +108,11 @@ function sliderDown(e) {
             return;
         }
         // 认证失败 提示失败然后将滑块位置归位
-        statusConvert.changeFaildStatus(slider.value, progressRef.value, sliderIcon.value);
+        statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
         puzzleCoverRef.value.style.left = `${leftLimit}px`;
         puzzleCoverRef.value.style.transition = `left .5s`;
         setTimeout(() => {
-            statusConvert.changeDefaultStatus(slider.value, progressRef.value, sliderIcon.value);
+            statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
             setTimeout(() => {
                 puzzleCoverRef.value.style.transition = "none";
                 // 如果失败超过指定次数则刷新位置

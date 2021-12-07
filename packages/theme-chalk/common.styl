@@ -11,8 +11,9 @@
     display flex
     justify-content center
     align-items center
-    i
-        font-size 24px
+    .asa-load
+        width 24px
+        height 24px
         animation rotate .5s linear infinite
         color #67c23a
 .asa-refresh
@@ -20,11 +21,18 @@
     z-index 1002
     bottom 18px
     right 8px
-    font-size 1.2em
+    height 20px
+    width 20px
     color #aaa !important
     cursor pointer
     &:hover
         color #fff !important
+
+.asa-error
+    height 1.3em
+    width 1.3em
+    vertical-align sub
+    color #F56C6C
 
 // 通用底部样式条
 .asa-slider-bar
@@ -51,8 +59,9 @@
         font-size 14px
     .asa-slider
         height 40px
-        line-height 40px
-        text-align center
+        display flex
+        align-items center
+        justify-content center
         background-color #fff
         border 1px solid #02d0bd
         box-shadow 0 0 3px #02d0bd
@@ -63,11 +72,17 @@
         top -1px
         z-index 101
         cursor move
-        i
+        .asa-icon
             color #02d0bd
-            font-size 22px
-            transform rotate(180deg)
+            width 22px
+            height 22px
             display inline-block
+        .icon-arrow
+            transform rotate(180deg)
+        .icon-fail
+            color #f56c6c
+        .icon-success
+            color #67c23a
     .text
         color #000
     .tips

@@ -8,7 +8,6 @@ import image from '@rollup/plugin-image';
 import babel from '@rollup/plugin-babel';
 import vue from 'rollup-plugin-vue';
 import del from 'rollup-plugin-delete';
-import {readdir, existsSync, mkdirSync, statSync, copyFileSync} from "fs";
 
 
 const baseOutput = format => ({
@@ -49,28 +48,6 @@ export default ({ format }) => {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
         babelHelpers: 'runtime',
         skipPreflightCheck: true
-      }),
-      readdir("./packages/theme-chalk/fonts", (err, files)=>{
-          if (!err) {
-            if (!existsSync(`./dist/`)) {
-              mkdirSync(`./dist/`);
-            }
-            if (!existsSync(`./dist/fonts`)) {
-              mkdirSync(`./dist/fonts`);
-            }
-            
-            if (existsSync(`./dist/fonts`)) {
-              //遍历原目录下的文件名
-              files.forEach(item => {
-                let item_path = join("./packages/theme-chalk/fonts", item);
-                //获取原目录下所有文件的文件信息
-                let temp = statSync(item_path);
-                if (temp.isFile()) {
-                    copyFileSync(item_path, join(`./dist/fonts`, item));
-                }
-              })
-            }
-          }
       })
     ],
     external(id) {

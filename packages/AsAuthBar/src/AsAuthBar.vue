@@ -1,6 +1,7 @@
 <template>
     <div class="click-btn">
-        <i :class="['iconfont', authObj.icon]"></i>
+        <auth v-if="!authObj.iconSuccess" />
+        <auth-success v-else />
         <span>{{authObj.text}}</span>
         <div class="auth-area">
             <slot></slot>
@@ -12,12 +13,12 @@ import { reactive } from "vue";
 
 let authObj = reactive({
     text: "立即开启验证",
-    icon: "icon-renzhengguanli"
+    iconSuccess: false
 });
 
 function success() {
     authObj.text = "认证成功";
-    authObj.icon = "icon-icon1";
+    authObj.iconSuccess = true;
 }
 
 defineExpose({

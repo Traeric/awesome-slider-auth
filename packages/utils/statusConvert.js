@@ -1,6 +1,7 @@
-function changeFaildStatus(slider, progressRef, sliderIcon) {
-    sliderIcon.setAttribute("class", "iconfont icon-shibai1");
-    sliderIcon.style.color = "#F56C6C";
+import {IconStatus} from "./enums";
+
+function changeFaildStatus(slider, progressRef, iconStatus) {
+    iconStatus.value = IconStatus.Fail;
     slider.style.borderColor = "#f46262";
     slider.style.boxShadow = "0 0 3px #f46262";
     progressRef.style.backgroundColor = '#fa96a0';
@@ -12,22 +13,18 @@ function changeFaildStatus(slider, progressRef, sliderIcon) {
     progressRef.style.transition = 'width .5s';
 }
 
-function changeSuccessStatus(slider, progressRef, sliderIcon) {
-    sliderIcon.setAttribute("class", "iconfont icon-wancheng");
-    sliderIcon.style.color = "#67C23A";
-    sliderIcon.style.transform = "rotate(0deg)";
+function changeSuccessStatus(slider, progressRef, iconStatus) {
+    iconStatus.value = IconStatus.Success;
     slider.style.borderColor = "#61c231";
     slider.style.boxShadow = "0 0 3px #61c231";
     progressRef.style.backgroundColor = '#d1edc4';
     progressRef.style.borderColor = '#67c23a';
 }
 
-function changeDefaultStatus(slider, progressRef, sliderIcon) {
+function changeDefaultStatus(slider, progressRef, iconStatus) {
+    iconStatus.value = IconStatus.Normal;
     slider.style.cssText = "";
     progressRef.style.cssText = "";
-    sliderIcon.style.cssText = "";
-    sliderIcon.setAttribute("class", "iconfont icon-zuobian");
-    sliderIcon.style.transform = "rotate(180deg)";
     slider.style.transition = "left .5s";
 
     setTimeout(() => {

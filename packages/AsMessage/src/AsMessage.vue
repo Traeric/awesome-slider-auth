@@ -7,7 +7,7 @@
         v-show="messageShow" 
         :style="styles"
         :class="wrapClass">
-        <i :class="iconClass"></i>
+        <component :class="iconClass" :is="iconComponent" />
         <span>
             <VNode :content="message"></VNode>
         </span>
@@ -15,9 +15,10 @@
     </transition>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, PropType, ref, h } from "vue";
+import { computed, onMounted, onUnmounted, PropType, ref } from "vue";
 import { MessageType } from "./AsMessageOptions.types";
 import {VNode} from "../../utils/insertVNode";
+import {MessageIconMap} from "./AsMessage";
 
 let props = defineProps({
     offset: Number,
@@ -43,7 +44,7 @@ let props = defineProps({
 
 let messageShow = ref(false);
 
-let timer: NodeJS.Timeout;
+let timer;
 onMounted(() => {
     messageShow.value = true;
 
@@ -60,9 +61,13 @@ let styles = computed(() => ({
     top: `${props.offset}px`
 }));
 
+let iconComponent = computed(() => {
+    return MessageIconMap[props.type];
+});
+
 let iconClass = computed(() => [
-    'iconfont',
-    'icon-' + props.type
+    'message-icon',
+    'icon-' + props.type,
 ]);
 
 let wrapClass = computed(() => {

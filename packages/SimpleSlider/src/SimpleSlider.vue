@@ -7,7 +7,12 @@
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
             <div class="asa-slider" @mousedown="sliderDown" ref="slider">
-                <i class="iconfont icon-zuobian" ref="iconRef"></i>
+                <arrow class="icon-arrow"
+                v-if="iconStatus === IconStatus.Normal" />
+                <success class="icon-success"
+                v-else-if="iconStatus === IconStatus.Success" />
+                <fail class="icon-fail"
+                v-else-if="iconStatus === IconStatus.Fail" />
             </div>
         </div>
     </div>
@@ -18,6 +23,7 @@ import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 import {defaultBackground} from "../../utils/pictureAdapter.js";
+import {IconStatus} from "../../utils/enums";
 
 export default {
     name: "as-simple-slider",
@@ -43,10 +49,10 @@ export default {
     setup(props) {
         const sliderBar = ref(null);
         const slider = ref(null);
-        const iconRef = ref(null);
         const authModule = ref();
         const imgRef = ref();
         const progressRef = ref();
+        let iconStatus = ref(IconStatus.Normal);
 
         onMounted(() => {
             const containerWidth = authModule.value.offsetWidth;
@@ -54,26 +60,27 @@ export default {
             imgRef.value.style.height = `${0.5 * containerWidth}px`;
         });
 
-        let {sliderDown} = sliderGather(sliderBar, progressRef, slider, iconRef, props, authModule);
+        let {sliderDown} = sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule);
         return {
             sliderDown,
             sliderBar,
             slider,
-            iconRef,
+            iconStatus,
             authModule,
             imgRef,
-            progressRef
+            progressRef,
+            IconStatus
         };
     },
 }
 
-function sliderGather(sliderBar, progressRef, slider, sliderIcon, props, authModule) {
+function sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule) {
     function sliderDown(e) {
         moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength) => {
             // 完成滑动 判断滑块是否移动到最右端
             if (Math.abs(sliderBar.value.offsetWidth - slider.value.offsetWidth - moveLength) <= props.errorRange) {
                 // 如果移动距离和滑块可移动距离之间的差距不足5个像素 则判断认证成功
-                statusConvert.changeSuccessStatus(slider.value, progressRef.value, sliderIcon.value);
+                statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconStatus);
                 // 执行成功后的回调方法
                 props.success?.(close);
                 setTimeout(() => {
@@ -82,9 +89,9 @@ function sliderGather(sliderBar, progressRef, slider, sliderIcon, props, authMod
                 return;
             }
             // 认证失败 提示失败然后将滑块位置归位
-            statusConvert.changeFaildStatus(slider.value, progressRef.value, sliderIcon.value);
+            statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
             setTimeout(() => {
-                statusConvert.changeDefaultStatus(slider.value, progressRef.value, sliderIcon.value);
+                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
             }, constant.faildStyleDisplayTime);
         });
     }

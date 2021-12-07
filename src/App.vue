@@ -12,96 +12,117 @@
     <hr>
 
     <div style="width: 300px;">
-        <as-auth-bar>
+        <as-auth-bar ref="authRef">
             <as-simple-slider :success="success1" :autoClose="false" tips="向右滑动滑块，完成认证" :errorRange="10" size="normal" 
             background="https://cn.bing.com/th?id=OHR.FanalMadeira_ZH-CN5337723033_1920x1080.jpg&rf=LaDigue_1920x1080.jpg" />
         </as-auth-bar>
     </div>
     <hr>
-    <as-button prefix-icon="icon-shibai1">测试按钮</as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian">
+    <as-button prefix-icon="icon-shibai1">
+        <search />
         测试按钮
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button>
+        测试按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button>
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="primary">
+    <as-button type="primary">
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="positive">
+    <as-button type="positive">
         成功按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="warning">
+    <as-button type="warning">
         警告按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="negative">
+    <as-button type="negative">
         错误按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button circle>
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle suffix-icon="icon-zuobian" prefix-icon="icon-zuobian">
+    <as-button circle>
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button circle type="primary">
+        <search />
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle prefix-icon="icon-zuobian" type="primary">
+    <as-button circle type="positive">
+        <search />
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle prefix-icon="icon-zuobian" type="positive">
+    <as-button circle type="warning">
+        <search />
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle prefix-icon="icon-zuobian" type="warning">
+    <as-button circle type="negative">
+        <search />
         测试按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button circle prefix-icon="icon-zuobian" type="negative">
-        测试按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="primary" plain>
-        主要按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="positive" plain>
-        成功按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="warning" plain>
-        警告按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="negative" plain>
-        错误按钮
     </as-button>
     <br><br>
-    <as-button suffix-icon="icon-zuobian" type="primary" disabled>
+    <as-button type="primary" plain>
         主要按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="positive" disabled>
+    <as-button type="positive" plain>
         成功按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="warning" plain disabled>
+    <as-button type="warning" plain>
         警告按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="negative" disabled>
+    <as-button type="negative" plain>
         错误按钮
+        <search />
+    </as-button>
+    <br><br>
+    <as-button type="primary" disabled>
+        主要按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button suffix-icon="icon-zuobian" type="primary" loading>
+    <as-button type="positive" disabled>
+        成功按钮
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="warning" plain disabled>
+        警告按钮
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" disabled>
+        错误按钮
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="primary" loading>
         主要按钮
+        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button type="primary" loading plain>
@@ -109,47 +130,54 @@
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button type="negative" loading circle>
-        主要按钮
     </as-button>
     <br><br>
     &nbsp;&nbsp;&nbsp;
     <as-button type="negative" size="mini">
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="mini">
+    <as-button type="negative" size="mini">
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="small">
+    <as-button type="negative" size="small">
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="normal">
+    <as-button type="negative" size="normal">
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="mini" circle>
+    <as-button type="negative" size="mini" circle>
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="small" circle>
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="normal" circle>
+        <search />
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="normal" circle plain>
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="small" circle>
+    <as-button type="negative" round>
+        <search />
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="normal" circle>
-        主要按钮
+    <as-button type="negative">
+        <loading />
     </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" size="normal" circle plain>
-        主要按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" prefix-icon="icon-zuobian" round>
-        主要按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" suffix-icon="icon-jiazaizhong"></as-button>
     <hr>
     <p>{{t}}</p>
     <hr>
@@ -177,6 +205,7 @@
     <as-button type="primary" @click="messageDialog">消息提示VNode</as-button> 
     <as-button type="positive" @click="messageDialog1">消息提示</as-button> 
     <as-button type="warning" @click="messageDialog2">消息提示2</as-button>
+    <as-button type="negative" @click="messageDialog3">消息提示3</as-button>
     <br><br>
     <div style="width: 500px;">
         <as-code-block theme="light" ref="codeBlockRef"></as-code-block>
@@ -222,6 +251,8 @@
     <div style="width: 350px">
         <as-scratch-slider :refresh="jigsawRefresh" :success="jigsawSuccess" />
     </div>
+    <br><br>
+    <arrow />
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
@@ -232,6 +263,7 @@ import {AsMessage} from "../packages";
 const pictureCaptchaRef = ref();
 let a = ref();
 let authCount = 0;
+let authRef = ref();
 
 function jigsawRefresh(callback) {
     let bgArr = ['https://cn.bing.com/th?id=OHR.BeechTrees_ZH-CN9605292244_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',
@@ -320,7 +352,7 @@ function messageDialog() {
           h('span', null, 'Message can be '),
           h('i', { style: 'color: teal' }, 'VNode'),
         ]),
-        type: "error",
+        type: "info",
         onClose: () => {
             console.log(111);
         },
@@ -333,7 +365,7 @@ function messageDialog() {
 function messageDialog1() {
     AsMessage({
         message: 'This is a test message',
-        type: "error",
+        type: "success",
         onClose: () => {
             console.log(111);
         },
@@ -344,6 +376,18 @@ function messageDialog1() {
 }
 
 function messageDialog2() {
+    AsMessage({
+        message: 'This is a test message',
+        type: "warn",
+        onClose: () => {
+            console.log(111);
+        },
+        offset: 20,
+        duration: 1000,
+    });
+}
+
+function messageDialog3() {
     AsMessage({
         message: 'This is a test message',
         type: "error",
@@ -371,11 +415,9 @@ function refresh(callback) {
 }
 
 
-function success1(close) {
-    alert(1);
-    setTimeout(() => {
-        close();
-    }, 1000);
+function success1() {
+    AsMessage("认证成功");
+    authRef.value.success();
 }
 
 function sleep(numberMillis) {

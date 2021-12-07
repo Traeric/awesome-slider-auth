@@ -21,14 +21,19 @@
     font-weight 500
     cursor var(--disabled)
     opacity var(--opacity)
+    user-select none
+    font-size 14px
+    max-height 40px
     &:hover
         background-color var(--hover-backend-color)
         color var(--hover-font-color)
         border-color var(--hover-border-color)
         opacity var(--opacity)
-    i
-        font-size 14px
-        vertical-align bottom
-    .load-icon
+    .asa-icon
+        width 14px
+        height 14px
+        vertical-align text-top
+    .loading-icon
         display inline-block
+        vertical-align text-top
         animation rotate 1s linear infinite

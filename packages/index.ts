@@ -1,6 +1,5 @@
 import type { App } from "vue";
 import "./theme-chalk/index.styl";
-import "./theme-chalk/iconfont.css";
 import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
 import AsButton from "./AsButton/src/AsButton.vue";
 import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";
@@ -13,9 +12,11 @@ import PictureCaptcha from "./PictureCaptcha";
 import JigsawSlider from "./JigsawSlider";
 import AsTop from "./AsTop";
 import ScratchSlider from "./ScratchSlider";
+import * as iconComponent from "./AsIcons";
 
 // package下组件列表
 const components = [
+    ...Object.values(iconComponent),
     SimpleSlider,
     AsButton,
     PuzzleSlider,
@@ -29,7 +30,6 @@ const components = [
     AsTop,
     ScratchSlider,
 ];
-
 
 // 定义安装方法 如果使用use注册插件，则将package中所有组件注册
 const install: any = (app: App) => {

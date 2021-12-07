@@ -6,7 +6,7 @@
             <!-- 刷新样式 -->
             <div class="asa-refresh-panel"
             v-show="refreshFlag">
-                <i class="iconfont icon-jiazaizhong2"></i>
+                <loading class="asa-load" />
             </div>
         </div>
         <div class="asa-slider-bar scratch-slider-bar">
@@ -14,7 +14,7 @@
             <span class="tips">刮出</span>
             <span class="text">图案</span>
             <div class="error-tips" ref="errorTipRef">
-                <i class="iconfont icon-shibai"></i>
+                <error class="asa-error" />
                 验证失败，请重试
             </div>
         </div>

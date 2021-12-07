@@ -8,11 +8,11 @@
             :key="index"
             :style="{top: `${item.top}px`, left: `${item.left}px`}">{{ item.text }}</span>
             <!-- 刷新按钮 -->
-            <i class="iconfont icon-shuaxin1 asa-refresh" @click="refreshPanel()"></i>
+            <refresh class="asa-refresh" @click="refreshPanel()" />
             <!-- 刷新样式 -->
             <div class="asa-refresh-panel"
             v-show="refreshFlag">
-                <i class="iconfont icon-jiazaizhong2"></i>
+                <loading class="asa-load" />
             </div>
         </div>
         <div class="auth-bar">
@@ -22,7 +22,7 @@
             <span class="word">{{textOrder}}</span>
         </div>
         <div class="error-tips" ref="errorTipRef">
-            <i class="iconfont icon-shibai"></i>
+            <error class="asa-error" />
             验证失败，请按提示重新认证
         </div>
     </div>

@@ -6,10 +6,10 @@
             <!-- 加载样式 -->
             <div class="asa-refresh-panel"
             v-show="loadFlag">
-                <i class="iconfont icon-jiazaizhong2"></i>
+                <loading class="asa-load" />
             </div>
             <!-- 刷新按钮 -->
-            <i class="iconfont icon-shuaxin1 asa-refresh" @click="refreshPanel()"></i>
+            <refresh class="asa-refresh" @click="refreshPanel()" />
         </div>
         <div class="asa-slider-bar" ref="sliderBar">
             <span class="asa-slider-tips">
@@ -17,7 +17,12 @@
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
             <div class="asa-slider" @mousedown="sliderDown" ref="slider">
-                <i class="iconfont icon-zuobian" ref="iconRef"></i>
+                <arrow class="icon-arrow"
+                v-if="iconStatus === IconStatus.Normal" />
+                <success class="icon-success"
+                v-else-if="iconStatus === IconStatus.Success" />
+                <fail class="icon-fail"
+                v-else-if="iconStatus === IconStatus.Fail" />
             </div>
         </div>
     </div>
@@ -29,6 +34,7 @@ import {defaultBackground1} from "../../utils/pictureAdapter";
 import {RotateSliderHandler} from "./RotateSlider";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
+import {IconStatus} from "../../utils/enums";
 
 let props = defineProps({
     tips: {
@@ -56,9 +62,8 @@ const slider = ref();
 const sliderBar = ref();
 const progressRef = ref();
 const rotateRef = ref();
-const iconRef = ref();
 const wrapRef = ref();
-
+let iconStatus = ref(IconStatus.Normal);
 let loadFlag = ref(false);
 
 let rotateHandler: RotateSliderHandler;
@@ -76,7 +81,7 @@ function sliderDown(e) {
         let authResult: boolean = rotateHandler.auth(moveLength / sliderMoveMostLength, props.errorRange);
         if (authResult) {
             // 认证成功
-            statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconRef.value);
+            statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconStatus);
             // 关闭panel
             setTimeout(() => {
                 close(wrapRef.value);
@@ -85,11 +90,11 @@ function sliderDown(e) {
             }, constant.successStyleDisplayTime);
         } else {
             // 认证失败
-            statusConvert.changeFaildStatus(slider.value, progressRef.value, iconRef.value);
+            statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
             // 将圆圈归位
             rotateHandler.resetRotate();
             setTimeout(() => {
-                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconRef.value);
+                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
                 // 如果失败超过指定次数则刷新位置
                 if (props.refreshFrequency <= ++failCount) {
                     refreshPanel();

@@ -4,3 +4,5 @@ dist
 dist-ssr
 *.local
 *.tgz
+package-lock.json
+packages/AsIcons/src/*.vue
