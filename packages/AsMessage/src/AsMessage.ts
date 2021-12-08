@@ -1,7 +1,6 @@
 import type {AsMessageOptionsType} from './AsMessageOptions.types';
 import AsMessageComponent from "./AsMessage.vue";
 import { createVNode, render, VNode, isVNode, Component } from 'vue';
-import { infoMessage, errorMessage, successMessage, warningMessage } from '../../AsIcons';
 
 // 储存页面上的消息节点
 let messageInstance: Array<VNode> = [];
@@ -70,13 +69,6 @@ const AsMessage = (options: AsMessageOptionsType) => {
         render(null, container);
     }
     messageInstance.push(vm);
-}
-
-export const MessageIconMap = {
-    "success": successMessage,
-    "error": errorMessage,
-    "warn": warningMessage,
-    "info": infoMessage,
 }
 
 export default AsMessage;

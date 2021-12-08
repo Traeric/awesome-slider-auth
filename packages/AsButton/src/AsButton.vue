@@ -1,12 +1,17 @@
 <template>
     <button class="as-button-wrap" ref="buttonRef">
         <loading class="loading-icon" v-if="$props.loading" />
-        <slot></slot>
+        <component :is="prefixComponent" v-if="!loading && prefixComponent" />
+        <span class="as-btn-text" ref="textRef">
+            <slot></slot>
+        </span>
+        <component :is="suffixComponent" v-if="!loading && suffixComponent" />
     </button>
 </template>
 <script lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import {changeTheme} from "./theme.js";
+import * as iconComponentMap from "../../AsIcons/index";
 
 export default {
     name: "as-button",
@@ -29,19 +34,34 @@ export default {
             type: String,
             default: "normal"
         },
+        prefixIcon: String,
+        suffixIcon: String,
     },
     setup(props) {
         let buttonRef = ref();
-        let loadIcon = ref(false);
+        let textRef = ref();
 
         onMounted(() => {
             // 替换主题
             changeTheme(buttonRef, props);
+            // 为文字加margin
+            if (textRef.value.innerHTML === "") {
+                textRef.value.remove();
+
+            } else {
+                textRef.value.innerText = textRef.value.innerText.trim();
+            }
         });
 
         return {
             buttonRef,
-            loadIcon,
+            textRef,
+            prefixComponent: computed(() => {
+                return props.prefixIcon && iconComponentMap[props.prefixIcon];
+            }),
+            suffixComponent: computed(() => {
+                return props.suffixIcon && iconComponentMap[props.suffixIcon];
+            }),
         };
     },
 }

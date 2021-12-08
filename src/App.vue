@@ -18,111 +18,89 @@
         </as-auth-bar>
     </div>
     <hr>
-    <as-button prefix-icon="icon-shibai1">
-        <search />
+    <as-button prefix-icon="search" suffix-icon="arrow">测试按钮</as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button suffix-icon="search">
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button>
         测试按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button>
-        测试按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="primary">
-        <search />
+    <as-button type="primary" prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="positive">
+    <as-button type="positive" suffix-icon="search">
         成功按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="warning">
+    <as-button type="warning" suffix-icon = "search">
         警告按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative">
+    <as-button type="negative" suffix-icon="search">
         错误按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button circle>
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle>
-        <search />
+    <as-button circle prefix-icon="search">
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle type="primary">
-        <search />
+    <as-button circle type="primary" prefix-icon="search">
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle type="positive">
-        <search />
+    <as-button circle type="positive" prefix-icon="search">
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle type="warning">
-        <search />
+    <as-button circle type="warning" prefix-icon="search">
         测试按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button circle type="negative">
-        <search />
+    <as-button circle type="negative" prefix-icon="search">
         测试按钮
     </as-button>
     <br><br>
-    <as-button type="primary" plain>
+    <as-button type="primary" plain suffix-icon="search">
         主要按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="positive" plain>
+    <as-button type="positive" plain suffix-icon="search">
         成功按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="warning" plain>
+    <as-button type="warning" plain suffix-icon="search">
         警告按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" plain>
+    <as-button type="negative" plain suffix-icon="search">
         错误按钮
-        <search />
     </as-button>
     <br><br>
-    <as-button type="primary" disabled>
+    <as-button type="primary" disabled suffix-icon="search">
         主要按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="positive" disabled>
+    <as-button type="positive" disabled suffix-icon="search">
         成功按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="warning" plain disabled>
+    <as-button type="warning" plain disabled suffix-icon="search">
         警告按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" disabled>
+    <as-button type="negative" disabled suffix-icon="search">
         错误按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="primary" loading>
+    <as-button type="primary" loading suffix-icon="search">
         主要按钮
-        <search />
     </as-button>
     &nbsp;&nbsp;&nbsp;
     <as-button type="primary" loading plain>
@@ -133,50 +111,36 @@
     </as-button>
     <br><br>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="mini">
-        <search />
+    <as-button type="negative" size="mini" prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="mini">
-        <search />
+    <as-button type="negative" size="small" prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="small">
-        <search />
+    <as-button type="negative" size="normal" prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="normal">
-        <search />
+    <as-button type="negative" size="mini" circle prefix-icon="search">
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="small" circle prefix-icon="search">
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="normal" circle prefix-icon="search">
+    </as-button>
+    &nbsp;&nbsp;&nbsp;
+    <as-button type="negative" size="normal" circle plain prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="mini" circle>
-        <search />
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="small" circle>
-        <search />
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="normal" circle>
-        <search />
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" size="normal" circle plain>
-        <search />
+    <as-button type="negative" round prefix-icon="search">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="negative" round>
-        <search />
-        主要按钮
-    </as-button>
-    &nbsp;&nbsp;&nbsp;
-    <as-button type="negative">
-        <loading />
+    <as-button type="negative" prefix-icon="load">
     </as-button>
     <hr>
     <p>{{t}}</p>

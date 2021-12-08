@@ -18,7 +18,7 @@
 import { computed, onMounted, onUnmounted, PropType, ref } from "vue";
 import { MessageType } from "./AsMessageOptions.types";
 import {VNode} from "../../utils/insertVNode";
-import {MessageIconMap} from "./AsMessage";
+import { infoMessage, errorMessage, successMessage, warningMessage } from '../../AsIcons';
 
 let props = defineProps({
     offset: Number,
@@ -41,6 +41,13 @@ let props = defineProps({
         default: false
     }
 });
+
+const MessageIconMap = {
+    "success": successMessage,
+    "error": errorMessage,
+    "warn": warningMessage,
+    "info": infoMessage,
+}
 
 let messageShow = ref(false);
 
