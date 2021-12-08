@@ -83,7 +83,7 @@
         错误按钮
     </as-button>
     <br><br>
-    <as-button type="primary" disabled suffix-icon="search">
+    <as-button type="primary" :disabled="loadtest" suffix-icon="search" @click="success">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
@@ -99,11 +99,11 @@
         错误按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="primary" loading suffix-icon="search">
+    <as-button type="primary" :loading="loadtest" suffix-icon="search" @click="success">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
-    <as-button type="primary" loading plain>
+    <as-button type="primary" plain @click="changeLoad">
         主要按钮
     </as-button>
     &nbsp;&nbsp;&nbsp;
@@ -228,6 +228,11 @@ const pictureCaptchaRef = ref();
 let a = ref();
 let authCount = 0;
 let authRef = ref();
+let loadtest = ref(false);
+
+function changeLoad() {
+    loadtest.value = !loadtest.value;
+}
 
 function jigsawRefresh(callback) {
     let bgArr = ['https://cn.bing.com/th?id=OHR.BeechTrees_ZH-CN9605292244_1920x1080.jpg&rf=LaDigue_1920x1080.jpg',

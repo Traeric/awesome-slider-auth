@@ -9,7 +9,7 @@
     </button>
 </template>
 <script lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import {changeTheme} from "./theme.js";
 import * as iconComponentMap from "../../AsIcons/index";
 
@@ -47,10 +47,18 @@ export default {
             // 为文字加margin
             if (textRef.value.innerHTML === "") {
                 textRef.value.remove();
-
             } else {
                 textRef.value.innerText = textRef.value.innerText.trim();
             }
+            // 设置按钮禁用
+            buttonRef.value.disabled = props.loading || props.disabled;
+        });
+
+        // 监听禁用
+        watch(() => [props.disabled, props.loading], ([newDis, newLoad], [oldDis, oldLoad]) => {
+            buttonRef.value.disabled = props.loading || props.disabled;
+            // 替换主题
+            changeTheme(buttonRef, props);
         });
 
         return {

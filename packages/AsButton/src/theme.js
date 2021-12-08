@@ -70,6 +70,8 @@ export function changeTheme(variable, props) {
     variable.value.style.setProperty("--hover-backend-color", colorThemeObj.hoverBackendColor);
     variable.value.style.setProperty("--hover-border-color", colorThemeObj.hoverBorderColor);
     variable.value.style.setProperty("--hover-font-color", colorThemeObj.hoverFontColor);
+    variable.value.style.setProperty("--disabled", "pointer");
+    variable.value.style.setProperty("--opacity", "1");
     // 如果设置了圆角
     if (props.circle) {
         variable.value.style.setProperty("--border-radius", roundObject.circle);
