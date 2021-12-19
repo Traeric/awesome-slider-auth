@@ -226,6 +226,12 @@
         <p>footer</p>
     </div>
     <as-top :listen-element="topRef" bottom="150" color="#3eaf7c" />
+    <br><br>
+    <as-button type="negative" suffix-icon="component">查看文档</as-button>
+    <br><br>
+    <as-button type="negative" suffix-icon="document">查看文档</as-button>
+    <br><br>
+    <as-button type="negative" suffix-icon="search">查看文档</as-button>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 

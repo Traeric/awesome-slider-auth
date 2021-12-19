@@ -4,6 +4,10 @@ export { default as authSuccess } from './src/auth-success.vue'
 
 export { default as auth } from './src/auth.vue'
 
+export { default as component } from './src/component.vue'
+
+export { default as document } from './src/document.vue'
+
 export { default as errorMessage } from './src/error-message.vue'
 
 export { default as error } from './src/error.vue'
