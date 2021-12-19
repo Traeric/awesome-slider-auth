@@ -1,6 +1,6 @@
 {
   "name": "awesome-slider-auth",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Human machine verification for sign on",
   "private": false,
   "main": "dist/index-umd.js",
