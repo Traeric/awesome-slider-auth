@@ -21,7 +21,7 @@ function changeSuccessStatus(slider, progressRef, iconStatus) {
     progressRef.style.borderColor = '#67c23a';
 }
 
-function changeDefaultStatus(slider, progressRef, iconStatus) {
+function changeDefaultStatus(slider, progressRef, iconStatus, callback) {
     iconStatus.value = IconStatus.Normal;
     slider.style.cssText = "";
     progressRef.style.cssText = "";
@@ -29,6 +29,7 @@ function changeDefaultStatus(slider, progressRef, iconStatus) {
 
     setTimeout(() => {
         slider.style.cssText = "";
+        callback?.();
     }, 500);
 }
 

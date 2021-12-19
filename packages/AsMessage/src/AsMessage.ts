@@ -20,7 +20,7 @@ const AsMessage = (options: AsMessageOptionsType) => {
     }
     // 到此options一定是一个AsMessageOptionsType类型的对象
     // 计算消息的偏移量 后面的消息需要与前面的消息拉开距离
-    let userOffset = options.offset || defaultOffset; 
+    let userOffset = options.offset || defaultOffset;
     let offset = userOffset;
     messageInstance.forEach(instance => {
         // 将该消息之前的所有消息的高度以及偏移值加起来得到目前消息的偏移量

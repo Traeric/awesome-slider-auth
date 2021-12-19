@@ -6,7 +6,7 @@
                 {{tips}}
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
-            <div class="asa-slider" @mousedown="sliderDown" ref="slider">
+            <div class="asa-slider" @mousedown="sliderDown" ref="slider" :style="cursorStyle">
                 <arrow class="icon-arrow"
                 v-if="iconStatus === IconStatus.Normal" />
                 <success class="icon-success"
@@ -18,7 +18,7 @@
     </div>
 </template>
 <script lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
@@ -53,6 +53,7 @@ export default {
         const imgRef = ref();
         const progressRef = ref();
         let iconStatus = ref(IconStatus.Normal);
+        let preventMove = ref(true);
 
         onMounted(() => {
             const containerWidth = authModule.value.offsetWidth;
@@ -60,7 +61,7 @@ export default {
             imgRef.value.style.height = `${0.5 * containerWidth}px`;
         });
 
-        let {sliderDown} = sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule);
+        let {sliderDown} = sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule, preventMove);
         return {
             sliderDown,
             sliderBar,
@@ -69,13 +70,19 @@ export default {
             authModule,
             imgRef,
             progressRef,
-            IconStatus
+            IconStatus,
+            cursorStyle: computed(() => ({
+                "cursor": preventMove.value ? 'move' : 'not-allowed',
+            }))
         };
     },
 }
 
-function sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule) {
+function sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule, preventMove) {
     function sliderDown(e) {
+        if (!preventMove.value) {
+            return;
+        }
         moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength) => {
             // 完成滑动 判断滑块是否移动到最右端
             if (Math.abs(sliderBar.value.offsetWidth - slider.value.offsetWidth - moveLength) <= props.errorRange) {
@@ -90,8 +97,9 @@ function sliderGather(sliderBar, progressRef, slider, iconStatus, props, authMod
             }
             // 认证失败 提示失败然后将滑块位置归位
             statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
+            preventMove.value = false;
             setTimeout(() => {
-                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
+                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus, () => preventMove.value = true);
             }, constant.faildStyleDisplayTime);
         });
     }

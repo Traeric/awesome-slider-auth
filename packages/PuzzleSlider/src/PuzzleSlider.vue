@@ -1,7 +1,7 @@
 <template>
     <div class="simple-wrap" ref="containerRef">
         <div class="img-area" ref="imgRef">
-            <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown"></canvas>
+            <canvas ref="puzzleCoverRef" class="puzzle-cover" @mousedown="sliderDown" :style="cursorStyle"></canvas>
             <canvas ref="puzzleBeCoveredRef"></canvas>
             <img :src="defaultBackground" alt="NO IMG" ref="imgBgRef">
             <!-- 加载样式 -->
@@ -17,7 +17,7 @@
                 {{tips}}
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
-            <div class="asa-slider" @mousedown="sliderDown" ref="slider">
+            <div class="asa-slider" @mousedown="sliderDown" ref="slider" :style="cursorStyle">
                 <arrow class="icon-arrow"
                 v-if="iconStatus === IconStatus.Normal" />
                 <success class="icon-success"
@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import {defaultBackground, blackBackground} from "../../utils/pictureAdapter.js";
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation.js";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
@@ -46,6 +46,10 @@ const progressRef = ref();
 const imgBgRef = ref();
 let iconStatus = ref(IconStatus.Normal);
 let loadFlag = ref(false);
+let preventMove = ref(true);
+let cursorStyle = computed(() => ({
+    "cursor": preventMove.value ? 'move' : 'not-allowed',
+}));
 
 // 父组件传入参数
 const props = defineProps({
@@ -93,6 +97,9 @@ onMounted(() => {
 
 // 移动底部滑块事件
 function sliderDown(e) {
+    if (!preventMove.value) {
+        return;
+    }
     moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength) => {
         // 完成滑动 判断两个拼图是否合并在一起
         const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));
@@ -111,9 +118,9 @@ function sliderDown(e) {
         statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
         puzzleCoverRef.value.style.left = `${leftLimit}px`;
         puzzleCoverRef.value.style.transition = `left .5s`;
+        preventMove.value = false;
         setTimeout(() => {
-            statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
-            setTimeout(() => {
+            statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus, () => {
                 puzzleCoverRef.value.style.transition = "none";
                 // 如果失败超过指定次数则刷新位置
                 if (props.refreshFrequency <= ++failCount) {
@@ -121,7 +128,8 @@ function sliderDown(e) {
                     initPuzzlePosition();
                     failCount = 0;
                 }
-            }, 500);
+                preventMove.value = true;
+            });
         }, constant.faildStyleDisplayTime);
     }, (moveLenth, mostMoveLength) => {
         // 计算滑块和拼图的移动比

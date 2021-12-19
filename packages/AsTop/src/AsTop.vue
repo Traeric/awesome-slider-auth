@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { nextTick, onMounted, PropType, Ref, ref } from 'vue';
 let props = defineProps({
     bottom: {
         type: Number,
@@ -22,18 +22,37 @@ let props = defineProps({
     visibilityHeight: {
         type: Number,
         default: 200
+    },
+    listenElement: {
+        type: Object as PropType<HTMLElement | Document>,
+        default: document
     }
 });
 
 let visible = ref(false);
 
-document.addEventListener("scroll", () => {
-    let scrollObj = document.documentElement || document.body;
-    visible.value = scrollObj.scrollTop >= props.visibilityHeight;
-}, true);
+nextTick(() => {
+    if (props.listenElement) {
+        props.listenElement.addEventListener("scroll", () => {
+            let domElement: HTMLElement;
+            if (props.listenElement instanceof Document) {
+                domElement = props.listenElement.documentElement;
+            } else {
+                domElement = props.listenElement;
+            }
+            visible.value = domElement.scrollTop >= props.visibilityHeight;
+        }, false);
+    }
+});
 
 function backToTop() {
-    window.scrollTo({
+    let domElement: HTMLElement;
+    if (props.listenElement instanceof Document) {
+        domElement = props.listenElement.documentElement;
+    } else {
+        domElement = props.listenElement;
+    }
+    domElement.scrollTo({
         top: 0,
         behavior: "smooth"
     });

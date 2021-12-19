@@ -217,6 +217,15 @@
     </div>
     <br><br>
     <arrow />
+    <br><br>
+    <div style="height: 50px; width: 200px; background-color: red; overflow: auto;" class="top-test" ref="topRef">
+        <p style="height: 500px;">dsds</p>
+        <p>eeeee</p>
+        <p>dsfdsfdsf</p>
+        <p>dddsfsd</p>
+        <p>footer</p>
+    </div>
+    <as-top :listen-element="topRef" :bottom="150" />
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
@@ -229,6 +238,10 @@ let a = ref();
 let authCount = 0;
 let authRef = ref();
 let loadtest = ref(false);
+let topRef = ref(null);
+onMounted(() => {
+    console.log("============", topRef.value);
+});
 
 function changeLoad() {
     loadtest.value = !loadtest.value;

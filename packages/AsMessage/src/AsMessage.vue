@@ -3,8 +3,8 @@
         name="as-message-fade"
         @before-leave="props.onClose"
         @after-leave="$emit('destory')">
-        <div class="as-message-wrap" 
-        v-show="messageShow" 
+        <div class="as-message-wrap"
+        v-show="messageShow"
         :style="styles"
         :class="wrapClass">
         <component :class="iconClass" :is="iconComponent" />
