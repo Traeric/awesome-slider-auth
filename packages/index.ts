@@ -1,9 +1,9 @@
 import type { App } from "vue";
 import "./theme-chalk/index.styl";
-import SimpleSlider from "./SimpleSlider/src/SimpleSlider.vue";
-import AsButton from "./AsButton/src/AsButton.vue";
-import PuzzleSlider from "./PuzzleSlider/src/PuzzleSlider.vue";
-import TextSlider from "./TextSlider/src/TextSlider.vue";
+import SimpleSlider from "./SimpleSlider";
+import AsButton from "./AsButton";
+import PuzzleSlider from "./PuzzleSlider";
+import TextSlider from "./TextSlider";
 import AsMessage from "./AsMessage";
 import AsCodeBlock from "./AsCodeBlock";
 import AsAuthBar from "./AsAuthBar";
@@ -34,9 +34,11 @@ const components = [
 // 定义安装方法 如果使用use注册插件，则将package中所有组件注册
 const install: any = (app: App) => {
     components.forEach((component: any) => {
-        // 执行每个组件的use方法
-        app.use(component);
-        app.component(component.name, component)
+        if (component.install) {
+            // 执行每个组件的install方法
+            app.use(component);
+        }
+        app.component(component.name, component);
     });
 }
 

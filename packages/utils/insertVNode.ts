@@ -2,7 +2,7 @@ import { defineComponent } from "vue";
 
 export const VNode = defineComponent({
     props: {
-        content: Object
+        content: [String, Object]
     },
     render(): any {
         return this.content;

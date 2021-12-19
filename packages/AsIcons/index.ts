@@ -4,7 +4,7 @@ export { default as authSuccess } from './src/auth-success.vue'
 
 export { default as auth } from './src/auth.vue'
 
-export { default as component } from './src/component.vue'
+export { default as components } from './src/components.vue'
 
 export { default as document } from './src/document.vue'
 

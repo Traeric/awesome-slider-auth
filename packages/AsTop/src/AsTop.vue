@@ -22,11 +22,11 @@ import { computed, nextTick, ComputedRef, PropType, ref } from 'vue';
 let props = defineProps({
     bottom: {
         type: String,
-        default: 50
+        default: '50px'
     },
     right: {
         type: String,
-        default: 50
+        default: '50px'
     },
     visibilityHeight: {
         type: Number,

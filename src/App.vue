@@ -1,19 +1,8 @@
 <template>
     <br><br><br><br><br><br><br><br><br><br><br>
-    <as-default-slider
-    :success="success" width="450" height="250" tips="提示。。。。。" errorRange="10"
-    :refresh="refresh" />
-
-    <hr>
-
-    <as-default-slider
-    :success="success" />
-
-    <hr>
-
     <div style="width: 300px;">
         <as-auth-bar ref="authRef">
-            <as-simple-slider :success="success1" :autoClose="false" tips="向右滑动滑块，完成认证" :errorRange="10" size="normal" 
+            <as-simple-slider :success="success1" :autoClose="false" tips="向右滑动滑块，完成认证" :errorRange="10" size="normal"
             background="https://cn.bing.com/th?id=OHR.FanalMadeira_ZH-CN5337723033_1920x1080.jpg&rf=LaDigue_1920x1080.jpg" />
         </as-auth-bar>
     </div>
@@ -143,17 +132,16 @@
     <as-button type="negative" prefix-icon="load">
     </as-button>
     <hr>
-    <p>{{t}}</p>
     <hr>
     <div style="width: 500px;">
-        <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10" 
-        :refreshFrequency="5" 
+        <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10"
+        :refreshFrequency="5"
         :refresh="refresh" />
     </div>
     <div style="width: 300px;">
         <as-auth-bar>
-            <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10" 
-            :refreshFrequency="5" 
+            <as-puzzle-slider :success="success" tips="提示提示提示" :errorRange="10"
+            :refreshFrequency="5"
             :refresh="refresh" />
         </as-auth-bar>
     </div>
@@ -166,8 +154,8 @@
         <as-text-slider :refresh="refreshText" />
     </div>
     <br>
-    <as-button type="primary" @click="messageDialog">消息提示VNode</as-button> 
-    <as-button type="positive" @click="messageDialog1">消息提示</as-button> 
+    <as-button type="primary" @click="messageDialog">消息提示VNode</as-button>
+    <as-button type="positive" @click="messageDialog1">消息提示</as-button>
     <as-button type="warning" @click="messageDialog2">消息提示2</as-button>
     <as-button type="negative" @click="messageDialog3">消息提示3</as-button>
     <br><br>
@@ -227,7 +215,7 @@
     </div>
     <as-top :listen-element="topRef" bottom="150" color="#3eaf7c" />
     <br><br>
-    <as-button type="negative" suffix-icon="component">查看文档</as-button>
+    <as-button type="negative" suffix-icon="components">查看文档</as-button>
     <br><br>
     <as-button type="negative" suffix-icon="document">查看文档</as-button>
     <br><br>
@@ -245,9 +233,6 @@ let authCount = 0;
 let authRef = ref();
 let loadtest = ref(false);
 let topRef = ref(null);
-onMounted(() => {
-    console.log("============", topRef.value);
-});
 
 function changeLoad() {
     loadtest.value = !loadtest.value;
@@ -302,7 +287,7 @@ function pictureAuth() {
 }
 
 
-let code = 
+let code =
 `<template>
     <as-button type="warning" @click="messageTip">Message消息基础用法</as-button>
     <as-button type="negative" @click="messageVNode">VNode消息基础用法</as-button>

@@ -23,7 +23,7 @@ import { infoMessage, errorMessage, successMessage, warningMessage } from '../..
 let props = defineProps({
     offset: Number,
     message: {
-        type: Object,
+        type: [String, Object],
         default: ''
     },
     onClose: Function as PropType<() => void>,

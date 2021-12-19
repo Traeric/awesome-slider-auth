@@ -13,5 +13,5 @@ interface MessageOptionInfo {
 }
 
 
-export type AsMessageOptionsType = MessageOptionInfo | string; 
+export type AsMessageOptionsType = MessageOptionInfo | string;
 
