@@ -196,11 +196,11 @@
     </div>
     <br>
     <as-top />
-    <as-top :bottom="100" :visibility-height="10">
+    <as-top bottom="100" :visibility-height="10">
         <div
             style="
-                height: 100%;
-                width: 100%;
+                height: 40px;
+                width: 40px;
                 background-color: #f2f5f6;
                 box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
                 text-align: center;
@@ -225,7 +225,7 @@
         <p>dddsfsd</p>
         <p>footer</p>
     </div>
-    <as-top :listen-element="topRef" :bottom="150" />
+    <as-top :listen-element="topRef" bottom="150" color="#3eaf7c" />
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 

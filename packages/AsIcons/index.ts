@@ -22,6 +22,8 @@ export { default as refresh } from './src/refresh.vue'
 
 export { default as restart } from './src/restart.vue'
 
+export { default as rocket } from './src/rocket.vue'
+
 export { default as search } from './src/search.vue'
 
 export { default as sourceCode } from './src/source-code.vue'

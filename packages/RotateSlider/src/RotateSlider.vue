@@ -16,7 +16,7 @@
                 {{tips}}
             </span>
             <div class="asa-slider-progress" ref="progressRef"></div>
-            <div class="asa-slider" @mousedown="sliderDown" ref="slider">
+            <div class="asa-slider" @mousedown="sliderDown" ref="slider" :style="cursorStyle">
                 <arrow class="icon-arrow"
                 v-if="iconStatus === IconStatus.Normal" />
                 <success class="icon-success"
@@ -28,7 +28,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import {moveSliderEvent, close} from "../../utils/eventSublimation.js";
 import {defaultBackground1} from "../../utils/pictureAdapter";
 import {RotateSliderHandler} from "./RotateSlider";
@@ -65,6 +65,10 @@ const rotateRef = ref();
 const wrapRef = ref();
 let iconStatus = ref(IconStatus.Normal);
 let loadFlag = ref(false);
+let preventMove = ref(true);
+let cursorStyle = computed(() => ({
+    "cursor": preventMove.value ? 'move' : 'not-allowed',
+}));
 
 let rotateHandler: RotateSliderHandler;
 onMounted(() => {
@@ -77,6 +81,9 @@ onMounted(() => {
 
 let failCount = 0;
 function sliderDown(e) {
+    if (!preventMove.value) {
+        return;
+    }
     moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength, sliderMoveMostLength) => {
         let authResult: boolean = rotateHandler.auth(moveLength / sliderMoveMostLength, props.errorRange);
         if (authResult) {
@@ -90,15 +97,18 @@ function sliderDown(e) {
             }, constant.successStyleDisplayTime);
         } else {
             // 认证失败
+            preventMove.value = false;
             statusConvert.changeFaildStatus(slider.value, progressRef.value, iconStatus);
             // 将圆圈归位
             rotateHandler.resetRotate();
             setTimeout(() => {
-                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus);
-                // 如果失败超过指定次数则刷新位置
-                if (props.refreshFrequency <= ++failCount) {
-                    refreshPanel();
-                }
+                statusConvert.changeDefaultStatus(slider.value, progressRef.value, iconStatus, () => {
+                    // 如果失败超过指定次数则刷新位置
+                    if (props.refreshFrequency <= ++failCount) {
+                        refreshPanel();
+                    }
+                    preventMove.value = true;
+                });
             }, constant.faildStyleDisplayTime);
         }
     }, (moveLength, sliderMoveMostLength) => {
@@ -128,6 +138,6 @@ function defaultRefresh (callbakc: Function) {
 </script>
 <script lang="ts">
 export default {
-    name: "as-rotate-slider"   
+    name: "as-rotate-slider"
 }
 </script>

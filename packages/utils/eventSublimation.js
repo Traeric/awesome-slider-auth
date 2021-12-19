@@ -1,9 +1,9 @@
 /**
- * 
- * @param {Object} e 鼠标事件对象 
- * @param {Object} data 该方法需要的参数集合 
+ *
+ * @param {Object} e 鼠标事件对象
+ * @param {Object} data 该方法需要的参数集合
  * @param {Function} mouseupCallback 鼠标抬起后的回调事件
- * @param {Function} moveCallback 鼠标移动过程中的回调事件 
+ * @param {Function} moveCallback 鼠标移动过程中的回调事件
  */
 function moveSliderEvent(e, data, mouseupCallback, moveCallback = null) {
     let {slider, sliderBar, progressRef} = data;
