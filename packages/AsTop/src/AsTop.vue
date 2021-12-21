@@ -18,7 +18,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, nextTick, ComputedRef, PropType, ref } from 'vue';
+import { computed, nextTick, PropType, ref } from 'vue';
 let props = defineProps({
     bottom: {
         type: String,
@@ -33,39 +33,43 @@ let props = defineProps({
         default: 200
     },
     listenElement: {
-        type: Object as PropType<HTMLElement | Document>,
+        type: [String, HTMLElement, Document],
         default: document
     },
     color: String
 });
 let visible = ref(false);
-let topWrapRef = ref();
-let domHeight = ref(0);
 let topStyle = computed(() => ({
-    'bottom': visible.value ? converUnit(props.bottom) : `-${domHeight.value}px`,
+    'bottom': visible.value ? converUnit(props.bottom) : `-100px`,
     'right': converUnit(props.right)
-}));;
+}));
+let scrollDom: HTMLElement | Document;
+
 nextTick(() => {
+    if (typeof props.listenElement === "string") {
+        scrollDom = document.querySelector(props.listenElement) as HTMLElement;
+    } else {
+        scrollDom = props.listenElement as HTMLElement | Document;
+    }
     if (props.listenElement) {
-        props.listenElement.addEventListener("scroll", () => {
+        scrollDom.addEventListener("scroll", () => {
             let domElement: HTMLElement;
-            if (props.listenElement instanceof Document) {
-                domElement = props.listenElement.documentElement;
+            if (scrollDom instanceof Document) {
+                domElement = scrollDom.documentElement;
             } else {
-                domElement = props.listenElement;
+                domElement = scrollDom;
             }
             visible.value = domElement.scrollTop >= props.visibilityHeight;
         }, false);
     }
-    domHeight.value = (topWrapRef.value as HTMLDivElement).offsetHeight;
 });
 
 function backToTop() {
     let domElement: HTMLElement;
-    if (props.listenElement instanceof Document) {
-        domElement = props.listenElement.documentElement;
+    if (scrollDom instanceof Document) {
+        domElement = scrollDom.documentElement;
     } else {
-        domElement = props.listenElement;
+        domElement = scrollDom;
     }
     domElement.scrollTo({
         top: 0,

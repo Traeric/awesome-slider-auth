@@ -213,7 +213,7 @@
         <p>dddsfsd</p>
         <p>footer</p>
     </div>
-    <as-top :listen-element="topRef" bottom="150" color="#3eaf7c" />
+    <as-top listen-element=".top-test" bottom="150" color="#3eaf7c" />
     <br><br>
     <as-button type="negative" suffix-icon="components">查看文档</as-button>
     <br><br>
