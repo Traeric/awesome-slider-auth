@@ -1,4 +1,4 @@
-import type { App } from "vue";
+import type { App, Component } from "vue";
 import "./theme-chalk/index.styl";
 import SimpleSlider from "./SimpleSlider";
 import AsButton from "./AsButton";
@@ -12,11 +12,11 @@ import PictureCaptcha from "./PictureCaptcha";
 import JigsawSlider from "./JigsawSlider";
 import AsTop from "./AsTop";
 import ScratchSlider from "./ScratchSlider";
-import * as iconComponent from "./AsIcons";
+import * as IconGather from "./AsIcons";
 
 // package下组件列表
 const components = [
-    ...Object.values(iconComponent),
+    ...Object.values(IconGather),
     SimpleSlider,
     AsButton,
     PuzzleSlider,
@@ -62,4 +62,6 @@ export {
     JigsawSlider,
     AsTop,
     ScratchSlider,
+    IconGather,
 }
+
