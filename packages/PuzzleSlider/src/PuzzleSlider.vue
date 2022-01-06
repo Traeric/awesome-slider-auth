@@ -28,9 +28,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import {defaultBackground} from "../../utils/pictureAdapter.js";
+import {defaultBackground, blackBackground} from "../../utils/pictureAdapter.js";
 import { computed, onMounted, ref } from 'vue';
-import {moveSliderEvent} from "../../utils/eventSublimation.js";
+import {moveSliderEvent} from "../../utils/eventSublimation";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 import {IconStatus} from "../../utils/enums";
@@ -81,6 +81,8 @@ const props = defineProps({
 const leftLimit = 10;
 const rate = 1.3;
 let failCount = 0;
+// 右侧拼图位置 通过这个校验用户是否认证成功
+let beCoverPuzzleLeft: number = 0;
 // 背景图片
 let bgImageData: HTMLImageElement;
 type callbackData = {
@@ -102,15 +104,13 @@ onMounted(() => {
 
 
 // 移动底部滑块事件
-function sliderDown(e) {
+function sliderDown(e: MouseEvent) {
     if (!preventMove.value) {
         return;
     }
     moveSliderEvent(e, {slider, sliderBar, progressRef}, (moveLength) => {
         // 完成滑动 判断两个拼图是否合并在一起
-        const coverLeft = parseInt(puzzleCoverRef.value.style.left.replace('px', ''));
-        const beCoveredLeft = parseInt(puzzleBeCoveredRef.value.style.left.replace('px', ''));
-        if (Math.abs(coverLeft - beCoveredLeft) <= props.errorRange) {
+        if (Math.abs(moveLength - beCoverPuzzleLeft) <= props.errorRange) {
             statusConvert.changeSuccessStatus(slider.value, progressRef.value, iconStatus);
             setTimeout(() => {
                 // 关闭认证模块
@@ -148,7 +148,7 @@ function sliderDown(e) {
 /**
  * 销毁当前认证模块
  */
-function close() {
+function close(): void {
     if (containerRef.value !== undefined) {
         containerRef.value.style.opacity = "0";
         setTimeout(() => {
@@ -180,21 +180,34 @@ function initPuzzlePosition() {
                 bgCoverRef.value!.getContext('2d')!
                 .drawImage(bgImageData, 0, 0, bgCoverRef.value!.offsetWidth, bgCoverRef.value!.offsetHeight);
                 // 准备待覆盖的puzzle
-                drawPuzzle(puzzleCoverRef.value, bgImageData, "#E6A23C", {
-                    x: -position.x,
-                    y: -position.y,
-                    width: imgRef.value.offsetWidth,
-                    height: imgRef.value.offsetHeight
+                drawPuzzle(puzzleCoverRef.value, true, 2, 0, ctx => {
+                    // 线条样式
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = "#E6A23C";
+                    ctx.stroke();
+                    ctx.clip();
+                    ctx.drawImage(bgImageData, -position.x, -position.y, imgRef.value.offsetWidth, imgRef.value.offsetHeight);
                 });
                 // 设置覆盖的puzzle位置
                 puzzleCoverRef.value.style.left = `${leftLimit}px`;
                 puzzleCoverRef.value.style.top = `${position.y}px`;
-                // // 准备被覆盖的puzzle
-                // drawPuzzle(puzzleBeCoveredRef.value, beCoveredImgData, "rgba(255, 255, 255, .5)");
-                // // 设置被覆盖的puzzle位置
-                // puzzleBeCoveredRef.value.style.left = `${position.x}px`;
-                // puzzleBeCoveredRef.value.style.top = `${position.y}px`;
+                // 准备被覆盖的puzzle
+                // 画被覆盖的puzzle的border
+                drawPuzzle(bgCoverRef.value!, false, position.x, position.y, ctx => {
+                    // 线条样式
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = "rgba(255, 255, 255, .5)";
+                    ctx.stroke();
+                });
+                // 被覆盖的puzzle背景
+                drawPuzzle(bgCoverRef.value!, false, position.x, position.y, ctx => ctx.fill());
                 loadFlag.value = false;
+                // 设置被覆盖的puzzle位置
+                beCoverPuzzleLeft = position.x;
             }
         });
     }, 200);
@@ -224,22 +237,17 @@ function initPuzzleSize() {
 /**
  * 画拼图方法
  */
-type drawPuzzleData = {
-    x: number,
-    y: number,
-    width: number,
-    height: number
-};
-function drawPuzzle(canvas: HTMLCanvasElement, imageData: CanvasImageSource, borderStyle: string = "#67C23A", position: drawPuzzleData | null = null, rate = 1.3) {
+function drawPuzzle(canvas: HTMLCanvasElement, canvasResize: boolean,
+                    xOffset: number = 2, yOffset: number = 0, callback: (ctx: CanvasRenderingContext2D) => void) {
     const cl = initPuzzleSize();
-    canvas.width = cl + 2;
-    canvas.height = cl + 2;
+    if (canvasResize) {
+        canvas.width = cl + 2;
+        canvas.height = cl + 2;
+    }
     // 设置圆的直径以及正方形的边长
     const sideLen = cl / 5 * 3.8;
     const diameter = cl / 5 * 1.2;
-    // x跟y轴整体移动距离
-    const xOffset = 2
-    const yOffset = 0;
+
     const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
     ctx.beginPath();
     // 设置线段效果
@@ -265,21 +273,8 @@ function drawPuzzle(canvas: HTMLCanvasElement, imageData: CanvasImageSource, bor
     ctx.arc(diameter / 2 - 2 + xOffset, diameter + sideLen / 2 + yOffset, diameter / 2, 0.8 * Math.PI, 1.2 * Math.PI, true);
     ctx.lineTo(xOffset, diameter + sideLen / 2 + - 5 + yOffset);
     ctx.lineTo(xOffset, diameter + yOffset);
-    // 线条样式
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = borderStyle;
-    ctx.stroke();
-    ctx.clip();
-    // 给图片位置设置默认值
-    position = position || {
-        x: 0,
-        y: 0,
-        width: canvas.width,
-        height: canvas.height
-    };
-    ctx.drawImage(imageData, position.x, position.y, position.width, position.height);
+    ctx.closePath();
+    callback(ctx);
 } 
 </script>
 <script lang="ts">

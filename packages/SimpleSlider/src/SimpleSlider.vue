@@ -1,6 +1,6 @@
 <template>
     <div class="simple-wrap" ref="authModule">
-        <div class="img-area" :style="'background-image: url(' + background + ')'" ref="imgRef"></div>
+        <div class="img-area" :style="bgStyle" ref="imgRef"></div>
         <div class="asa-slider-bar" ref="sliderBar">
             <span class="asa-slider-tips">
                 {{tips}}
@@ -18,14 +18,14 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import {moveSliderEvent} from "../../utils/eventSublimation.js";
+import { computed, onMounted, ref, defineComponent } from 'vue';
+import {moveSliderEvent} from "../../utils/eventSublimation";
 import statusConvert from "../../utils/statusConvert.js";
 import constant from "../../utils/constant.js";
 import {defaultBackground} from "../../utils/pictureAdapter.js";
 import {IconStatus} from "../../utils/enums";
 
-export default {
+export default defineComponent({
     name: "as-simple-slider",
     props: {
         // 认证成功后的回调方法
@@ -73,10 +73,13 @@ export default {
             IconStatus,
             cursorStyle: computed(() => ({
                 "cursor": preventMove.value ? 'move' : 'not-allowed',
-            }))
+            })),
+            bgStyle: computed(() => ({
+                "background-image": `url(${props.background})`
+            })),
         };
     },
-}
+});
 
 function sliderGather(sliderBar, progressRef, slider, iconStatus, props, authModule, preventMove) {
     function sliderDown(e) {

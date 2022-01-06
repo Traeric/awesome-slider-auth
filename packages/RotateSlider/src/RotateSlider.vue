@@ -29,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import {moveSliderEvent, close} from "../../utils/eventSublimation.js";
+import {moveSliderEvent, close} from "../../utils/eventSublimation";
 import {defaultBackground1} from "../../utils/pictureAdapter";
 import {RotateSliderHandler} from "./RotateSlider";
 import statusConvert from "../../utils/statusConvert.js";
