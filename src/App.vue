@@ -222,12 +222,58 @@
     <as-button type="negative" suffix-icon="document">查看文档</as-button>
     <br><br>
     <as-button type="negative" suffix-icon="search">查看文档</as-button>
+    <br><br>
+    <as-button type="negative" suffix-icon="search" @click="loadTest">load测试</as-button>
+    <br><br>
+    <div class="test" ref="testRef" style="border: 1px solid #aaa">
+        <p>sdasdsa</p>
+        <p>asdsadsa</p>
+        <p>asdasdasdsa</p>
+        <p>sadsadasdsadasdadaada</p>
+    </div>
+    <as-button type="negative" suffix-icon="search" @click="startLoad">开启</as-button>
+    <as-button type="negative" suffix-icon="search" @click="endLoad">关闭</as-button>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { load } from "packages/AsIcons";
 import { h, onMounted, ref } from "vue";
-import {AsMessage} from "../packages";
+import {AsMessage, AsLoad, LoadHandler} from "../packages";
+let testRef = ref();
+
+let testLoad: LoadHandler;
+onMounted(() => {
+    testLoad = AsLoad({
+        description: "加载中...",
+        target: testRef.value
+    })!;
+});
+
+function startLoad() {
+    testLoad?.show();
+}
+
+function endLoad() {
+    testLoad?.close();
+}
+
+let loadObj = AsLoad({
+    description: "加载加载加载",
+    alpha: .98
+});
+function loadTest() {
+    if (loadObj === null) {
+        return;
+    }
+    loadObj.show();
+    // setTimeout(() => {
+    //     if (loadObj === null) {
+    //         return;
+    //     }
+    //     loadObj.destroy();
+    // }, 1000);
+}
 
 const pictureCaptchaRef = ref();
 let a = ref();

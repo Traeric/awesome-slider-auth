@@ -28,7 +28,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import {defaultBackground, blackBackground} from "../../utils/pictureAdapter.js";
+import {defaultBackground} from "../../utils/pictureAdapter.js";
 import { computed, onMounted, ref } from 'vue';
 import {moveSliderEvent} from "../../utils/eventSublimation";
 import statusConvert from "../../utils/statusConvert.js";

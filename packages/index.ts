@@ -1,4 +1,4 @@
-import type { App, Component } from "vue";
+import type { App } from "vue";
 import "./theme-chalk/index.styl";
 import SimpleSlider from "./SimpleSlider";
 import AsButton from "./AsButton";
@@ -13,6 +13,7 @@ import JigsawSlider from "./JigsawSlider";
 import AsTop from "./AsTop";
 import ScratchSlider from "./ScratchSlider";
 import * as IconGather from "./AsIcons";
+import AsLoad, {LoadHandler} from "./AsLoad";
 
 // package下组件列表
 const components = [
@@ -29,6 +30,7 @@ const components = [
     JigsawSlider,
     AsTop,
     ScratchSlider,
+    AsLoad,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将package中所有组件注册
@@ -63,5 +65,7 @@ export {
     AsTop,
     ScratchSlider,
     IconGather,
+    AsLoad,
+    LoadHandler
 }
 
