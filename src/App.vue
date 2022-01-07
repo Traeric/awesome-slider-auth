@@ -246,7 +246,8 @@ let testLoad: LoadHandler;
 onMounted(() => {
     testLoad = AsLoad({
         description: "加载中...",
-        target: testRef.value
+        target: testRef.value,
+        iconSize: "small"
     })!;
 });
 

@@ -18,7 +18,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, nextTick, PropType, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 let props = defineProps({
     bottom: {
         type: String,

@@ -3,6 +3,7 @@ export type InputData = {
     target?: string | HTMLElement,
     alpha?: number,
     color?: string,
+    iconSize?: IconSize,
 };
 
-
+export type IconSize = "small" | "medium" | "large";
